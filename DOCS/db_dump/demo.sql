@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 3.2.5deb2
+-- version 3.3.1deb1
 -- http://www.phpmyadmin.net
 --
--- Хост: localhost
--- Время создания: Мар 29 2010 г., 00:30
--- Версия сервера: 5.1.43
--- Версия PHP: 5.3.1-4
+-- Host: localhost
+-- Generation Time: Apr 14, 2010 at 11:45 PM
+-- Server version: 5.0.51
+-- PHP Version: 5.3.1-5
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
@@ -16,69 +16,69 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 /*!40101 SET NAMES utf8 */;
 
 --
--- База данных: `mojotest`
+-- Database: `mojotest`
 --
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `mjsmf_members`
+-- Table structure for table `mjsmf_members`
 --
 
 CREATE TABLE IF NOT EXISTS `mjsmf_members` (
-  `ID_MEMBER` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
-  `memberName` varchar(80) NOT NULL DEFAULT '',
-  `dateRegistered` int(10) unsigned NOT NULL DEFAULT '0',
-  `posts` mediumint(8) unsigned NOT NULL DEFAULT '0',
-  `ID_GROUP` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `ID_MEMBER` mediumint(8) unsigned NOT NULL auto_increment,
+  `memberName` varchar(80) NOT NULL default '',
+  `dateRegistered` int(10) unsigned NOT NULL default '0',
+  `posts` mediumint(8) unsigned NOT NULL default '0',
+  `ID_GROUP` smallint(5) unsigned NOT NULL default '0',
   `lngfile` tinytext NOT NULL,
-  `lastLogin` int(10) unsigned NOT NULL DEFAULT '0',
+  `lastLogin` int(10) unsigned NOT NULL default '0',
   `realName` tinytext NOT NULL,
-  `instantMessages` smallint(5) NOT NULL DEFAULT '0',
-  `unreadMessages` smallint(5) NOT NULL DEFAULT '0',
+  `instantMessages` smallint(5) NOT NULL default '0',
+  `unreadMessages` smallint(5) NOT NULL default '0',
   `buddy_list` text NOT NULL,
   `pm_ignore_list` tinytext NOT NULL,
   `messageLabels` text NOT NULL,
-  `passwd` varchar(64) NOT NULL DEFAULT '',
+  `passwd` varchar(64) NOT NULL default '',
   `emailAddress` tinytext NOT NULL,
   `personalText` tinytext NOT NULL,
-  `gender` tinyint(4) unsigned NOT NULL DEFAULT '0',
-  `birthdate` date NOT NULL DEFAULT '0001-01-01',
+  `gender` tinyint(4) unsigned NOT NULL default '0',
+  `birthdate` date NOT NULL default '0001-01-01',
   `websiteTitle` tinytext NOT NULL,
   `websiteUrl` tinytext NOT NULL,
   `location` tinytext NOT NULL,
   `ICQ` tinytext NOT NULL,
-  `AIM` varchar(16) NOT NULL DEFAULT '',
-  `YIM` varchar(32) NOT NULL DEFAULT '',
+  `AIM` varchar(16) NOT NULL default '',
+  `YIM` varchar(32) NOT NULL default '',
   `MSN` tinytext NOT NULL,
-  `hideEmail` tinyint(4) NOT NULL DEFAULT '0',
-  `showOnline` tinyint(4) NOT NULL DEFAULT '1',
-  `timeFormat` varchar(80) NOT NULL DEFAULT '',
+  `hideEmail` tinyint(4) NOT NULL default '0',
+  `showOnline` tinyint(4) NOT NULL default '1',
+  `timeFormat` varchar(80) NOT NULL default '',
   `signature` text NOT NULL,
-  `timeOffset` float NOT NULL DEFAULT '0',
+  `timeOffset` float NOT NULL default '0',
   `avatar` tinytext NOT NULL,
-  `pm_email_notify` tinyint(4) NOT NULL DEFAULT '0',
-  `karmaBad` smallint(5) unsigned NOT NULL DEFAULT '0',
-  `karmaGood` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `pm_email_notify` tinyint(4) NOT NULL default '0',
+  `karmaBad` smallint(5) unsigned NOT NULL default '0',
+  `karmaGood` smallint(5) unsigned NOT NULL default '0',
   `usertitle` tinytext NOT NULL,
-  `notifyAnnouncements` tinyint(4) NOT NULL DEFAULT '1',
-  `notifyOnce` tinyint(4) NOT NULL DEFAULT '1',
-  `notifySendBody` tinyint(4) NOT NULL DEFAULT '0',
-  `notifyTypes` tinyint(4) NOT NULL DEFAULT '2',
+  `notifyAnnouncements` tinyint(4) NOT NULL default '1',
+  `notifyOnce` tinyint(4) NOT NULL default '1',
+  `notifySendBody` tinyint(4) NOT NULL default '0',
+  `notifyTypes` tinyint(4) NOT NULL default '2',
   `memberIP` tinytext NOT NULL,
   `memberIP2` tinytext NOT NULL,
   `secretQuestion` tinytext NOT NULL,
-  `secretAnswer` varchar(64) NOT NULL DEFAULT '',
-  `ID_THEME` tinyint(4) unsigned NOT NULL DEFAULT '0',
-  `is_activated` tinyint(3) unsigned NOT NULL DEFAULT '1',
-  `validation_code` varchar(10) NOT NULL DEFAULT '',
-  `ID_MSG_LAST_VISIT` int(10) unsigned NOT NULL DEFAULT '0',
+  `secretAnswer` varchar(64) NOT NULL default '',
+  `ID_THEME` tinyint(4) unsigned NOT NULL default '0',
+  `is_activated` tinyint(3) unsigned NOT NULL default '1',
+  `validation_code` varchar(10) NOT NULL default '',
+  `ID_MSG_LAST_VISIT` int(10) unsigned NOT NULL default '0',
   `additionalGroups` tinytext NOT NULL,
-  `smileySet` varchar(48) NOT NULL DEFAULT '',
-  `ID_POST_GROUP` smallint(5) unsigned NOT NULL DEFAULT '0',
-  `totalTimeLoggedIn` int(10) unsigned NOT NULL DEFAULT '0',
-  `passwordSalt` varchar(5) NOT NULL DEFAULT '',
-  PRIMARY KEY (`ID_MEMBER`),
+  `smileySet` varchar(48) NOT NULL default '',
+  `ID_POST_GROUP` smallint(5) unsigned NOT NULL default '0',
+  `totalTimeLoggedIn` int(10) unsigned NOT NULL default '0',
+  `passwordSalt` varchar(5) NOT NULL default '',
+  PRIMARY KEY  (`ID_MEMBER`),
   KEY `memberName` (`memberName`(30)),
   KEY `dateRegistered` (`dateRegistered`),
   KEY `ID_GROUP` (`ID_GROUP`),
@@ -90,7 +90,7 @@ CREATE TABLE IF NOT EXISTS `mjsmf_members` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=20 ;
 
 --
--- Дамп данных таблицы `mjsmf_members`
+-- Dumping data for table `mjsmf_members`
 --
 
 INSERT INTO `mjsmf_members` (`ID_MEMBER`, `memberName`, `dateRegistered`, `posts`, `ID_GROUP`, `lngfile`, `lastLogin`, `realName`, `instantMessages`, `unreadMessages`, `buddy_list`, `pm_ignore_list`, `messageLabels`, `passwd`, `emailAddress`, `personalText`, `gender`, `birthdate`, `websiteTitle`, `websiteUrl`, `location`, `ICQ`, `AIM`, `YIM`, `MSN`, `hideEmail`, `showOnline`, `timeFormat`, `signature`, `timeOffset`, `avatar`, `pm_email_notify`, `karmaBad`, `karmaGood`, `usertitle`, `notifyAnnouncements`, `notifyOnce`, `notifySendBody`, `notifyTypes`, `memberIP`, `memberIP2`, `secretQuestion`, `secretAnswer`, `ID_THEME`, `is_activated`, `validation_code`, `ID_MSG_LAST_VISIT`, `additionalGroups`, `smileySet`, `ID_POST_GROUP`, `totalTimeLoggedIn`, `passwordSalt`) VALUES
@@ -100,18 +100,18 @@ INSERT INTO `mjsmf_members` (`ID_MEMBER`, `memberName`, `dateRegistered`, `posts
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `mjsmf_sessions`
+-- Table structure for table `mjsmf_sessions`
 --
 
 CREATE TABLE IF NOT EXISTS `mjsmf_sessions` (
   `session_id` char(32) NOT NULL,
   `last_update` int(10) unsigned NOT NULL,
   `data` text NOT NULL,
-  PRIMARY KEY (`session_id`)
+  PRIMARY KEY  (`session_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
--- Дамп данных таблицы `mjsmf_sessions`
+-- Dumping data for table `mjsmf_sessions`
 --
 
 INSERT INTO `mjsmf_sessions` (`session_id`, `last_update`, `data`) VALUES
@@ -121,27 +121,29 @@ INSERT INTO `mjsmf_sessions` (`session_id`, `last_update`, `data`) VALUES
 ('2c003bc2163cca24732f1ccb39bd9850', 1267906029, 'rand_code|s:32:"1300dd093bb298e2602a0d70c3ff953a";USER_AGENT|s:100:"Mozilla/5.0 (X11; U; Linux i686; ru; rv:1.9.1.8) Gecko/20100218 Iceweasel/3.5.8 (like Firefox/3.5.8)";'),
 ('46dde114045c96625edebfdb464d5cff', 1269326448, 'rand_code|s:32:"5034b2558667345f96e62facf5d97288";USER_AGENT|s:100:"Mozilla/5.0 (X11; U; Linux i686; ru; rv:1.9.1.8) Gecko/20100218 Iceweasel/3.5.8 (like Firefox/3.5.8)";'),
 ('8faa911a761b6c866bf9af71a31a8d62', 1269639082, 'rand_code|s:32:"d9695f902adbb31c35751fa9d131ecb7";USER_AGENT|s:100:"Mozilla/5.0 (X11; U; Linux i686; ru; rv:1.9.1.8) Gecko/20100218 Iceweasel/3.5.8 (like Firefox/3.5.8)";'),
-('a266592f9feb867bc9f48e7ca7324da0', 1269684537, 'rand_code|s:32:"1a13c836a9958b5b1bfb1db996187279";USER_AGENT|s:100:"Mozilla/5.0 (X11; U; Linux i686; ru; rv:1.9.1.8) Gecko/20100218 Iceweasel/3.5.8 (like Firefox/3.5.8)";');
+('a266592f9feb867bc9f48e7ca7324da0', 1269684537, 'rand_code|s:32:"1a13c836a9958b5b1bfb1db996187279";USER_AGENT|s:100:"Mozilla/5.0 (X11; U; Linux i686; ru; rv:1.9.1.8) Gecko/20100218 Iceweasel/3.5.8 (like Firefox/3.5.8)";'),
+('0ad0bef55b17b108d7f6dcc8bcb283e5', 1270203841, 'rand_code|s:32:"ab00a75afe7fff443f709344d8ee8c78";USER_AGENT|s:103:"Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.8) Gecko/20100308 Iceweasel/3.5.8 (like Firefox/3.5.8)";'),
+('7e178fde282b447cff905bff966cc426', 1270624228, 'rand_code|s:32:"e2084ed61642e6bdd255097a55ef3d85";USER_AGENT|s:103:"Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.8) Gecko/20100308 Iceweasel/3.5.8 (like Firefox/3.5.8)";');
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `mj_awps`
+-- Table structure for table `mj_awps`
 --
 
 CREATE TABLE IF NOT EXISTS `mj_awps` (
-  `awp_id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
+  `awp_id` smallint(5) unsigned NOT NULL auto_increment,
   `name` char(48) NOT NULL,
-  `ins` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `upd` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `ins` datetime NOT NULL default '0000-00-00 00:00:00',
+  `upd` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
   `member_id` mediumint(8) unsigned NOT NULL,
-  `whoedit` mediumint(8) unsigned DEFAULT NULL,
-  `sequence` tinyint(3) unsigned NOT NULL DEFAULT '1',
-  PRIMARY KEY (`awp_id`)
+  `whoedit` mediumint(8) unsigned default NULL,
+  `sequence` tinyint(3) unsigned NOT NULL default '1',
+  PRIMARY KEY  (`awp_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='User''s Automated Work Places' AUTO_INCREMENT=5 ;
 
 --
--- Дамп данных таблицы `mj_awps`
+-- Dumping data for table `mj_awps`
 --
 
 INSERT INTO `mj_awps` (`awp_id`, `name`, `ins`, `upd`, `member_id`, `whoedit`, `sequence`) VALUES
@@ -151,40 +153,38 @@ INSERT INTO `mj_awps` (`awp_id`, `name`, `ins`, `upd`, `member_id`, `whoedit`, `
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `mj_cats_data`
+-- Table structure for table `mj_cats_data`
 --
 
 CREATE TABLE IF NOT EXISTS `mj_cats_data` (
   `cat_id` int(10) unsigned NOT NULL,
   `lang` char(4) NOT NULL,
   `name` char(32) NOT NULL,
-  `cname` char(16) DEFAULT NULL,
+  `cname` char(16) default NULL,
   `descr` text NOT NULL,
   `keywords` text NOT NULL,
-  `is_active` tinyint(1) NOT NULL DEFAULT '1',
+  `is_active` tinyint(1) NOT NULL default '1',
   `extra_data` text NOT NULL,
   `member_id` mediumint(8) unsigned NOT NULL,
-  `whoedit` mediumint(8) unsigned DEFAULT NULL,
-  `ins` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `upd` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `whoedit` mediumint(8) unsigned default NULL,
+  `ins` datetime NOT NULL default '0000-00-00 00:00:00',
+  `upd` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
   UNIQUE KEY `cat_id_idx` (`cat_id`),
   KEY `cname_idx` (`cname`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Categories data';
 
 --
--- Дамп данных таблицы `mj_cats_data`
+-- Dumping data for table `mj_cats_data`
 --
 
 INSERT INTO `mj_cats_data` (`cat_id`, `lang`, `name`, `cname`, `descr`, `keywords`, `is_active`, `extra_data`, `member_id`, `whoedit`, `ins`, `upd`) VALUES
-(2, 'en', 'eee', 'rrr', '', '', 1, '', 1, NULL, '2010-03-07 05:07:08', '2010-03-07 05:07:08'),
-(3, 'en', 'hui', 'sun', 'vv', 'chai', 1, '', 1, 1, '2010-03-07 06:00:43', '2010-03-07 06:00:53'),
-(4, 'en', 'on', 'eng', 'opa', 'zopa\n', 1, '', 1, NULL, '2010-03-07 06:02:31', '2010-03-07 06:02:31'),
-(5, 'ru', 'wewe', 'ere', 'wewe', 'wewe', 1, '', 1, NULL, '2010-03-07 07:24:21', '2010-03-07 07:24:21');
+(9, 'en', 'Demo 2', 'demo2', 'demo2 descr', 'demo2 kwds', 1, '', 1, NULL, '2010-04-12 14:11:29', '2010-04-12 14:11:29'),
+(8, 'en', 'Demo 1', 'demo1', 'demo1 descr', 'demo1 kwds', 1, '', 1, 1, '2010-04-12 14:10:35', '2010-04-12 14:11:06');
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `mj_cats_trans`
+-- Table structure for table `mj_cats_trans`
 --
 
 CREATE TABLE IF NOT EXISTS `mj_cats_trans` (
@@ -194,97 +194,85 @@ CREATE TABLE IF NOT EXISTS `mj_cats_trans` (
   `descr` text NOT NULL,
   `keywords` text NOT NULL,
   `member_id` mediumint(8) NOT NULL,
-  `whoedit` mediumint(8) DEFAULT NULL,
+  `whoedit` mediumint(8) default NULL,
   `ins` datetime NOT NULL,
-  `upd` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `upd` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
   UNIQUE KEY `menu_lng_idx` (`cat_id`,`lang`),
   KEY `cat_id_idx` (`cat_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Categories translations';
 
 --
--- Дамп данных таблицы `mj_cats_trans`
+-- Dumping data for table `mj_cats_trans`
 --
 
-INSERT INTO `mj_cats_trans` (`cat_id`, `lang`, `name`, `descr`, `keywords`, `member_id`, `whoedit`, `ins`, `upd`) VALUES
-(2, 'ru', 'eerr', 'rere', 'ererrrr', 1, 1, '2010-03-07 22:02:33', '2010-03-07 22:07:31');
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `mj_cats_tree`
+-- Table structure for table `mj_cats_tree`
 --
 
 CREATE TABLE IF NOT EXISTS `mj_cats_tree` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `level` tinyint(3) NOT NULL DEFAULT '1',
-  `left_key` int(10) NOT NULL DEFAULT '0',
-  `right_key` int(10) NOT NULL DEFAULT '0',
+  `id` int(10) NOT NULL auto_increment,
+  `level` tinyint(3) NOT NULL default '1',
+  `left_key` int(10) NOT NULL default '0',
+  `right_key` int(10) NOT NULL default '0',
   `group` int(10) NOT NULL,
-  `ins` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `upd` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
+  `ins` datetime NOT NULL default '0000-00-00 00:00:00',
+  `upd` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+  PRIMARY KEY  (`id`),
   KEY `level` (`level`),
   KEY `group` (`group`),
   KEY `comlete_idx` (`level`,`left_key`,`right_key`,`group`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Categories data tree' AUTO_INCREMENT=6 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Categories data tree' AUTO_INCREMENT=10 ;
 
 --
--- Дамп данных таблицы `mj_cats_tree`
+-- Dumping data for table `mj_cats_tree`
 --
 
 INSERT INTO `mj_cats_tree` (`id`, `level`, `left_key`, `right_key`, `group`, `ins`, `upd`) VALUES
-(2, 1, 3, 8, 0, '0000-00-00 00:00:00', '2010-03-07 22:07:58'),
-(3, 2, 4, 7, 0, '0000-00-00 00:00:00', '2010-03-07 22:07:58'),
-(4, 3, 5, 6, 0, '0000-00-00 00:00:00', '2010-03-07 22:07:58'),
-(5, 1, 1, 2, 0, '0000-00-00 00:00:00', '2010-03-07 22:07:58');
+(9, 1, 3, 4, 0, '0000-00-00 00:00:00', '2010-04-12 14:11:29'),
+(8, 1, 1, 2, 0, '0000-00-00 00:00:00', '2010-04-12 14:10:35');
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `mj_menus_data`
+-- Table structure for table `mj_menus_data`
 --
 
 CREATE TABLE IF NOT EXISTS `mj_menus_data` (
   `menu_id` int(10) unsigned NOT NULL,
   `lang` char(4) NOT NULL,
   `text` char(32) NOT NULL,
-  `cname` char(16) DEFAULT NULL,
+  `cname` char(16) default NULL,
   `link` text NOT NULL,
-  `is_active` tinyint(1) NOT NULL DEFAULT '1',
+  `is_active` tinyint(1) NOT NULL default '1',
   `extra_data` text NOT NULL,
   `member_id` mediumint(8) unsigned NOT NULL,
-  `whoedit` mediumint(8) unsigned DEFAULT NULL,
+  `whoedit` mediumint(8) unsigned default NULL,
   `ins` datetime NOT NULL,
-  `upd` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `upd` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
   UNIQUE KEY `menu_id_idx` (`menu_id`),
   KEY `cname_idx` (`cname`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
--- Дамп данных таблицы `mj_menus_data`
+-- Dumping data for table `mj_menus_data`
 --
 
 INSERT INTO `mj_menus_data` (`menu_id`, `lang`, `text`, `cname`, `link`, `is_active`, `extra_data`, `member_id`, `whoedit`, `ins`, `upd`) VALUES
-(3, 'en', 'MjCMS adm menu', 'mjcmsadm', 'is_active', 0, '', 1, 1, '2010-02-26 23:45:35', '2010-03-04 20:48:31'),
-(5, 'en', 'Slave', 'mumucn', '', 1, '', 1, 1, '2010-03-03 17:59:24', '2010-03-03 22:48:22'),
-(6, 'en', 'OpaOpa', 'zzzda', '', 1, '', 1, 1, '2010-03-04 12:11:09', '2010-03-04 16:44:34'),
-(19, 'en', 'dds', 'hhhd', '', 1, '', 1, NULL, '2010-03-04 12:42:54', '2010-03-04 12:42:54'),
-(20, 'en', 'refdsf', 'sdeer', '', 1, '', 1, NULL, '2010-03-04 12:43:41', '2010-03-04 12:43:41'),
-(21, 'en', 'ewer', 'aew', '', 1, '', 1, NULL, '2010-03-04 12:45:02', '2010-03-04 12:45:02'),
-(22, 'en', 'wqwqe', 'wewqq', '', 1, '', 1, 1, '2010-03-04 12:54:28', '2010-03-04 13:08:31'),
-(23, 'en', 'eeyub', 'ebubue', 'oyaebu', 1, '', 1, 1, '2010-03-04 16:45:42', '2010-03-04 17:28:39'),
-(24, 'en', 'opopo', 'yoyo', 'ololo', 1, '', 1, NULL, '2010-03-04 17:06:41', '2010-03-04 17:06:41'),
-(25, 'en', 'pliio', 'dodo', 'jopa', 1, '', 1, NULL, '2010-03-04 21:00:09', '2010-03-04 21:00:09'),
-(26, 'en', 'ttt', 'ttt', 'ttt', 1, '', 1, NULL, '2010-03-04 22:11:36', '2010-03-04 22:11:36'),
-(27, 'en', 'sssd', 'dsdsd', 'sdsdsd', 1, '', 1, NULL, '2010-03-04 22:12:05', '2010-03-04 22:12:05'),
-(28, 'en', 'ds', 'zdx', 'wewewe', 1, '', 1, NULL, '2010-03-04 22:13:12', '2010-03-04 22:13:12'),
-(29, 'en', 'eweyavol', 'eweyavol', 'eweyavol', 1, '', 1, NULL, '2010-03-04 22:28:13', '2010-03-04 22:28:13'),
-(30, 'en', 'hhhuuii', 'hhhuuii', 'hhhuuii', 1, '', 1, NULL, '2010-03-04 22:30:16', '2010-03-04 22:30:16');
+(3, 'en', 'MjNCMS adm menu', 'mjncmsadm', '', 1, '', 1, 1, '2010-02-26 23:45:35', '2010-04-14 22:28:55'),
+(37, 'en', 'SiteMenu', 'onsite', '', 1, '', 1, NULL, '2010-04-12 23:02:24', '2010-04-12 23:02:24'),
+(39, 'en', 'JustPage', '', '/justpage.html', 1, '', 1, 1, '2010-04-13 00:18:18', '2010-04-13 00:29:34'),
+(36, 'en', 'Admin', 'admin', '/mjadmin', 1, '', 1, NULL, '2010-04-12 14:08:28', '2010-04-12 14:08:28'),
+(40, 'en', 'DemoCat1', '', '/demo1', 1, '', 1, NULL, '2010-04-13 00:19:30', '2010-04-13 00:19:30'),
+(41, 'en', 'DemoCat2', '', '/demo2', 1, '', 1, NULL, '2010-04-13 00:19:51', '2010-04-13 00:19:51'),
+(44, 'en', 'Forum', '', '/forum', 1, '', 1, NULL, '2010-04-13 11:28:14', '2010-04-13 11:28:14');
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `mj_menus_trans`
+-- Table structure for table `mj_menus_trans`
 --
 
 CREATE TABLE IF NOT EXISTS `mj_menus_trans` (
@@ -293,113 +281,129 @@ CREATE TABLE IF NOT EXISTS `mj_menus_trans` (
   `text` char(32) NOT NULL,
   `link` text NOT NULL,
   `member_id` mediumint(8) NOT NULL,
-  `whoedit` mediumint(8) DEFAULT NULL,
+  `whoedit` mediumint(8) default NULL,
   `ins` datetime NOT NULL,
-  `upd` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `upd` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
   UNIQUE KEY `menu_lng_idx` (`menu_id`,`lang`),
   KEY `menu_id_idx` (`menu_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Menus translations';
 
 --
--- Дамп данных таблицы `mj_menus_trans`
+-- Dumping data for table `mj_menus_trans`
 --
 
+INSERT INTO `mj_menus_trans` (`menu_id`, `lang`, `text`, `link`, `member_id`, `whoedit`, `ins`, `upd`) VALUES
+(36, 'ru', 'Админка', '', 1, NULL, '2010-04-14 11:54:41', '2010-04-14 11:54:41');
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `mj_menus_tree`
+-- Table structure for table `mj_menus_tree`
 --
 
 CREATE TABLE IF NOT EXISTS `mj_menus_tree` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `level` tinyint(3) NOT NULL DEFAULT '1',
-  `left_key` int(10) NOT NULL DEFAULT '0',
-  `right_key` int(10) NOT NULL DEFAULT '0',
+  `id` int(10) NOT NULL auto_increment,
+  `level` tinyint(3) NOT NULL default '1',
+  `left_key` int(10) NOT NULL default '0',
+  `right_key` int(10) NOT NULL default '0',
   `group` int(10) NOT NULL,
-  `ins` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `upd` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
+  `ins` datetime NOT NULL default '0000-00-00 00:00:00',
+  `upd` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+  PRIMARY KEY  (`id`),
   KEY `level` (`level`),
   KEY `group` (`group`),
   KEY `comlete_idx` (`level`,`left_key`,`right_key`,`group`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Menus data tree' AUTO_INCREMENT=31 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Menus data tree' AUTO_INCREMENT=45 ;
 
 --
--- Дамп данных таблицы `mj_menus_tree`
+-- Dumping data for table `mj_menus_tree`
 --
 
 INSERT INTO `mj_menus_tree` (`id`, `level`, `left_key`, `right_key`, `group`, `ins`, `upd`) VALUES
-(3, 1, 1, 30, 0, '0000-00-00 00:00:00', '2010-03-04 22:30:16'),
-(5, 2, 2, 17, 0, '0000-00-00 00:00:00', '2010-03-05 02:59:51'),
-(6, 2, 18, 19, 0, '0000-00-00 00:00:00', '2010-03-05 02:59:51'),
-(19, 2, 20, 21, 0, '0000-00-00 00:00:00', '2010-03-05 02:59:51'),
-(20, 2, 22, 23, 0, '0000-00-00 00:00:00', '2010-03-05 02:59:51'),
-(22, 2, 26, 27, 0, '0000-00-00 00:00:00', '2010-03-05 02:59:51'),
-(21, 2, 24, 25, 0, '0000-00-00 00:00:00', '2010-03-05 02:59:51'),
-(23, 3, 3, 16, 0, '0000-00-00 00:00:00', '2010-03-05 02:59:51'),
-(24, 2, 28, 29, 0, '0000-00-00 00:00:00', '2010-03-05 02:59:51'),
-(25, 4, 10, 11, 0, '0000-00-00 00:00:00', '2010-03-05 02:59:51'),
-(26, 4, 6, 7, 0, '0000-00-00 00:00:00', '2010-03-05 02:59:51'),
-(27, 4, 14, 15, 0, '0000-00-00 00:00:00', '2010-03-05 02:59:51'),
-(28, 4, 12, 13, 0, '0000-00-00 00:00:00', '2010-03-05 02:59:51'),
-(29, 4, 8, 9, 0, '0000-00-00 00:00:00', '2010-03-05 02:59:51'),
-(30, 4, 4, 5, 0, '0000-00-00 00:00:00', '2010-03-05 02:59:51');
+(3, 1, 1, 6, 0, '0000-00-00 00:00:00', '2010-04-13 11:28:14'),
+(37, 1, 7, 14, 0, '0000-00-00 00:00:00', '2010-04-13 11:28:14'),
+(39, 2, 8, 9, 0, '0000-00-00 00:00:00', '2010-04-13 11:28:14'),
+(36, 2, 2, 3, 0, '0000-00-00 00:00:00', '2010-04-12 14:08:28'),
+(44, 2, 4, 5, 0, '0000-00-00 00:00:00', '2010-04-13 11:28:14'),
+(41, 2, 12, 13, 0, '0000-00-00 00:00:00', '2010-04-13 11:28:14'),
+(40, 2, 10, 11, 0, '0000-00-00 00:00:00', '2010-04-13 11:28:14');
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `mj_pages`
+-- Table structure for table `mj_pages`
 --
 
 CREATE TABLE IF NOT EXISTS `mj_pages` (
-  `page_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `is_published` tinyint(1) unsigned NOT NULL DEFAULT '1',
+  `page_id` bigint(20) unsigned NOT NULL auto_increment,
+  `is_published` tinyint(1) unsigned NOT NULL default '1',
   `cat_id` int(10) unsigned NOT NULL,
   `lang` char(4) NOT NULL,
-  `slug` char(128) DEFAULT NULL,
+  `slug` char(128) default NULL,
   `intro` text NOT NULL,
   `body` text,
   `header` char(64) NOT NULL,
   `descr` text NOT NULL,
   `keywords` char(255) NOT NULL,
-  `showintro` tinyint(1) NOT NULL DEFAULT '1',
-  `use_customtitle` tinyint(1) NOT NULL DEFAULT '0',
-  `custom_title` char(128) DEFAULT NULL,
-  `allow_comments` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `comments_mode` enum('comment','thread') DEFAULT 'comment',
-  `use_password` tinyint(1) NOT NULL DEFAULT '0',
-  `password` char(64) DEFAULT NULL,
-  `use_acces_sets` tinyint(1) NOT NULL DEFAULT '0',
+  `showintro` tinyint(1) NOT NULL default '1',
+  `use_customtitle` tinyint(1) NOT NULL default '0',
+  `custom_title` char(128) default NULL,
+  `allow_comments` tinyint(1) unsigned NOT NULL default '0',
+  `comments_mode` enum('comment','thread') default 'comment',
+  `use_password` tinyint(1) NOT NULL default '0',
+  `password` char(64) default NULL,
+  `use_access_roles` tinyint(1) NOT NULL default '0',
   `comments_count` bigint(20) NOT NULL,
   `author_id` mediumint(8) NOT NULL,
   `member_id` mediumint(8) NOT NULL,
   `whoedit` mediumint(8) NOT NULL,
-  `ins` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `upd` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `ins` datetime NOT NULL default '0000-00-00 00:00:00',
+  `upd` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
   `dt_created` datetime NOT NULL,
-  `dt_publishstart` datetime DEFAULT NULL,
-  `dt_publishend` datetime DEFAULT NULL,
-  PRIMARY KEY (`page_id`),
-  UNIQUE KEY `slug_uniq_idx` (`slug`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Active posts table' AUTO_INCREMENT=28 ;
+  `dt_publishstart` datetime default NULL,
+  `dt_publishend` datetime default NULL,
+  PRIMARY KEY  (`page_id`),
+  UNIQUE KEY `slug_uniq_idx` (`slug`),
+  KEY `use_access_roles_idx` (`use_access_roles`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Active posts table' AUTO_INCREMENT=4 ;
 
 --
--- Дамп данных таблицы `mj_pages`
+-- Dumping data for table `mj_pages`
 --
 
-INSERT INTO `mj_pages` (`page_id`, `is_published`, `cat_id`, `lang`, `slug`, `intro`, `body`, `header`, `descr`, `keywords`, `showintro`, `use_customtitle`, `custom_title`, `allow_comments`, `comments_mode`, `use_password`, `password`, `use_acces_sets`, `comments_count`, `author_id`, `member_id`, `whoedit`, `ins`, `upd`, `dt_created`, `dt_publishstart`, `dt_publishend`) VALUES
-(2, 1, 0, 'ru', 'sdsdsd', '<p>\n	iiii</p>\n', '<p>\n	bbbbbbbb</p>\n', 'hhhhh', 'keywords', '', 0, 0, NULL, 0, NULL, 0, 'use_acces_sets', 0, 0, 1, 1, 0, '2010-03-13 15:58:01', '2010-03-13 15:58:01', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL),
-(27, 1, 0, 'ru', '22e', '<p>\n	22222</p>\n', '<p>\n	22222</p>\n', '222-22', '', '', 1, 0, '', 1, 'comment', 0, NULL, 0, 0, 1, 1, 1, '2010-03-18 00:59:59', '2010-03-18 13:27:52', '2010-03-18 00:59:00', '2010-03-18 00:59:00', NULL);
+INSERT INTO `mj_pages` (`page_id`, `is_published`, `cat_id`, `lang`, `slug`, `intro`, `body`, `header`, `descr`, `keywords`, `showintro`, `use_customtitle`, `custom_title`, `allow_comments`, `comments_mode`, `use_password`, `password`, `use_access_roles`, `comments_count`, `author_id`, `member_id`, `whoedit`, `ins`, `upd`, `dt_created`, `dt_publishstart`, `dt_publishend`) VALUES
+(1, 1, 0, 'en', 'justpage', '<p>\n	<img alt="" ilo-full-src="http://mojotest:82/userfiles/mjncms/1/avopingvo.jpg" src="/userfiles/mjncms/1/avopingvo.jpg" style="width: 96px; height: 96px;" /></p>\n<p>\n	This is justpage intro. hi! cool!</p>\n<p>\n	&nbsp;</p>\n<p>\n', '<p>\n	This is justpagebody</p>\n', 'just single page', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 1, '2010-04-12 14:14:38', '2010-04-14 22:38:35', '2010-04-12 02:13:00', '2010-04-12 02:13:00', NULL),
+(2, 1, 8, 'en', 'd1cp1', '<p>\n	iintro</p>\n', '<p>\n	bbody</p>\n', 'demo1 cat page 1', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 0, '2010-04-12 14:15:14', '2010-04-12 14:15:14', '2010-04-12 03:14:00', '2010-04-12 03:14:00', NULL),
+(3, 1, 8, 'en', 'd1cp2', '<p>\n	introoo</p>\n', '<p>\n	bodyyy</p>\n', 'demo1 cat page 2', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 1, '2010-04-12 14:15:44', '2010-04-12 14:18:35', '2010-04-12 04:15:00', '2010-04-12 04:15:00', NULL);
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `mj_pages_archive`
+-- Table structure for table `mj_pages_access_roles`
+--
+
+CREATE TABLE IF NOT EXISTS `mj_pages_access_roles` (
+  `page_id` int(10) unsigned NOT NULL,
+  `role_id` smallint(5) unsigned NOT NULL,
+  `whoedit` mediumint(8) unsigned NOT NULL,
+  `ins` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+  UNIQUE KEY `page_role_idx` (`page_id`,`role_id`),
+  KEY `page_id_idx` (`page_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='pages roles access limitations';
+
+--
+-- Dumping data for table `mj_pages_access_roles`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `mj_pages_archive`
 --
 
 CREATE TABLE IF NOT EXISTS `mj_pages_archive` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) unsigned NOT NULL auto_increment,
   `page_id` bigint(20) unsigned NOT NULL,
   `is_published` tinyint(1) unsigned NOT NULL,
   `cat_id` int(10) unsigned NOT NULL,
@@ -417,43 +421,85 @@ CREATE TABLE IF NOT EXISTS `mj_pages_archive` (
   `comments_mode` char(8) NOT NULL,
   `use_password` tinyint(1) NOT NULL,
   `password` char(64) NOT NULL,
-  `use_acces_sets` tinyint(1) NOT NULL,
+  `use_access_roles` tinyint(1) NOT NULL,
   `comments_count` bigint(20) NOT NULL,
   `author_id` mediumint(8) NOT NULL,
   `member_id` mediumint(8) NOT NULL,
   `whoedit` mediumint(8) NOT NULL,
   `ins` datetime NOT NULL,
-  `upd` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `upd` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
   `dt_created` datetime NOT NULL,
   `dt_publishstart` datetime NOT NULL,
   `dt_publishend` datetime NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Archive posts table' AUTO_INCREMENT=3 ;
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Archive posts table' AUTO_INCREMENT=17 ;
 
 --
--- Дамп данных таблицы `mj_pages_archive`
+-- Dumping data for table `mj_pages_archive`
 --
 
-INSERT INTO `mj_pages_archive` (`id`, `page_id`, `is_published`, `cat_id`, `lang`, `slug`, `intro`, `body`, `header`, `descr`, `keywords`, `showintro`, `use_customtitle`, `custom_title`, `allow_comments`, `comments_mode`, `use_password`, `password`, `use_acces_sets`, `comments_count`, `author_id`, `member_id`, `whoedit`, `ins`, `upd`, `dt_created`, `dt_publishstart`, `dt_publishend`) VALUES
-(1, 27, 1, 0, 'ru', '22e', '<p>\n	22222eee</p>', '<p>\n	22222</p>', '222-22', '', '', 1, 0, '', 1, '', 0, '', 0, 0, 1, 1, 1, '2010-03-18 00:59:59', '2010-03-18 13:26:52', '2010-03-18 00:59:00', '2010-03-18 00:59:00', '0000-00-00 00:00:00'),
-(2, 27, 1, 0, 'ru', '22e', '<p>\n	22222eee</p>', '<p>\n	22222</p>', '222-22', '', '', 1, 0, '', 1, '', 0, '', 0, 0, 1, 1, 1, '2010-03-18 00:59:59', '2010-03-18 13:27:52', '2010-03-18 00:59:00', '2010-03-18 00:59:00', '0000-00-00 00:00:00');
+INSERT INTO `mj_pages_archive` (`id`, `page_id`, `is_published`, `cat_id`, `lang`, `slug`, `intro`, `body`, `header`, `descr`, `keywords`, `showintro`, `use_customtitle`, `custom_title`, `allow_comments`, `comments_mode`, `use_password`, `password`, `use_access_roles`, `comments_count`, `author_id`, `member_id`, `whoedit`, `ins`, `upd`, `dt_created`, `dt_publishstart`, `dt_publishend`) VALUES
+(1, 3, 1, 8, 'en', 'd1cp2', '<p>\n	introoo</p>\n', '<p>\n	bodyyy</p>\n', 'demo1 cat page 2', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 1, '2010-04-12 14:15:44', '2010-04-12 14:18:35', '2010-04-12 03:15:00', '2010-04-12 03:15:00', '0000-00-00 00:00:00'),
+(2, 1, 1, 0, 'en', 'justpage', '<p>\n	This is justpage intro</p>\n', '<p>\n	This is justpagebody</p>\n', 'just single page', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 1, '2010-04-12 14:14:38', '2010-04-12 14:19:16', '2010-04-12 03:13:00', '2010-04-12 03:13:00', '0000-00-00 00:00:00'),
+(3, 1, 1, 0, 'en', 'justpage', '<p>\n	This is justpage intro</p>\n', '<p>\n	This is justpagebody</p>\n', 'just single page', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 1, '2010-04-12 14:14:38', '2010-04-12 14:19:34', '2010-04-12 04:13:00', '2010-04-12 04:13:00', '0000-00-00 00:00:00'),
+(4, 1, 1, 0, 'en', 'justpage', '<p>\n	This is justpage intro</p>\n', '<p>\n	This is justpagebody</p>\n', 'just single page', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 1, '2010-04-12 14:14:38', '2010-04-12 22:29:34', '2010-04-12 05:13:00', '2010-04-12 05:13:00', '0000-00-00 00:00:00'),
+(5, 1, 1, 0, 'en', 'justpage', '<p>\n	This is justpage intro</p>\n', '<p>\n	This is justpagebody</p>\n', 'just single page', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 1, '2010-04-12 14:14:38', '2010-04-12 22:30:59', '2010-04-12 06:13:00', '2010-04-12 06:13:00', '0000-00-00 00:00:00'),
+(6, 1, 1, 0, 'en', 'justpage', '<p>\n	This is justpage introoo</p>\n', '<p>\n	This is justpagebody</p>\n', 'just single page', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 1, '2010-04-12 14:14:38', '2010-04-12 22:31:27', '2010-04-12 06:13:00', '2010-04-12 06:13:00', '0000-00-00 00:00:00'),
+(7, 1, 1, 0, 'en', 'justpage', '<p>\n	This is justpage introoo</p>\n', '<p>\n	This is justpagebody</p>\n', 'just single page', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 1, '2010-04-12 14:14:38', '2010-04-12 22:31:52', '2010-04-12 07:13:00', '2010-04-12 07:13:00', '0000-00-00 00:00:00'),
+(8, 1, 1, 0, 'en', 'justpage', '<p>\n	This is justpage introoo</p>\n', '<p>\n	This is justpagebody</p>\n', 'just single page', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 1, '2010-04-12 14:14:38', '2010-04-12 22:37:29', '2010-04-12 08:13:00', '2010-04-12 08:13:00', '0000-00-00 00:00:00'),
+(9, 1, 1, 0, 'en', 'justpage', '<p>\n	This is justpage introoo</p>\n', '<p>\n	This is justpagebody</p>\n', 'just single page', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 1, '2010-04-12 14:14:38', '2010-04-12 22:39:11', '2010-04-12 09:13:00', '2010-04-12 09:13:00', '0000-00-00 00:00:00'),
+(10, 1, 1, 0, 'en', 'justpage', '<p>\n	This is justpage intro. hi!</p>\n', '<p>\n	This is justpagebody</p>\n', 'just single page', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 1, '2010-04-12 14:14:38', '2010-04-12 22:40:26', '2010-04-12 09:13:00', '2010-04-12 09:13:00', '0000-00-00 00:00:00'),
+(11, 1, 1, 0, 'en', 'justpage', '<p>\n	This is justpage intro. hi!</p>\n', '<p>\n	This is justpagebody</p>\n', 'just single page', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 1, '2010-04-12 14:14:38', '2010-04-12 22:41:31', '2010-04-12 10:13:00', '2010-04-12 10:13:00', '0000-00-00 00:00:00'),
+(12, 1, 1, 0, 'en', 'justpage', '<p>\n	This is justpage intro. hi! eee!</p>', '<p>\n	This is justpagebody</p>', 'just single page', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 1, '2010-04-12 14:14:38', '2010-04-12 22:41:51', '2010-04-12 10:13:00', '2010-04-12 10:13:00', '0000-00-00 00:00:00'),
+(13, 1, 1, 0, 'en', 'justpage', '<p>\n	<img alt="" ilo-full-src="http://mojotest:82/userfiles/mjcms/1/avopingvo.jpg" src="/userfiles/mjcms/1/avopingvo.jpg" style="width: 96px; height: 96px;" /></p>\n<p>\n	This is justpage intro. hi! eee!</p>', '<p>\n	This is justpagebody</p>', 'just single page', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 1, '2010-04-12 14:14:38', '2010-04-12 23:01:12', '2010-04-12 10:13:00', '2010-04-12 10:13:00', '0000-00-00 00:00:00'),
+(14, 1, 1, 0, 'en', 'justpage', '<p>\n	<img alt="" ilo-full-src="http://mojotest:82/userfiles/mjcms/1/avopingvo.jpg" src="/userfiles/mjcms/1/avopingvo.jpg" style="width: 96px; height: 96px;" /></p>\n<p>\n	This is justpage intro. hi!</p>\n', '<p>\n	This is justpagebody</p>\n', 'just single page', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 1, '2010-04-12 14:14:38', '2010-04-12 23:01:24', '2010-04-12 11:13:00', '2010-04-12 11:13:00', '0000-00-00 00:00:00'),
+(15, 1, 1, 0, 'en', 'justpage', '<p>\n	<img alt="" ilo-full-src="http://mojotest:82/userfiles/mjcms/1/avopingvo.jpg" src="/userfiles/mjcms/1/avopingvo.jpg" style="width: 96px; height: 96px;" /></p>\n<p>\n	This is justpage intro. hi! cool!</p>\n', '<p>\n	This is justpagebody</p>\n', 'just single page', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 1, '2010-04-12 14:14:38', '2010-04-14 12:04:38', '2010-04-12 12:13:00', '2010-04-12 12:13:00', '0000-00-00 00:00:00'),
+(16, 1, 1, 0, 'en', 'justpage', '<p>\n	<img alt="" ilo-full-src="http://mojotest:82/userfiles/mjcms/1/avopingvo.jpg" src="/userfiles/mjcms/1/avopingvo.jpg" style="width: 96px; height: 96px;" /></p>\n<p>\n	This is justpage intro. hi! cool!</p>\n<p>\n	&nbsp;</p>\n<p>\n	А вот хуй!</p>\n', '<p>\n	This is justpagebody</p>\n', 'just single page', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 1, '2010-04-12 14:14:38', '2010-04-14 22:38:35', '2010-04-12 01:13:00', '2010-04-12 01:13:00', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `mj_permissions`
+-- Table structure for table `mj_pages_translations`
+--
+
+CREATE TABLE IF NOT EXISTS `mj_pages_translations` (
+  `page_id` bigint(20) unsigned NOT NULL,
+  `lang` char(4) NOT NULL,
+  `intro` text NOT NULL,
+  `body` text,
+  `header` char(64) NOT NULL,
+  `descr` text NOT NULL,
+  `keywords` char(255) NOT NULL,
+  `custom_title` char(128) default NULL,
+  `member_id` mediumint(8) NOT NULL,
+  `whoedit` mediumint(8) NOT NULL,
+  `ins` datetime NOT NULL default '0000-00-00 00:00:00',
+  `upd` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+  UNIQUE KEY `page_lang_idx` (`page_id`,`lang`),
+  KEY `page_id_idx` (`page_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Pages translations table';
+
+--
+-- Dumping data for table `mj_pages_translations`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `mj_permissions`
 --
 
 CREATE TABLE IF NOT EXISTS `mj_permissions` (
   `permission_id` int(10) unsigned NOT NULL,
-  `awp_id` int(10) unsigned DEFAULT NULL,
-  `role_id` int(10) unsigned DEFAULT NULL,
-  `r` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `w` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `awp_id` int(10) unsigned default NULL,
+  `role_id` int(10) unsigned default NULL,
+  `r` tinyint(1) unsigned NOT NULL default '0',
+  `w` tinyint(1) unsigned NOT NULL default '0',
   `member_id` mediumint(8) unsigned NOT NULL,
-  `whoedit` mediumint(8) unsigned DEFAULT NULL,
-  `ins` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `upd` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `whoedit` mediumint(8) unsigned default NULL,
+  `ins` datetime NOT NULL default '0000-00-00 00:00:00',
+  `upd` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
   KEY `perm_role_idx` (`permission_id`,`role_id`),
   KEY `role_id_idx` (`role_id`),
   KEY `awp_id_idx` (`awp_id`),
@@ -462,44 +508,45 @@ CREATE TABLE IF NOT EXISTS `mj_permissions` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Permissions by awp:role combo';
 
 --
--- Дамп данных таблицы `mj_permissions`
+-- Dumping data for table `mj_permissions`
 --
 
 INSERT INTO `mj_permissions` (`permission_id`, `awp_id`, `role_id`, `r`, `w`, `member_id`, `whoedit`, `ins`, `upd`) VALUES
-(4, 1, NULL, 1, 1, 1, NULL, '2010-03-29 00:12:20', '2010-03-29 00:12:20'),
-(8, 1, NULL, 1, 1, 1, NULL, '2010-03-29 00:12:20', '2010-03-29 00:12:20'),
-(14, 1, NULL, 1, 1, 1, NULL, '2010-03-29 00:12:20', '2010-03-29 00:12:20'),
-(15, 1, NULL, 1, 1, 1, NULL, '2010-03-29 00:12:20', '2010-03-29 00:12:20'),
-(2, 1, NULL, 1, 1, 1, NULL, '2010-03-29 00:12:20', '2010-03-29 00:12:20'),
-(17, 1, NULL, 1, 1, 1, NULL, '2010-03-29 00:12:20', '2010-03-29 00:12:20'),
-(9, 1, NULL, 1, 1, 1, NULL, '2010-03-29 00:12:20', '2010-03-29 00:12:20'),
-(3, 1, NULL, 1, 1, 1, NULL, '2010-03-29 00:12:20', '2010-03-29 00:12:20'),
-(11, 1, NULL, 1, 1, 1, NULL, '2010-03-29 00:12:20', '2010-03-29 00:12:20'),
-(13, 1, NULL, 1, 1, 1, NULL, '2010-03-29 00:12:20', '2010-03-29 00:12:20'),
-(16, 1, NULL, 1, 1, 1, NULL, '2010-03-29 00:12:20', '2010-03-29 00:12:20'),
-(10, 1, NULL, 1, 1, 1, NULL, '2010-03-29 00:12:20', '2010-03-29 00:12:20');
+(16, 1, NULL, 1, 1, 1, NULL, '2010-04-09 14:45:38', '2010-04-09 14:45:38'),
+(13, 1, NULL, 1, 1, 1, NULL, '2010-04-09 14:45:38', '2010-04-09 14:45:38'),
+(18, 1, NULL, 1, 1, 1, NULL, '2010-04-09 14:45:38', '2010-04-09 14:45:38'),
+(4, 1, NULL, 1, 1, 1, NULL, '2010-04-09 14:45:38', '2010-04-09 14:45:38'),
+(8, 1, NULL, 1, 1, 1, NULL, '2010-04-09 14:45:38', '2010-04-09 14:45:38'),
+(14, 1, NULL, 1, 1, 1, NULL, '2010-04-09 14:45:38', '2010-04-09 14:45:38'),
+(15, 1, NULL, 1, 1, 1, NULL, '2010-04-09 14:45:38', '2010-04-09 14:45:38'),
+(2, 1, NULL, 1, 1, 1, NULL, '2010-04-09 14:45:38', '2010-04-09 14:45:38'),
+(17, 1, NULL, 1, 1, 1, NULL, '2010-04-09 14:45:38', '2010-04-09 14:45:38'),
+(9, 1, NULL, 1, 1, 1, NULL, '2010-04-09 14:45:38', '2010-04-09 14:45:38'),
+(3, 1, NULL, 1, 1, 1, NULL, '2010-04-09 14:45:38', '2010-04-09 14:45:38'),
+(11, 1, NULL, 1, 1, 1, NULL, '2010-04-09 14:45:38', '2010-04-09 14:45:38'),
+(10, 1, NULL, 1, 1, 1, NULL, '2010-04-09 14:45:38', '2010-04-09 14:45:38');
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `mj_permission_types`
+-- Table structure for table `mj_permission_types`
 --
 
 CREATE TABLE IF NOT EXISTS `mj_permission_types` (
-  `permission_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `permission_id` int(10) unsigned NOT NULL auto_increment,
   `controller` char(32) NOT NULL,
   `action` char(32) NOT NULL,
   `descr` char(64) NOT NULL,
   `member_id` mediumint(8) unsigned NOT NULL,
-  `whoedit` mediumint(8) unsigned DEFAULT NULL,
-  `ins` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `upd` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`permission_id`),
+  `whoedit` mediumint(8) unsigned default NULL,
+  `ins` datetime NOT NULL default '0000-00-00 00:00:00',
+  `upd` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+  PRIMARY KEY  (`permission_id`),
   UNIQUE KEY `c_a_uniq_idx` (`controller`,`action`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Permission types library' AUTO_INCREMENT=18 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Permission types library' AUTO_INCREMENT=19 ;
 
 --
--- Дамп данных таблицы `mj_permission_types`
+-- Dumping data for table `mj_permission_types`
 --
 
 INSERT INTO `mj_permission_types` (`permission_id`, `controller`, `action`, `descr`, `member_id`, `whoedit`, `ins`, `upd`) VALUES
@@ -518,30 +565,31 @@ INSERT INTO `mj_permission_types` (`permission_id`, `controller`, `action`, `des
 (14, 'filemanager', 'manage', 'Allow manage personal files on local FS', 1, 1, '2010-03-28 16:27:26', '2010-03-28 23:56:36'),
 (15, 'permissions', 'manage', 'Allow manage permissions system', 1, NULL, '2010-03-29 00:10:00', '2010-03-29 00:10:00'),
 (16, 'awp_roles', 'manage', 'Allow manage AWP/Roles && their permissions', 1, NULL, '2010-03-29 00:10:54', '2010-03-29 00:10:54'),
-(17, 'users', 'manage', 'Allow manage users records', 1, NULL, '2010-03-29 00:11:30', '2010-03-29 00:11:30');
+(17, 'users', 'manage', 'Allow manage users records', 1, NULL, '2010-03-29 00:11:30', '2010-03-29 00:11:30'),
+(18, 'translations', 'manage', 'Manage translations', 1, NULL, '2010-04-09 14:44:11', '2010-04-09 14:44:11');
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `mj_roles`
+-- Table structure for table `mj_roles`
 --
 
 CREATE TABLE IF NOT EXISTS `mj_roles` (
-  `role_id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
+  `role_id` smallint(5) unsigned NOT NULL auto_increment,
   `awp_id` smallint(5) unsigned NOT NULL,
   `name` char(48) NOT NULL,
-  `ins` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `upd` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `ins` datetime NOT NULL default '0000-00-00 00:00:00',
+  `upd` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
   `member_id` mediumint(8) unsigned NOT NULL,
-  `whoedit` mediumint(8) unsigned DEFAULT NULL,
-  `sequence` tinyint(3) unsigned NOT NULL DEFAULT '1',
-  PRIMARY KEY (`role_id`),
+  `whoedit` mediumint(8) unsigned default NULL,
+  `sequence` tinyint(3) unsigned NOT NULL default '1',
+  PRIMARY KEY  (`role_id`),
   KEY `awp_id_idx` (`awp_id`),
   KEY `alternatives_idx` (`role_id`,`awp_id`,`sequence`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='User''s roles @ workplaces [text_content/moderator, etc]' AUTO_INCREMENT=4 ;
 
 --
--- Дамп данных таблицы `mj_roles`
+-- Dumping data for table `mj_roles`
 --
 
 INSERT INTO `mj_roles` (`role_id`, `awp_id`, `name`, `ins`, `upd`, `member_id`, `whoedit`, `sequence`) VALUES
@@ -551,58 +599,58 @@ INSERT INTO `mj_roles` (`role_id`, `awp_id`, `name`, `ins`, `upd`, `member_id`, 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `mj_role_alternatives`
+-- Table structure for table `mj_role_alternatives`
 --
 
 CREATE TABLE IF NOT EXISTS `mj_role_alternatives` (
   `member_id` mediumint(8) unsigned NOT NULL,
   `role_id` smallint(5) unsigned NOT NULL,
-  `upd` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `upd` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
   `whoedit` mediumint(8) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
--- Дамп данных таблицы `mj_role_alternatives`
+-- Dumping data for table `mj_role_alternatives`
 --
 
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `mj_sessions`
+-- Table structure for table `mj_sessions`
 --
 
 CREATE TABLE IF NOT EXISTS `mj_sessions` (
   `session_id` char(32) NOT NULL,
   `member_id` mediumint(8) unsigned NOT NULL,
   `data` text,
-  `upd` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `upd` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
   UNIQUE KEY `session_id` (`session_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Internal MjCMS user sessions store';
 
 --
--- Дамп данных таблицы `mj_sessions`
+-- Dumping data for table `mj_sessions`
 --
 
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `mj_short_urls`
+-- Table structure for table `mj_short_urls`
 --
 
 CREATE TABLE IF NOT EXISTS `mj_short_urls` (
-  `alias_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `sugrp_id` int(10) unsigned DEFAULT NULL,
+  `alias_id` bigint(20) unsigned NOT NULL auto_increment,
+  `sugrp_id` int(10) unsigned default NULL,
   `is_custom` tinyint(1) NOT NULL,
   `alias` char(8) NOT NULL,
   `sha1_sum` char(40) NOT NULL,
   `orig_url` text NOT NULL,
-  `ins` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `upd` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `ins` datetime NOT NULL default '0000-00-00 00:00:00',
+  `upd` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
   `member_id` mediumint(8) unsigned NOT NULL,
   `whoedit` mediumint(8) unsigned NOT NULL,
-  PRIMARY KEY (`alias_id`),
+  PRIMARY KEY  (`alias_id`),
   UNIQUE KEY `alias_id_is_custom_idx` (`alias_id`,`is_custom`),
   UNIQUE KEY `grp_alias_idx` (`sugrp_id`,`alias`),
   UNIQUE KEY `sugrp_srch_idx` (`sugrp_id`,`sha1_sum`),
@@ -612,7 +660,7 @@ CREATE TABLE IF NOT EXISTS `mj_short_urls` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Short urls links' AUTO_INCREMENT=3 ;
 
 --
--- Дамп данных таблицы `mj_short_urls`
+-- Dumping data for table `mj_short_urls`
 --
 
 INSERT INTO `mj_short_urls` (`alias_id`, `sugrp_id`, `is_custom`, `alias`, `sha1_sum`, `orig_url`, `ins`, `upd`, `member_id`, `whoedit`) VALUES
@@ -621,21 +669,21 @@ INSERT INTO `mj_short_urls` (`alias_id`, `sugrp_id`, `is_custom`, `alias`, `sha1
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `mj_short_url_groups`
+-- Table structure for table `mj_short_url_groups`
 --
 
 CREATE TABLE IF NOT EXISTS `mj_short_url_groups` (
-  `sugrp_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `sugrp_id` int(10) unsigned NOT NULL auto_increment,
   `name` char(32) NOT NULL,
-  `ins` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `upd` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `ins` datetime NOT NULL default '0000-00-00 00:00:00',
+  `upd` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
   `member_id` mediumint(8) unsigned NOT NULL,
   `whoedit` mediumint(8) unsigned NOT NULL,
-  PRIMARY KEY (`sugrp_id`)
+  PRIMARY KEY  (`sugrp_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Short url groups' AUTO_INCREMENT=3 ;
 
 --
--- Дамп данных таблицы `mj_short_url_groups`
+-- Dumping data for table `mj_short_url_groups`
 --
 
 INSERT INTO `mj_short_url_groups` (`sugrp_id`, `name`, `ins`, `upd`, `member_id`, `whoedit`) VALUES
@@ -644,27 +692,27 @@ INSERT INTO `mj_short_url_groups` (`sugrp_id`, `name`, `ins`, `upd`, `member_id`
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `mj_users`
+-- Table structure for table `mj_users`
 --
 
 CREATE TABLE IF NOT EXISTS `mj_users` (
   `member_id` mediumint(8) unsigned NOT NULL,
-  `replace_member_id` mediumint(8) unsigned DEFAULT NULL,
-  `is_cms_active` tinyint(1) DEFAULT NULL,
-  `role_id` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `replace_member_id` mediumint(8) unsigned default NULL,
+  `is_cms_active` tinyint(1) default NULL,
+  `role_id` smallint(5) unsigned NOT NULL default '0',
   `name` tinytext NOT NULL,
-  `site_lng` char(4) DEFAULT NULL,
-  `ins` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `upd` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `whoedit` mediumint(8) unsigned DEFAULT NULL,
+  `site_lng` char(4) default NULL,
+  `ins` datetime NOT NULL default '0000-00-00 00:00:00',
+  `upd` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+  `whoedit` mediumint(8) unsigned default NULL,
   `startpage` text,
-  PRIMARY KEY (`member_id`),
+  PRIMARY KEY  (`member_id`),
   KEY `role_idx` (`role_id`),
   KEY `m_id_cms_active_idx` (`member_id`,`is_cms_active`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='MjCMS-specific user fields';
 
 --
--- Дамп данных таблицы `mj_users`
+-- Dumping data for table `mj_users`
 --
 
 INSERT INTO `mj_users` (`member_id`, `replace_member_id`, `is_cms_active`, `role_id`, `name`, `site_lng`, `ins`, `upd`, `whoedit`, `startpage`) VALUES
@@ -674,19 +722,19 @@ INSERT INTO `mj_users` (`member_id`, `replace_member_id`, `is_cms_active`, `role
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `mj_users_extrareplaces`
+-- Table structure for table `mj_users_extrareplaces`
 --
 
 CREATE TABLE IF NOT EXISTS `mj_users_extrareplaces` (
   `member_id` mediumint(8) unsigned NOT NULL,
   `slave_id` mediumint(8) unsigned NOT NULL,
-  `upd` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `upd` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
   `whoedit` mediumint(8) NOT NULL,
   UNIQUE KEY `member_slave_idx` (`member_id`,`slave_id`),
   KEY `member_id_idx` (`member_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Extra replaces rules';
 
 --
--- Дамп данных таблицы `mj_users_extrareplaces`
+-- Dumping data for table `mj_users_extrareplaces`
 --
 
