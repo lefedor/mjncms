@@ -1,4 +1,6 @@
 #`perl -MCPAN -e shell`, type "install <MODULENAME>"
+Mojolicious
+Mojo::Server::FCGI  
 Cache::Memcached::Fast
 Captcha::reCAPTCHA
 common::sense
@@ -6,9 +8,7 @@ Crypt::Tea
 Data::Serializer
 Date::Calc
 Filesys:Tree
-Locale::Maketext::Lexicon
-Mojo::Server::FCGI  
-Mojolicious
+#Locale::Maketext::Lexicon #Wiped
 PHP::Serialization
 Template
 YAML

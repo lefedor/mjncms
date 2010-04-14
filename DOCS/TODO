@@ -26,5 +26,6 @@
   Improve AJAX usage @ admin pages
   Extend possible databases to use: from mysql to postgress or maybe more over orm [for base admin]. At least test/fix postgress :)
   Extend/test multi site feature.
+  Get rid of Date::Calc - seems like it requires half of cpan
 
 ..not complete...
