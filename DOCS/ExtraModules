@@ -1,0 +1,14 @@
+#`perl -MCPAN -e shell`, type "install <MODULENAME>"
+Cache::Memcached::Fast
+Captcha::reCAPTCHA
+common::sense
+Crypt::Tea
+Data::Serializer
+Date::Calc
+Filesys:Tree
+Locale::Maketext::Lexicon
+Mojo::Server::FCGI  
+Mojolicious
+PHP::Serialization
+Template
+YAML

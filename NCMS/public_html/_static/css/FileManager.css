@@ -1,0 +1,71 @@
+div.FmFileTreeContainer {
+	background-color: #FFFFFF;
+}
+
+div.FmFileListContainer {
+	background-color: #FFFFFF;
+}
+
+div.FmActionsContainer {
+	background-color: #FFFFFF;
+}
+
+table.FmFileListTable {
+	width: 100%;
+	padding: 2px;
+}
+
+tr.FmFileListTableTrHeaderRow {
+	text-align:center;
+	vertical-align:middle;
+	font-weight:bold;
+}
+
+td.FmFileListTableTdHeaderName {
+	text-align:left;
+}
+
+td.FmFileListTableTdHeaderActions {
+	width: 10%;
+}
+
+td.FmFileListTableTdHeaderSize {
+	width: 10%;
+}
+
+tr.FmFileListTableTrFileRowA {
+	background-color: #E0EFED;
+}
+
+tr.FmFileListTableTrFileRowB {
+	background-color: #E6EFE0;
+}
+
+td.FmFileListTableTdFileIcon {
+	width: 30px;
+	text-align:center;
+	
+}
+
+td.FmFileListTableTdFileName {
+	
+}
+
+td.FmFileListTableTdFileActions {
+
+}
+
+td.FmFileListTableTdFileSize {
+	
+}
+
+form.FmOneStringForm{
+	padding: 0px;
+	margin: 0px;
+	white-space:nowrap;
+}
+
+form.FmIv {
+	visibility:hidden;
+	display:none;
+}

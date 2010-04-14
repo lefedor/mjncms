@@ -1,0 +1,26 @@
+MjNCMS - Mojolicious-[PERL]-based CMS [Mj Not CMS :) ]
+
+Project goal is not create CMS, but create ``CMS`` enviropment.
+Let me describe: every time you start new project you need 
+mess with "boring" stuff. Like user model, categories, 
+static pages, make admin panel, other simple and not stuff.
+This always takes time - you have idea, but days/weeks later 
+you (pssoble :)) still mess with them and `core functional` is stil "far far away".
+I meet same problem - my "framework/kitchen" 
+(CGI.pm/Template-Toolkit) was not modern at all.
+I've desided build new useful env based on some mainstream framework.
+And Mojo/Mojolicious becomes my desigeon.
+
+So this is first public "*yehay it's working*" realise :).
+
+Install instrucions described at DOCS/INSTALL
+
+Mojolicious/MjNCMS 'how it works' description at DOCS/HowitWorks
+If there will be interest in project I think to 
+start wiki for better description/documentation. But later.
+
+Code licensed under Artistic license (LICENSES dir)
+
+Project distro is in NCMS folder
+
+Support: http://groups.google.com/group/mjncms

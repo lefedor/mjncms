@@ -1,0 +1,29 @@
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+	<head>
+		<title>FileManager</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		
+		<link rel="stylesheet" type="text/css" href="/tt_tpls/mjncms/_static/js/assets/themes/crispin/jxtheme.uncompressed.css" />
+		
+		<link rel="stylesheet" type="text/css" href="/_static/css/FileManager.css" />											
+									
+		<script src="/tt_tpls/mjncms/_static/js/mootools.js" type="text/javascript"></script>
+		<script src="/tt_tpls/mjncms/_static/js/mootools-more.js" type="text/javascript"></script>
+
+		<script src="/tt_tpls/mjncms/_static/js/jxlib.js" type="text/javascript"></script>
+		
+		<script src="/_static/js/FileManager.js" type="text/javascript"></script>			
+	</head>
+	<body>
+			<div id="FmContainer" />
+			<!-- Here should be CKFINDER File manager, but because fucking demo message, I've been forced to write own one. -->
+
+			<script type="text/javascript">
+				var FM = false;
+				window.addEvent('load', function(){
+					FM = new FileManager('FmContainer');
+				});
+				
+			</script>
+	</body>
+</html>

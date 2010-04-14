@@ -1,0 +1,30 @@
+#Things in mind:
+
+  Code cleanup/optimizing (i was too paranoid ad checks maybe)/Mojolicious::Guides::CodingGuidelines 
+  Make everythin as plugins, aso separate parts (at least routes) - adm/content side? [maaaaybe]
+  Split MjNCMS::Content to sub modules [Cats, Pages, Urls, Filemanager] - it's too big
+  global %MULTISESSION{'SITE'}{'SOMEKEYS'} feature - static ocnnections to DB/MEMD/etc
+  breadcrumbs
+  Improve texts/localization (ready loc/po files, error messages, etc)
+  Access permissions for Menus (like @ pages, ' "visible for" option ')
+  Access/Post permissions for Categoryes (-//-)
+  System variables @ DB feature (excep database itself :) - init, load params from db, update keys, continue)
+  Comments system, 
+  Comments as forum thread option 
+  Tag clouds system
+  "Contact us" customizeble form
+  E-mail messaging core (plain text, html, attaches @emain  max easily as possible) + Subscribe system
+  RSS core (global) + extensions (content complete/per category)
+  Gallery/Image simple api (resize, add watermark)??? - for pages at least - 
+	parse page on save and make correctly sized copies of images at page, 
+	(if they were resized in cfeditor (big img but wth h/s = 10px or smth)), other reasons
+  FAQ subsystem
+  Documentation/Help
+  Make a bit "useful"er "demo" site.
+  WebSocket simple app. Like chat (with google chrome possible, it supports WebSocket out-of-box alredy).
+  Improve templates, maybe self-made "admin theme"
+  Improve AJAX usage @ admin pages
+  Extend possible databases to use: from mysql to postgress or maybe more over orm [for base admin]. At least test/fix postgress :)
+  Extend/test multi site feature.
+
+..not complete...
