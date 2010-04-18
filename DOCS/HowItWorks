@@ -1,112 +1,154 @@
 This is temporary descr just u should know if u've started MjNCMS
 
-1. At server start it runs sub startup {} once
-   This build "routes" chain - "http://some.host/some_path" matches for "todo at defined path".
+0. The most easier way currently to get 'how it works' is read source. sry.
+
+1. As server starts it runs sub startup {}, 
+   This build "routes" chain - "http://some.host/some_path" matches for "what to do at defined path".
    For example:
    $r->route($adminroot . '/chat')->
      to(controller => 'Chat', action => 'show_chat_template');
-   #define for /chat url run some sub &Chat::show_chat_template(){my $controller = shift; 'some code'; }; #$controller = Mojolicious::Controller;
-   Also ont this step plugins are defined - plug-ins it's a files with some code you don't want to put @ main daemon code.
+   #define for /chat url run some sub &Chat::show_chat_template(){my $controller = shift; 
+        'some code'; }; #$controller = Mojolicious::Controller;
+   Also on this step plugins are defined - plug-ins it's 
+    a files with some code you don't want to put @ main daemon code.
    Mojolicius will load them and run sub register () {}.
     they are runs once as sub startup, but you can define some hooks @ them: 
     (policy run defined code every time before current route founde, after, etc, read Mojolicious::Plugin pod)
-   Currently is one rly important plugin: MjNCMS::Plugins::MjncmsInit.pm - there are almost all interisting initialization/auth/etc fun placed now.
+   Currently is one rly important plugin: MjNCMS::Plugins::MjncmsInit.pm - 
+   there are almost all interisting initialization/auth/etc fun placed now.
 
    that's all, init complete, now Mojolicious just monitor queryed url's and runs mathced subs, 
     see Mojolicious documentation or this NCMS source or read support group for more information (see README).
 
 
-2. Auth is currently is only one option: auth based on SMF Forum user table [But flexible]
+2. Auth is currently is only one option: auth based on SMF Forum user table 
+    [But just auth, user model is build in, and it's flexible]
+    U can replace auth as u wish it's easy since another auth systems possibility is @box.
+    check MjNCMS::User
 
-	2.1 User model is quite functional. 
-		User have attributes: 
-			User belongs to Automated work space (AWP, have awp_id), 
-			User have ROLE at that work space (role_id)
-			User have set of permissions, consider it's awp_id/role_id
-			User have an personal id - member_id
-			
-		for example, we have Chat app, users basically works at Chat work space,
-		when they use Chat, they can be:
-			just peoples who talking, 
-			moderators who ban/monitor, 
-			administrators, who edit settings
-			etc
-		that would be roles
-		
-		roles are belongs to awp's
-		prmissions can belong to awp's (cross slave roles permissions) or 
-		to exact roles
-		
-		awp's and roles have attribute "sequence", it's digit, 1-255
-			more than bigger sequence, we say less important awp/role_is.
-		
-		one exception - Guest user entry. 
-		it have member_id = 0, awp_id = 0, role_id = 0,
-		sequences = 255
-		
-		there are defenition "slave users". 
-		This is set of users, working @ same AWP, but they role sequence is 
-		bigger than current user role sequence
-		For example with chat awp:
-		Chat AWP
-			admin_role, seq=1
-			moder_role, seq=50
-			chatter_rl, seq=100
-		
-		moderators and chutters are slave to admin of Chat AWP, but, for example, 
-		he have no power over another moderators, say, at ShortURLS AWP.
-	
-	2.2 There are possibility to switch AWP/Role combo 
-		(user can belong to different roles belongs to different AWP's)
-		
-	2.3 There are possibility to REPLACE user, typically it's one of
-		slave users, but there are extra_replaces table and option
-		For example content editor get on vacation, 
-		so another user (may be also temporary worker or smb else or admin) 
-		can replace this user, - edit his records, post new data, etc, say, 
-		for couple hours per day. When user replace smb, there are column 
-		replace_user_id @ users table - it have attr = member_id of user
-		currently being replaced.
-	
+    2.1 User model is quite functional. 
+        User have attributes: 
+            User belongs to Automated work space (AWP, have awp_id), 
+            User have ROLE at that work space (role_id)
+            User have set of permissions, consider it's awp_id/role_id
+            User have an personal id - member_id
+            
+        for example, we have Chat app, users basically works at Chat work space,
+        when they use Chat, they can be:
+            just peoples who talking, 
+            moderators who ban/monitor, 
+            administrators, who edit settings
+            etc
+        that would be roles
+        
+        roles are belongs to awp's
+        prmissions can belong to awp's (cross slave roles permissions) or 
+        to exact roles
+        
+        awp's and roles have attribute "sequence", it's digit, 1-255
+            more than bigger sequence, we say less important awp/role_is.
+        
+        one exception - Guest user entry. 
+        it have member_id = 0, awp_id = 0, role_id = 0,
+        sequences = 255
+        
+        there are defenition "slave users". 
+        This is set of users, working @ same AWP, but they role sequence is 
+        bigger than current user role sequence
+        For example with chat awp:
+        Chat AWP
+            admin_role, seq=1
+            moder_role, seq=50
+            chatter_rl, seq=100
+        
+        moderators and chutters are slave to admin of Chat AWP, but, for example, 
+        he have no power over another moderators, say, at ShortURLS AWP.
+        
+        Or another example, u've local self-made erp/crm, U have 
+        main manager, operators, couriers, 
+        awp 'SalesDepartment', roles mainManager, operatorManager, courier, 
+        They're have different interfaces for their specific actions,
+        we can organize that mainManager is monitor only statiostic on his
+        workspace, but can switch into operators, couriers to control 
+        their work progress, replace when they're ill, etc...
+        
+    
+    2.2 There are possibility to switch AWP/Role combo 
+        (user can belong to different roles belongs to different AWP's)
+        
+    2.3 There are possibility to REPLACE user, typically it's one of
+        slave users, but there are extra_replaces table and option
+        For example content editor get on vacation, 
+        so another user (may be also temporary worker or smb else or admin) 
+        can replace this user, - edit his records, post new data, etc, say, 
+        for couple hours per day. When user replace smb, there are column 
+        replace_user_id @ users table - it have attr = member_id of user
+        currently being replaced. Oftenly, when someone work as someone 
+        we will mark NEW records as it's created (and belong) by replaced user, and
+        when user edit data, table column (whoedit) whould be filled with 
+        member_id of replacer.
+
 
 3. Config settings:
 
-	3.1. MysqlDatabase/Memcached lottery:
-		There are multidatabase/multimemcached server trick avaliable now:
-		databases and memcached described as {}
-		'common' is group becomes $SESSION{'DBH'} or $SESSION{'MEMD'}.
+    3.1. MysqlDatabase/Memcached lottery:
+        There are multidatabase/multimemcached server trick avaliable now:
+        databases and memcached described as {}
+        'common' is group becomes $SESSION{'DBH'} or $SESSION{'MEMD'}.
 
-		not 'common' are extra servers for extra functional. 
-		For example, dunno, 'Chat' feature uses own memcached server, 
-		you can define extra memcached servers group 'chat' and it will avaliable over $SESSION{'MEMD_CHAT'} -
-		yes, it's get '_' + uc('group_key_or_name') name.
+        not 'common' are extra servers for extra functional. 
+        For example, dunno, 'Chat' feature uses own memcached server, 
+        you can define extra memcached servers group 'chat' and it will avaliable over $SESSION{'MEMD_CHAT'} -
+        yes, it's get '_' + uc('group_key_or_name') name.
 
-		DBH* also have subroups: there are writable servers ('_W') subgroups, readable ('_R') and reserve.
-		It's for cluster feature.
-		$SESSION{'DBH'} = $SESSION{'DBH_W'};# always
-		if readables is not defined $SESSION{'DBH_R'} = $SESSION{'DBH_W'}, else it uses defined servers.
-		actual used server from lister is selected by rand() now :).
+        DBH* also have subroups: there are writable servers ('_W') subgroups, readable ('_R') and reserve.
+        It's for cluster feature.
+        $SESSION{'DBH'} = $SESSION{'DBH_W'};# always
+        if readables is not defined $SESSION{'DBH_R'} = $SESSION{'DBH_W'}, else it uses defined servers.
+        actual used server from lister is selected by rand() now :).
 
-		#if _W and _r still not defined (server overload, smth else), servers from reserver are used.
-		they will listed at $SESSION{'DBHS_ISRESERVE'} = [] if you want check them.
+        #if _W and _R still not defined (server overload, smth else), servers from reserver are used.
+        they will listed at $SESSION{'DBHS_ISRESERVE'} = [] if you want check them.
 
-		See MjNCMS::Plugins::MjncmsInit.pm for more information, near word 'loterry'.
+        See MjNCMS::Plugins::MjncmsInit.pm for more information, near word 'loterry'.
+      
       
 4. 
-   4.1 there are cross-modules variables, provided by Config.pm: 
-   %SESSION - data for current run/page, 
-   global %MULTISESSION - static connections to DBH, MEMD, etc [not done yet]
+   4.1 there are cross-modules variables, provided by MjNCMS::Config: 
+   %SESSION - data for current client-server iteration, 
+   global %MULTISESSION - static connections to DBH, MEMD, etc [not really done yet]
    %TT_VARS, %TT_CALLS - keys for Template-Toolkit [like zoo/jail]:
       You want use some (vars/subs) at 'current run used template(s)' - define them at this parent hashes 
-      and use as [% TT_CALLS.some_func() %], [% TT_VARS.some_var %].
+      and use as [% TT_CALLS.some_func() %], [% TT_VARS.some_var %]. 
+      Direct perl variables/functions are should be restricted.
       
-      Also there are MjNCMS::Service::sv_register_tt_call() (TT_CALLS.register_tt_call('func_name')), 
-      uses data from Config.pm, it allow register new call from TT template, 
-      if this is allowed. For blocks, service calls could be on every page, etc.
+      Also there are MjNCMS::Service::sv_register_tt_call() [% TT_CALLS.register_tt_call('func_name') %], 
+      uses data from Config.pm ('reg_tt_call_rules' => {} key), it allow register new call "on demand" from TT template, 
+      if this is allowed. Like, for blocks, service calls could be on every page you don't want 
+      set every route match, etc (like menus, they're could be everywhere, etc).
+   4.2 MjNCMS::Service - some service subs we want use everywhere, like useful &inarray() sub.
 
 
-5. Default template engine is TT2.
-	Currently It has 1 wrapper where headers, JS/CSS, title, etc lines are placed.
-	it's "wrapper_index.tpl" from your TT path(s) at CFG.
-	
+5. Default template engine is TT2 since it's flexible and powerful
+    It does not "please avoid another", I've just defenatly prefer powerful and flexible engine 
+    for at least admin-side - this part of NCMS will not used so frequently to use 
+    some super-duper-simple and mess with ith on every tiny change.
+    Currently It has 1 wrapper where headers, JS/CSS, title, etc lines are placed.
+    it's "wrapper_index.tpl" from your TT path(s) (oftenly theme path) at CFG, check it.
+
+
+6. Localization based on Mojolicious I18n plugin and avaliabale trough %SESSION{'LOC'}->loc('some'/['some', 'else'], 'lang [optional]');
+    lang u can sw on fly with %SESSION{'LOC'}->set_lang('ru')
+    More info MjNCMS::MjI18N (Since I18N namespace taken by plugin).
+    translations are I18n plugin translations and they are in MjNCMS::I18N::*=(en|anythingelse)
+    There are filter for TT2 (MjNCMS::Template::Filter::loc): [% USE loc %][% loc('some') | hmtl %]
+    Also all functions should return alredy translatd data (like &get_page, etc) except if some flag
+    like 'get_untranslated' is setted, it's easyer @ content side, so it's better )
+
+
+7. Don't remember, U can defenatly use simplifyed Mojolicious::Lite/Even no TT2 for hi-load things, 
+   just set up nginx right :)
+   Just use Config, Service, enable plugins i18n, MjncmsInit, and you have user/etc model inbox.
+
+    
 ..not finished yet...

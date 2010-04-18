@@ -1,0 +1,452 @@
+/*
+ * Tiny useful css hacks
+ * FedorFL, 2009, ffl.public@gmail.com 
+ */
+form{
+    padding:0px; 
+    margin:0px;
+}
+
+p{
+    padding:0px; 
+    margin:0px;
+    margin-top:4px;
+}
+
+.p1{
+    padding:1px; 
+}
+
+.p3{
+    padding:3px; 
+}
+
+.p5{
+    padding:5px; 
+}
+
+.wide, .w100{
+    width:100%;
+}
+
+.w5{
+    width:5%;
+}
+
+.w10{
+    width:10%;
+}
+
+.w15{
+    width:15%;
+}
+
+.w20{
+    width:20%;
+}
+
+.w25{
+    width:25%;
+}
+
+.w30{
+    width:30%;
+}
+
+.w35{
+    width:35%;
+}
+
+.w40{
+    width:40%;
+}
+
+.w50{
+    width:50%;
+}
+
+.w60{
+    width:60%;
+}
+
+.w70{
+    width:70%;
+}
+
+.w75{
+    width:75%;
+}
+
+.w80{
+    width:80%;
+}
+
+.w90{
+    width:90%;
+}
+
+
+a[target="_blank"]{
+    border-bottom: 1px dotted;
+}
+
+
+.b {
+    font-weight:bold;
+}
+
+.u {
+    text-decoration:underline;
+}
+
+.i {
+    font-style:italic;
+}
+
+.strike {
+    text-decoration: line-through;
+}
+
+.req_fill {
+    font-size:90%;
+    font-weight:bold;
+    color:red;
+}
+
+.opt_fill {
+    font-size:90%;
+    font-weight:bold;
+    color:royalblue;
+}
+
+.r {
+    color:red;
+}
+
+.g {
+    color:green;
+}
+
+.bl {
+    color:black;
+}
+
+.wt {
+    color:white;
+}
+
+.ni {
+    border:1px solid red;
+    border-top:2px solid tomato;
+    border-left:2px solid tomato;
+}
+
+.thin {
+    border:0px;
+    padding: 0px;
+    margin: 0px;
+}
+
+.m0 {
+    margin: 0px;
+}
+
+.m2 {
+    margin: 2px;
+}
+
+.m2 {
+    margin: 1px;
+}
+
+.m3 {
+    margin: 3px;
+}
+
+.m4 {
+    margin: 4px;
+}
+
+.m5 {
+    margin: 5px;
+}
+
+.f100 {
+    font-size:100%;
+}
+
+.f90 {
+    font-size:90%;
+}
+
+.f80 {
+    font-size:80%;
+}
+
+.f75 {
+    font-size:75%;
+}
+
+.f60 {
+    font-size:60%;
+}
+
+.vam {
+    vertical-align:middle;
+}
+
+.vab {
+    vertical-align:bottom;
+}
+
+.vat {
+    vertical-align:top;
+}
+
+.lual {
+    text-align:left;
+    vertical-align:top;
+}
+
+.cmal {
+    text-align:center;
+    vertical-align:middle;
+}
+
+.ctal {
+    text-align:center;
+    vertical-align:top;
+}
+
+.cbal {
+    text-align:center;
+    vertical-align:bottom;
+}
+
+ .rmal {
+    text-align:right;
+    vertical-align:middle;
+}
+
+.rual {
+    text-align:right;
+    vertical-align:top;
+}
+
+.lmal {
+    text-align:left;
+    vertical-align:middle;
+}
+
+.nwp {
+    white-space:nowrap;
+}
+
+
+.hp {
+    cursor: help;
+}
+
+.hd, label {
+    cursor:hand;
+    cursor:pointer;
+}
+
+
+.invisible, .iv {
+    visibility:hidden;
+    display:none;
+}
+
+.dn {
+    display:none;
+}
+
+
+select:focus, input:focus, textarea:focus{
+    background-color: #f7fbcb;
+    /* border-top: 2px solid #6e7157;
+    border-left: 2px solid  #6e7157;
+    border-bottom: 2px solid  #f0f5bd;
+    border-right: 2px solid  #f0f5bd; */
+}
+
+
+div#ajax_indicator_canvas{
+     width:16px;
+     height:16px;
+     /*background-color:red;*/
+     position:fixed;
+     left:4px;
+     top:4px;
+     z-index:250;
+}
+
+div#ajax_indicator_canvas{
+    background-image: url('/Themes/timdb2/images/ajax-loader-transparent.gif');
+}
+
+
+tr.hllight{
+    background-color: #F6E690;
+}
+
+td.hllight{
+    background-color: #F6E690;
+}
+
+tr.darkglow{
+    background-color: #bade4d;
+}
+
+td.darkglow{
+    background-color: #bade4d;
+}
+
+tr.darkghi{
+    background-color: #c8fd83;
+}
+
+td.darkghi{
+    background-color: #c8fd83;
+}
+
+tr.denylight{
+    background-color: #E15757;
+}
+
+td.denylight{
+    background-color: #E15757;
+}
+
+
+td.cab, table.cab, tr.cab{
+    border: 2px solid #000000;
+}
+
+td.clb, table.clb, tr.clb{
+    border-left: 2px solid #000000;
+}
+
+td.crb, table.crb, tr.crb{
+    border-right: 2px solid #000000;
+}
+
+td.ctb, table.ctb, tr.ctb{
+    border-top: 2px solid #000000;
+}
+
+td.cbb, table.cbb, tr.cbb{
+    border-bottom: 2px solid #000000;
+}
+
+td.clab, table.clab, tr.clab{
+    border: 1px solid #000000;
+}
+
+td.cllb, table.cllb, tr.cllb{
+    border-left: 1px solid #000000;
+}
+
+td.clrb, table.clrb, tr.clrb{
+    border-right: 1px solid #000000;
+}
+
+td.cltb, table.cltb, tr.cltb{
+    border-top: 1px solid #000000;
+}
+
+td.clbb, table.clbb, tr.clbb{
+    border-bottom: 1px solid #000000;
+}
+
+td.gr_hdr{
+    background-color: #e1dfd6;
+}
+
+
+table.cellable_tbl{
+    /* border-collapse: collapse; */
+    border-top: 2px solid #000000;
+    border-right: 2px solid #000000;
+    border-bottom: 1px solid #000000;
+    border-left: 1px solid #000000;
+}
+table.cellable_tbl td{
+    border-bottom: 1px solid #000000;
+    border-left: 1px solid #000000;
+}
+
+table.transp_table{
+    border:0px;
+    border-color:#FFFFFF;
+}
+table.transp_table td{
+    border:0px;
+    border-color:#FFFFFF;
+}
+
+
+td.bdbl, tr.bdbl{
+    border-style: double;
+}
+
+td.b2dbl, tr.b2dbl{
+    border-style: double;
+    border-width: 2px;
+}
+
+td.brdbl, tr.brdbl{
+    border-right-style: double;
+}
+
+td.b2rdbl, tr.b2rdbl{
+    border-right-style: double;
+    border-right-width: 5px;
+}
+
+
+span.fr{
+    float:right;
+}
+span.fl{
+    float:left;
+}
+
+
+.status_template {
+    background-color: transparent;
+}
+
+.status_senttoaccept {
+    background-color: transparent;
+}
+
+.status_rejected {
+    background-color: rgb(243, 237, 210);
+}
+
+.status_accepted {
+    background-color: rgb(209, 239, 227);
+}
+
+.status_indelivery {
+    background-color: rgb(194, 219, 239);
+}
+
+.status_replace {
+    background-color: #4bb9ff;
+}
+
+.sc_ptb{
+    padding-top:1em;
+    padding-bottom:1em;
+}
+
+.lpad{
+    padding-left:1.4em;
+}
+
+.rpad{
+    padding-right:1.4em;
+}

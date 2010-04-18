@@ -1,11 +1,16 @@
 1. Install modules from ExtraModules
 2. Insert to database base dump - clean or demo, from "db_dump" directory.
-3. Rename mjn_daemon.pl.example to mjn_daemon
+2.5 Mojolicious Mojolicious-0.999924 should update, or apply this:
+    http://github.com/lefedor/mojo/commit/f03dc75c0d5ba8b72c636a9e453a091d974f2324
+    http://github.com/lefedor/mojo/commit/2a0d5fa8d75467a489d5d66426b9e8e974fa14d5
+3. Rename mj_daemon.pl.example to mj_daemon.pl
 4. Rename MjNCMS::Config.pm.example to MjNCMS::Config.pm
-5. Setup data @ config, basically just DB settings, random strings for crypt/md5 checks 
+5. Setup data @ config, basically just DB settings, random strings for crypt/md5 checks, recaptcha private/public keys 
+   (there are filled keys for host 'mojotest', so u can start up host with same name for *just testing* reasons)
 6. Start MjNCMS daemon: by typing `perl mjn_daemon.pl` 
-   (FCGI start, default options at mjn_daemon.pl, "near Mojolicious->start" [fcgi_prefork --listen mojotest:3042 by default])
+   (FCGI start, default options at mj_daemon.pl, near "Mojolicious->start" [fcgi_prefork --listen mojotest:3042 by default])
    I've tested MjNCMS with nginx, nginx config example is nginx.conf just here, @ DOCS.
 7. OR! Start MjNCMS with your command line params, like `perl mjn_daemon.pl daemon` (localhost:3000 demo server)
-8. go to demo site. default admin path is /mjnadmin/, default login/pass is austin/powers
+   check 'help' command output.
+8. go to demo site. default admin path is /mjadmin/, default login/pass is austin/powers
 9. Profit!

@@ -1,4 +1,5 @@
 #`perl -MCPAN -e shell`, type "install <MODULENAME>"
+YAML
 Mojolicious
 Mojo::Server::FCGI  
 Cache::Memcached::Fast
@@ -11,4 +12,3 @@ Filesys:Tree
 #Locale::Maketext::Lexicon #Wiped
 PHP::Serialization
 Template
-YAML

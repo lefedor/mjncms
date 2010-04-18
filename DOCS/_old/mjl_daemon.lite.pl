@@ -723,53 +723,6 @@ get '/mjadmin/content/cats' => sub {
 
 
 
-
-
-########################################################################
-#							WEBSHOP ACTIONS
-########################################################################
-#browse categories
-get '/shop/(index|page).html' => sub {
-	my $self = shift;
-	$self->render(text => 'Hello from MjCMS!');
-};
-
-#filter categories
-get '/shop/(search|srch_page).html' => sub {
-	my $self = shift;
-	$self->render(text => 'Hello from MjCMS!');
-};
-
-get '/shop/rss' => sub {
-	my $self = shift;
-	$self->render(text => 'Hello from MjCMS!');
-};
-
-#view products
-get '/shop/product.html' => sub {
-	my $self = shift;
-	$self->render(text => 'Hello from MjCMS!');
-};
-
-#browse cart
-get '/shop/cart.html' => sub {
-	my $self = shift;
-	$self->render(text => 'Hello from MjCMS!');
-};
-
-#edit cart
-post '/shop/cart.html' => sub {
-	my $self = shift;
-	$self->render(text => 'Hello from MjCMS!');
-};
-
-#complete order
-post '/shop/order.html' => sub {
-	my $self = shift;
-	$self->render(text => 'Hello from MjCMS!');
-};
-
-
 ########################################################################
 #							USER ACTIONS
 ########################################################################

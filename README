@@ -3,13 +3,16 @@ MjNCMS - Mojolicious-[PERL]-based CMS [Mj Not CMS :) ]
 Project goal is not create CMS, but create ``CMS`` enviropment.
 Let me describe: every time you start new project you need 
 mess with "boring" stuff. Like user model, categories, 
-static pages, make admin panel, other simple and not stuff.
+static pages, html block u/content_manager can change over web ui, 
+make admin panel, other simple and not stuff.
 This always takes time - you have idea, but days/weeks later 
-you (pssoble :)) still mess with them and `core functional` is stil "far far away".
+you (pssoble :)) still mess with them and `core functional` 
+as is "far far away" as they were some time ago.
 I meet same problem - my "framework/kitchen" 
 (CGI.pm/Template-Toolkit) was not modern at all.
-I've desided build new useful env based on some mainstream framework.
-And Mojo/Mojolicious becomes my desigeon.
+I've desided build new useful env based on some 
+mainstream framework form 0, but with couple things in mind.
+And Mojo/Mojolicious becomes decision.
 
 So this is first public "*yehay it's working*" realise :).
 
@@ -23,18 +26,13 @@ Code licensed under Artistic license (LICENSES dir)
 
 There are CKEditor, SMF in packages [think that's all], 
 they're comes under it's own licenses wth all respects to owners.
+Yep, there mootools extension jxlib (javascript UI) 
+also have own license, but free enough.
 
 Project distro is in NCMS folder
 
+This is not final realise. Still need Docs/TODO#HOT
+Realise may be this week (
+
 Support: http://groups.google.com/group/mjncms
 
-
-BTW, This is test upload, it could NOT WORK or be partly broken.
-Just toying with GITHUB.
-
-
-Real version mybe this weekend
-
-Demo possybly acceseble @ http://ffl.ath.cx:82/
-
-BTW i've broken login :)

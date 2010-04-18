@@ -1,31 +1,81 @@
-#Things in mind:
+#Things in mind, volunteers/suggestions are welcome:
 
+  HOT:
+  User reg/login/confirm @ content-side
+    with lame predefined role
+    profile page
+    change email/pass form
+  MEMD use @ pages, @categories, @blocks
+  Paging @ category list - adv ..slug/[index|page_(2..n)].htm
+  Paging @ pages display - adv ..[slug|slug_page_(2..n)].html
+  Language switch block @ content-side, 
+    parse {@before_dispatch} url, if some like /en/path:
+    s /^\/en//, 
+    set lang=en, 
+    ==>transparent urls routes && transparent translation since 
+        we're get translated data from functions by default 
+  Still no sessions. Rquirements: 
+    format: $SESSION->{'USR'}->{'SESS'} = {keys=values},
+    no ->get/set api, not useful and transparents, just hash
+    by coockie
+    init @ user init, MEMD if avail ELSE read from DB
+    store @DB && @MEMD @after_dispatch
+    guest sould have session
+    on auth session assigned to member
+    member can select active session then 
+    [like shop cart - previous temporary order should not be lost]
+    all sessions stored @ db like forever
+  E-mail messaging core (plain text, html, attaches @email max easily api as possible)
+  
+      
+  OTHER STUFF:
   Code cleanup/optimizing (i was too paranoid ad checks maybe)/Mojolicious::Guides::CodingGuidelines 
+  Since NCMS is young, we take 6 month since 1th may to make all mods @core and freeze it.
+  Split MjNCMS::Content to sub modules [Categories, Pages, 
+    Urls, Filemanager, Blocks] - it's too fckin big (7k lines o_0 and not even complete) 
+  Think about more transparent route('/some/:c/:a/param)->to route decoration
   Make everythin as plugins, aso separate parts (at least routes) - adm/content side? [maaaaybe]
-  Split MjNCMS::Content to sub modules [Cats, Pages, Urls, Filemanager] - it's too big
   global %MULTISESSION{'SITE'}{'SOMEKEYS'} feature - static ocnnections to DB/MEMD/etc
   breadcrumbs
-  Improve texts/localization (ready loc/po files, error messages, etc)
+  HTML Blocks feature - 
+    just static pieces of html code can be placed on site and edited from admin side
+  BLOCK TRANSLATIONS
+  Improve texts/localization (ready lang files, error messages, etc)
   Access permissions for Menus (like @ pages, ' "visible for" option ')
   Access/Post permissions for Categoryes (-//-)
-  System variables @ DB feature (excep database itself :) - init, load params from db, update keys, continue)
+  System variables @ DB feature (except database itself :) - init, load params from db, update keys, continue)
   Comments system, 
   Comments as forum thread option 
   Tag clouds system
   "Contact us" customizeble form
-  E-mail messaging core (plain text, html, attaches @emain  max easily as possible) + Subscribe system
-  RSS core (global) + extensions (content complete/per category)
+  Subscribe system
+  RSS core (global) + extensions (content complete/per category, for example, it useful)
   Gallery/Image simple api (resize, add watermark)??? - for pages at least - 
-	parse page on save and make correctly sized copies of images at page, 
-	(if they were resized in cfeditor (big img but wth h/s = 10px or smth)), other reasons
+    parse page on save and make correctly sized copies of images at page, 
+    (if they were resized in cfeditor (big img but wth h/s = 10px or smth)), other reasons
   FAQ subsystem
   Documentation/Help
-  Make a bit "useful"er "demo" site.
+  Make a bit "useful"'er/"looks cool" "demo" site.
   WebSocket simple app. Like chat (with google chrome possible, it supports WebSocket out-of-box alredy).
-  Improve templates, maybe self-made "admin theme"
+  Improve templates, maybe self-made "admin theme", not critical at all, i need cms env, not a "original-designed env"
   Improve AJAX usage @ admin pages
   Extend possible databases to use: from mysql to postgress or maybe more over orm [for base admin]. At least test/fix postgress :)
   Extend/test multi site feature.
   Get rid of Date::Calc - seems like it requires half of cpan
-
+  Shell script start/restart server for init.d, LSB compat
+  Use TT cleverier
+  robots, favicon rules for nginx for multisite (map robots.domain.txt => robots.txt, etc)
+  Mess with date and offsets... I've been to clever with it and lost what where alredy 
+  modify content_get_catrecord like get_pagerecord: not ([], {extraparams}), but get_pagerecord: ({cat_ids=>[],extraparams})
+  add all standart Mojolicious error pages  - 404, etc, since current set is done from scratch and don't have any
+  Add filter to page content - cut iframes and cut JS inside
+  ShortUrl groups should also have own alias to allow /r/grp_alias/9sd32, /r/grp_id=\d+/skyd76 now (.
+  Mojolicious app log parser (at least, access, say last 1000-10000 strings) @box? Would be fun.
+    btw, mess with log, now daemon itself put logs at ./, client request as defined @ cfg...
+  Add actions logging and fail return conditions @ log - will it slow apps?
+  @ Users, 'show extra replaces' - to control/monitor. Also, extrareplaces may should have "expire date"
+  Update all JS dialogs and evrything as Mootools locales, not hash like now, 
+    which was about temporary solution, before locales extension man was read )
+  Update FileManager.js to use locales 
+  
 ..not complete...

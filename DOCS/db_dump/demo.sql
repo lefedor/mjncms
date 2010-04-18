@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 14, 2010 at 11:45 PM
+-- Generation Time: Apr 19, 2010 at 12:15 AM
 -- Server version: 5.0.51
 -- PHP Version: 5.3.1-5
 
@@ -87,7 +87,7 @@ CREATE TABLE IF NOT EXISTS `mjsmf_members` (
   KEY `lastLogin` (`lastLogin`),
   KEY `lngfile` (`lngfile`(30)),
   KEY `ID_POST_GROUP` (`ID_POST_GROUP`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=20 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=21 ;
 
 --
 -- Dumping data for table `mjsmf_members`
@@ -95,7 +95,8 @@ CREATE TABLE IF NOT EXISTS `mjsmf_members` (
 
 INSERT INTO `mjsmf_members` (`ID_MEMBER`, `memberName`, `dateRegistered`, `posts`, `ID_GROUP`, `lngfile`, `lastLogin`, `realName`, `instantMessages`, `unreadMessages`, `buddy_list`, `pm_ignore_list`, `messageLabels`, `passwd`, `emailAddress`, `personalText`, `gender`, `birthdate`, `websiteTitle`, `websiteUrl`, `location`, `ICQ`, `AIM`, `YIM`, `MSN`, `hideEmail`, `showOnline`, `timeFormat`, `signature`, `timeOffset`, `avatar`, `pm_email_notify`, `karmaBad`, `karmaGood`, `usertitle`, `notifyAnnouncements`, `notifyOnce`, `notifySendBody`, `notifyTypes`, `memberIP`, `memberIP2`, `secretQuestion`, `secretAnswer`, `ID_THEME`, `is_activated`, `validation_code`, `ID_MSG_LAST_VISIT`, `additionalGroups`, `smileySet`, `ID_POST_GROUP`, `totalTimeLoggedIn`, `passwordSalt`) VALUES
 (0, 'guest', 0, 0, 0, '', 0, 'Guest', 0, 0, '', '', '', '9474d8c82a7bdef16bb503f7dbd1b02f5aaf601f', '', 'I''m guest', 0, '0001-01-01', '', '', '', '', '', '', '', 1, 0, '', '', 0, '', 0, 0, 0, '', 1, 1, 0, 2, '', '', '', '', 0, 0, 'oyaebu', 0, '', '', 0, 0, '!QAZa'),
-(1, 'austin', 0, 0, 0, '', 0, 'Austin Powers', 0, 0, '', '', '', 'affed750772acc7816bdfb3740357b6e40c9e18f', 'austin@powers.ap', '', 0, '1939-11-12', '', '', '', '', '', '', '', 0, 1, '', '', 3, '', 0, 0, 0, '', 1, 1, 0, 2, '', '', '', '', 0, 1, '', 0, '', '', 0, 0, 'AuSt!');
+(1, 'austin', 0, 0, 0, '', 0, 'Austin Powers', 0, 0, '', '', '', 'affed750772acc7816bdfb3740357b6e40c9e18f', 'austin@powers.ap', '', 0, '1939-11-12', '', '', '', '', '', '', '', 0, 1, '', '', 3, '', 0, 0, 0, '', 1, 1, 0, 2, '', '', '', '', 0, 1, '', 0, '', '', 0, 0, 'AuSt!'),
+(20, 'Morbo', 1271615794, 0, 0, '', 0, 'Morbo', 0, 0, '', '', '', 'ecafe79de815678b999f15a90b4e1cc32a35c09f', 'morbo@powers.app', '', 0, '0001-01-01', '', '', '', '', '', '', '', 1, 1, '', '', 0, '', 0, 0, 0, '', 1, 1, 0, 2, '', '', '', '', 0, 0, '395bd7cd21', 0, '', '', 0, 0, '5a71');
 
 -- --------------------------------------------------------
 
@@ -123,7 +124,10 @@ INSERT INTO `mjsmf_sessions` (`session_id`, `last_update`, `data`) VALUES
 ('8faa911a761b6c866bf9af71a31a8d62', 1269639082, 'rand_code|s:32:"d9695f902adbb31c35751fa9d131ecb7";USER_AGENT|s:100:"Mozilla/5.0 (X11; U; Linux i686; ru; rv:1.9.1.8) Gecko/20100218 Iceweasel/3.5.8 (like Firefox/3.5.8)";'),
 ('a266592f9feb867bc9f48e7ca7324da0', 1269684537, 'rand_code|s:32:"1a13c836a9958b5b1bfb1db996187279";USER_AGENT|s:100:"Mozilla/5.0 (X11; U; Linux i686; ru; rv:1.9.1.8) Gecko/20100218 Iceweasel/3.5.8 (like Firefox/3.5.8)";'),
 ('0ad0bef55b17b108d7f6dcc8bcb283e5', 1270203841, 'rand_code|s:32:"ab00a75afe7fff443f709344d8ee8c78";USER_AGENT|s:103:"Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.8) Gecko/20100308 Iceweasel/3.5.8 (like Firefox/3.5.8)";'),
-('7e178fde282b447cff905bff966cc426', 1270624228, 'rand_code|s:32:"e2084ed61642e6bdd255097a55ef3d85";USER_AGENT|s:103:"Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.8) Gecko/20100308 Iceweasel/3.5.8 (like Firefox/3.5.8)";');
+('7e178fde282b447cff905bff966cc426', 1270624228, 'rand_code|s:32:"e2084ed61642e6bdd255097a55ef3d85";USER_AGENT|s:103:"Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.8) Gecko/20100308 Iceweasel/3.5.8 (like Firefox/3.5.8)";'),
+('f1b76994a7fb9002ad35b5d77f0f91a1', 1271409820, 'rand_code|s:32:"2058676fc8c3afeefc3c6ab774cd1b67";USER_AGENT|s:103:"Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.8) Gecko/20100308 Iceweasel/3.5.8 (like Firefox/3.5.8)";'),
+('4f5b80a66385d1267dfd5224cf72eead', 1271490299, 'rand_code|s:32:"07b3030d1d51cdac8c8d53be10bc16b1";USER_AGENT|s:103:"Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.8) Gecko/20100308 Iceweasel/3.5.8 (like Firefox/3.5.8)";'),
+('8dd646045c2f0d2acac397ecff2103a6', 1271571671, 'rand_code|s:32:"31181c61db465da7ac91b5bf25fcb798";USER_AGENT|s:103:"Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.8) Gecko/20100308 Iceweasel/3.5.8 (like Firefox/3.5.8)";');
 
 -- --------------------------------------------------------
 
@@ -140,15 +144,92 @@ CREATE TABLE IF NOT EXISTS `mj_awps` (
   `whoedit` mediumint(8) unsigned default NULL,
   `sequence` tinyint(3) unsigned NOT NULL default '1',
   PRIMARY KEY  (`awp_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='User''s Automated Work Places' AUTO_INCREMENT=5 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='User''s Automated Work Places' AUTO_INCREMENT=6 ;
 
 --
 -- Dumping data for table `mj_awps`
 --
 
 INSERT INTO `mj_awps` (`awp_id`, `name`, `ins`, `upd`, `member_id`, `whoedit`, `sequence`) VALUES
-(0, 'MjCMS guest AWP', '2010-02-09 00:00:00', '2010-02-15 23:14:08', 1, NULL, 255),
-(1, 'MjCMS admin AWP', '2010-02-09 00:00:00', '2010-02-15 23:14:15', 1, NULL, 0);
+(0, 'MjNCMS guest AWP', '2010-02-09 00:00:00', '2010-04-15 16:40:56', 1, 1, 255),
+(1, 'MjNCMS admin AWP', '2010-02-09 00:00:00', '2010-04-15 11:45:16', 1, NULL, 0),
+(2, 'MjNCMS content-side users', '2010-04-15 11:46:35', '2010-04-15 17:09:48', 1, NULL, 200);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `mj_blocks`
+--
+
+CREATE TABLE IF NOT EXISTS `mj_blocks` (
+  `block_id` int(10) unsigned NOT NULL auto_increment,
+  `lang` char(4) default NULL,
+  `is_active` tinyint(1) unsigned NOT NULL default '0',
+  `use_access_roles` tinyint(1) NOT NULL default '0',
+  `show_header` tinyint(1) NOT NULL default '1',
+  `alias` char(32) default NULL,
+  `header` char(64) NOT NULL,
+  `body` text NOT NULL,
+  `member_id` mediumint(8) unsigned NOT NULL,
+  `whoedit` mediumint(8) unsigned NOT NULL,
+  `ins` datetime NOT NULL default '0000-00-00 00:00:00',
+  `upd` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+  PRIMARY KEY  (`block_id`),
+  KEY `id_active_idx` (`block_id`,`is_active`),
+  KEY `id_active_alias_idx` (`block_id`,`is_active`,`alias`),
+  KEY `use_access_roles_idx` (`use_access_roles`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Html blocks table' AUTO_INCREMENT=4 ;
+
+--
+-- Dumping data for table `mj_blocks`
+--
+
+INSERT INTO `mj_blocks` (`block_id`, `lang`, `is_active`, `use_access_roles`, `show_header`, `alias`, `header`, `body`, `member_id`, `whoedit`, `ins`, `upd`) VALUES
+(2, NULL, 1, 0, 1, 'anybody_block', 'Block4Everybody', '<b>Hello everybody</b>\r\n<br /> And 1 more time', 1, 1, '2010-04-18 00:02:26', '2010-04-18 10:42:55');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `mj_blocks_access_roles`
+--
+
+CREATE TABLE IF NOT EXISTS `mj_blocks_access_roles` (
+  `block_id` int(10) unsigned NOT NULL,
+  `role_id` smallint(5) unsigned NOT NULL,
+  `whoedit` mediumint(8) unsigned NOT NULL,
+  `ins` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+  UNIQUE KEY `block_role_idx` (`block_id`,`role_id`),
+  KEY `block_id_idx` (`block_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='blocks roles access limitations';
+
+--
+-- Dumping data for table `mj_blocks_access_roles`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `mj_blocks_translations`
+--
+
+CREATE TABLE IF NOT EXISTS `mj_blocks_translations` (
+  `block_id` int(10) unsigned NOT NULL,
+  `lang` char(4) NOT NULL,
+  `header` char(64) NOT NULL,
+  `body` text,
+  `member_id` mediumint(8) NOT NULL,
+  `whoedit` mediumint(8) NOT NULL,
+  `ins` datetime NOT NULL default '0000-00-00 00:00:00',
+  `upd` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+  UNIQUE KEY `block_lang_idx` (`block_id`,`lang`),
+  KEY `block_id_idx` (`block_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Blocks translations table';
+
+--
+-- Dumping data for table `mj_blocks_translations`
+--
+
 
 -- --------------------------------------------------------
 
@@ -265,9 +346,12 @@ INSERT INTO `mj_menus_data` (`menu_id`, `lang`, `text`, `cname`, `link`, `is_act
 (37, 'en', 'SiteMenu', 'onsite', '', 1, '', 1, NULL, '2010-04-12 23:02:24', '2010-04-12 23:02:24'),
 (39, 'en', 'JustPage', '', '/justpage.html', 1, '', 1, 1, '2010-04-13 00:18:18', '2010-04-13 00:29:34'),
 (36, 'en', 'Admin', 'admin', '/mjadmin', 1, '', 1, NULL, '2010-04-12 14:08:28', '2010-04-12 14:08:28'),
-(40, 'en', 'DemoCat1', '', '/demo1', 1, '', 1, NULL, '2010-04-13 00:19:30', '2010-04-13 00:19:30'),
-(41, 'en', 'DemoCat2', '', '/demo2', 1, '', 1, NULL, '2010-04-13 00:19:51', '2010-04-13 00:19:51'),
-(44, 'en', 'Forum', '', '/forum', 1, '', 1, NULL, '2010-04-13 11:28:14', '2010-04-13 11:28:14');
+(47, 'en', 'Add ShortLink', '', '/sl/add', 1, '', 1, NULL, '2010-04-15 21:13:05', '2010-04-15 21:13:05'),
+(46, 'en', 'LogIn/Register', '', '/user/login', 1, '', 1, NULL, '2010-04-15 20:43:12', '2010-04-15 20:43:12'),
+(40, 'en', 'DemoCat1', '', '/demo1.htm', 1, '', 1, 1, '2010-04-13 00:19:30', '2010-04-15 20:41:43'),
+(41, 'en', 'DemoCat2', '', '/demo2.htm', 1, '', 1, 1, '2010-04-13 00:19:51', '2010-04-15 20:41:51'),
+(44, 'en', 'Forum', '', '/forum', 1, '', 1, NULL, '2010-04-13 11:28:14', '2010-04-13 11:28:14'),
+(45, 'en', 'Main page', '', '/', 1, '', 1, NULL, '2010-04-15 20:31:23', '2010-04-15 20:31:23');
 
 -- --------------------------------------------------------
 
@@ -313,7 +397,7 @@ CREATE TABLE IF NOT EXISTS `mj_menus_tree` (
   KEY `level` (`level`),
   KEY `group` (`group`),
   KEY `comlete_idx` (`level`,`left_key`,`right_key`,`group`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Menus data tree' AUTO_INCREMENT=45 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Menus data tree' AUTO_INCREMENT=48 ;
 
 --
 -- Dumping data for table `mj_menus_tree`
@@ -321,12 +405,15 @@ CREATE TABLE IF NOT EXISTS `mj_menus_tree` (
 
 INSERT INTO `mj_menus_tree` (`id`, `level`, `left_key`, `right_key`, `group`, `ins`, `upd`) VALUES
 (3, 1, 1, 6, 0, '0000-00-00 00:00:00', '2010-04-13 11:28:14'),
-(37, 1, 7, 14, 0, '0000-00-00 00:00:00', '2010-04-13 11:28:14'),
-(39, 2, 8, 9, 0, '0000-00-00 00:00:00', '2010-04-13 11:28:14'),
+(37, 1, 7, 20, 0, '0000-00-00 00:00:00', '2010-04-15 21:13:05'),
+(39, 2, 14, 15, 0, '0000-00-00 00:00:00', '2010-04-15 21:13:19'),
 (36, 2, 2, 3, 0, '0000-00-00 00:00:00', '2010-04-12 14:08:28'),
+(47, 2, 12, 13, 0, '0000-00-00 00:00:00', '2010-04-15 21:13:19'),
+(46, 2, 10, 11, 0, '0000-00-00 00:00:00', '2010-04-15 21:13:19'),
+(45, 2, 8, 9, 0, '0000-00-00 00:00:00', '2010-04-15 21:13:19'),
 (44, 2, 4, 5, 0, '0000-00-00 00:00:00', '2010-04-13 11:28:14'),
-(41, 2, 12, 13, 0, '0000-00-00 00:00:00', '2010-04-13 11:28:14'),
-(40, 2, 10, 11, 0, '0000-00-00 00:00:00', '2010-04-13 11:28:14');
+(41, 2, 18, 19, 0, '0000-00-00 00:00:00', '2010-04-15 21:13:19'),
+(40, 2, 16, 17, 0, '0000-00-00 00:00:00', '2010-04-15 21:13:19');
 
 -- --------------------------------------------------------
 
@@ -365,7 +452,7 @@ CREATE TABLE IF NOT EXISTS `mj_pages` (
   PRIMARY KEY  (`page_id`),
   UNIQUE KEY `slug_uniq_idx` (`slug`),
   KEY `use_access_roles_idx` (`use_access_roles`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Active posts table' AUTO_INCREMENT=4 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Active posts table' AUTO_INCREMENT=5 ;
 
 --
 -- Dumping data for table `mj_pages`
@@ -374,7 +461,8 @@ CREATE TABLE IF NOT EXISTS `mj_pages` (
 INSERT INTO `mj_pages` (`page_id`, `is_published`, `cat_id`, `lang`, `slug`, `intro`, `body`, `header`, `descr`, `keywords`, `showintro`, `use_customtitle`, `custom_title`, `allow_comments`, `comments_mode`, `use_password`, `password`, `use_access_roles`, `comments_count`, `author_id`, `member_id`, `whoedit`, `ins`, `upd`, `dt_created`, `dt_publishstart`, `dt_publishend`) VALUES
 (1, 1, 0, 'en', 'justpage', '<p>\n	<img alt="" ilo-full-src="http://mojotest:82/userfiles/mjncms/1/avopingvo.jpg" src="/userfiles/mjncms/1/avopingvo.jpg" style="width: 96px; height: 96px;" /></p>\n<p>\n	This is justpage intro. hi! cool!</p>\n<p>\n	&nbsp;</p>\n<p>\n', '<p>\n	This is justpagebody</p>\n', 'just single page', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 1, '2010-04-12 14:14:38', '2010-04-14 22:38:35', '2010-04-12 02:13:00', '2010-04-12 02:13:00', NULL),
 (2, 1, 8, 'en', 'd1cp1', '<p>\n	iintro</p>\n', '<p>\n	bbody</p>\n', 'demo1 cat page 1', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 0, '2010-04-12 14:15:14', '2010-04-12 14:15:14', '2010-04-12 03:14:00', '2010-04-12 03:14:00', NULL),
-(3, 1, 8, 'en', 'd1cp2', '<p>\n	introoo</p>\n', '<p>\n	bodyyy</p>\n', 'demo1 cat page 2', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 1, '2010-04-12 14:15:44', '2010-04-12 14:18:35', '2010-04-12 04:15:00', '2010-04-12 04:15:00', NULL);
+(3, 1, 8, 'en', 'd1cp2', '<p>\n	introoo</p>\n', '<p>\n	bodyyy</p>\n', 'demo1 cat page 2', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 1, '2010-04-12 14:15:44', '2010-04-12 14:18:35', '2010-04-12 04:15:00', '2010-04-12 04:15:00', NULL),
+(4, 1, 0, 'en', 'index', '<p>\n	Index page</p>\n', '<p>\n	bla</p>\n<p>\n	bla</p>\n<p>\n	&nbsp;</p>\n<p>\n	be careful this demo runs on lowerclocked NAS :)</p>\n<p>\n	&nbsp;</p>\n<p>\n	bla</p>\n<p>\n	Index so index....</p>\n<p>\n	&nbsp;</p>\n<p>\n	btw, <a href="/mjadmin">admin side</a></p>', 'Main index page', 'MjNCMS project - PERL Mojolicious CMS demo site index page', 'MjNCMS, Mojolicious, Mojo, CMS', 1, 1, 'MjNCMS project demo site index page', 1, 'comment', 0, '', 0, 0, 1, 1, 1, '2010-04-15 19:45:55', '2010-04-18 10:36:08', '2010-04-15 11:45:00', '2010-04-15 11:45:00', NULL);
 
 -- --------------------------------------------------------
 
@@ -432,7 +520,7 @@ CREATE TABLE IF NOT EXISTS `mj_pages_archive` (
   `dt_publishstart` datetime NOT NULL,
   `dt_publishend` datetime NOT NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Archive posts table' AUTO_INCREMENT=17 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Archive posts table' AUTO_INCREMENT=20 ;
 
 --
 -- Dumping data for table `mj_pages_archive`
@@ -454,7 +542,10 @@ INSERT INTO `mj_pages_archive` (`id`, `page_id`, `is_published`, `cat_id`, `lang
 (13, 1, 1, 0, 'en', 'justpage', '<p>\n	<img alt="" ilo-full-src="http://mojotest:82/userfiles/mjcms/1/avopingvo.jpg" src="/userfiles/mjcms/1/avopingvo.jpg" style="width: 96px; height: 96px;" /></p>\n<p>\n	This is justpage intro. hi! eee!</p>', '<p>\n	This is justpagebody</p>', 'just single page', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 1, '2010-04-12 14:14:38', '2010-04-12 23:01:12', '2010-04-12 10:13:00', '2010-04-12 10:13:00', '0000-00-00 00:00:00'),
 (14, 1, 1, 0, 'en', 'justpage', '<p>\n	<img alt="" ilo-full-src="http://mojotest:82/userfiles/mjcms/1/avopingvo.jpg" src="/userfiles/mjcms/1/avopingvo.jpg" style="width: 96px; height: 96px;" /></p>\n<p>\n	This is justpage intro. hi!</p>\n', '<p>\n	This is justpagebody</p>\n', 'just single page', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 1, '2010-04-12 14:14:38', '2010-04-12 23:01:24', '2010-04-12 11:13:00', '2010-04-12 11:13:00', '0000-00-00 00:00:00'),
 (15, 1, 1, 0, 'en', 'justpage', '<p>\n	<img alt="" ilo-full-src="http://mojotest:82/userfiles/mjcms/1/avopingvo.jpg" src="/userfiles/mjcms/1/avopingvo.jpg" style="width: 96px; height: 96px;" /></p>\n<p>\n	This is justpage intro. hi! cool!</p>\n', '<p>\n	This is justpagebody</p>\n', 'just single page', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 1, '2010-04-12 14:14:38', '2010-04-14 12:04:38', '2010-04-12 12:13:00', '2010-04-12 12:13:00', '0000-00-00 00:00:00'),
-(16, 1, 1, 0, 'en', 'justpage', '<p>\n	<img alt="" ilo-full-src="http://mojotest:82/userfiles/mjcms/1/avopingvo.jpg" src="/userfiles/mjcms/1/avopingvo.jpg" style="width: 96px; height: 96px;" /></p>\n<p>\n	This is justpage intro. hi! cool!</p>\n<p>\n	&nbsp;</p>\n<p>\n	А вот хуй!</p>\n', '<p>\n	This is justpagebody</p>\n', 'just single page', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 1, '2010-04-12 14:14:38', '2010-04-14 22:38:35', '2010-04-12 01:13:00', '2010-04-12 01:13:00', '0000-00-00 00:00:00');
+(16, 1, 1, 0, 'en', 'justpage', '<p>\n	<img alt="" ilo-full-src="http://mojotest:82/userfiles/mjcms/1/avopingvo.jpg" src="/userfiles/mjcms/1/avopingvo.jpg" style="width: 96px; height: 96px;" /></p>\n<p>\n	This is justpage intro. hi! cool!</p>\n<p>\n	&nbsp;</p>\n<p>\n	А вот хуй!</p>\n', '<p>\n	This is justpagebody</p>\n', 'just single page', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 1, '2010-04-12 14:14:38', '2010-04-14 22:38:35', '2010-04-12 01:13:00', '2010-04-12 01:13:00', '0000-00-00 00:00:00'),
+(17, 4, 1, 0, 'en', 'index', '<p>\n	Index page</p>\n', '<p>\n	bla</p>\n<p>\n	bla</p>\n<p>\n	bla</p>\n<p>\n	Index so index....</p>\n', 'Main index page', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 1, '2010-04-15 19:45:55', '2010-04-15 20:40:43', '2010-04-15 08:45:00', '2010-04-15 08:45:00', '0000-00-00 00:00:00'),
+(18, 4, 1, 0, 'en', 'index', '<p>\n	Index page</p>\n', '<p>\n	bla</p>\n<p>\n	bla</p>\n<p>\n	bla</p>\n<p>\n	Index so index....</p>\n', 'Main index page', 'MjNCMS project demo site index page', 'MjNCMS, Mojolicious, Mojo', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 1, '2010-04-15 19:45:55', '2010-04-18 01:16:18', '2010-04-15 09:45:00', '2010-04-15 09:45:00', '0000-00-00 00:00:00'),
+(19, 4, 1, 0, 'en', 'index', '<p>\n	Index page</p>\n', '<p>\n	bla</p>\n<p>\n	bla</p>\n<p>\n	&nbsp;</p>\n<p>\n	be careful this demo runs on lowerclocked NAS :)</p>\n<p>\n	&nbsp;</p>\n<p>\n	bla</p>\n<p>\n	Index so index....</p>\n<p>\n	&nbsp;</p>\n<p>\n	btw, <a href="/mjadmin">admin side</a></p>\n<p>\n	&nbsp;</p>', 'Main index page', 'MjNCMS project demo site index page', 'MjNCMS, Mojolicious, Mojo', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 1, '2010-04-15 19:45:55', '2010-04-18 10:36:08', '2010-04-15 10:45:00', '2010-04-15 10:45:00', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -512,19 +603,27 @@ CREATE TABLE IF NOT EXISTS `mj_permissions` (
 --
 
 INSERT INTO `mj_permissions` (`permission_id`, `awp_id`, `role_id`, `r`, `w`, `member_id`, `whoedit`, `ins`, `upd`) VALUES
-(16, 1, NULL, 1, 1, 1, NULL, '2010-04-09 14:45:38', '2010-04-09 14:45:38'),
-(13, 1, NULL, 1, 1, 1, NULL, '2010-04-09 14:45:38', '2010-04-09 14:45:38'),
-(18, 1, NULL, 1, 1, 1, NULL, '2010-04-09 14:45:38', '2010-04-09 14:45:38'),
-(4, 1, NULL, 1, 1, 1, NULL, '2010-04-09 14:45:38', '2010-04-09 14:45:38'),
-(8, 1, NULL, 1, 1, 1, NULL, '2010-04-09 14:45:38', '2010-04-09 14:45:38'),
-(14, 1, NULL, 1, 1, 1, NULL, '2010-04-09 14:45:38', '2010-04-09 14:45:38'),
-(15, 1, NULL, 1, 1, 1, NULL, '2010-04-09 14:45:38', '2010-04-09 14:45:38'),
-(2, 1, NULL, 1, 1, 1, NULL, '2010-04-09 14:45:38', '2010-04-09 14:45:38'),
-(17, 1, NULL, 1, 1, 1, NULL, '2010-04-09 14:45:38', '2010-04-09 14:45:38'),
-(9, 1, NULL, 1, 1, 1, NULL, '2010-04-09 14:45:38', '2010-04-09 14:45:38'),
-(3, 1, NULL, 1, 1, 1, NULL, '2010-04-09 14:45:38', '2010-04-09 14:45:38'),
-(11, 1, NULL, 1, 1, 1, NULL, '2010-04-09 14:45:38', '2010-04-09 14:45:38'),
-(10, 1, NULL, 1, 1, 1, NULL, '2010-04-09 14:45:38', '2010-04-09 14:45:38');
+(15, NULL, 1, 1, 1, 1, NULL, '2010-04-18 16:55:28', '2010-04-18 16:55:28'),
+(17, NULL, 1, 1, 1, 1, NULL, '2010-04-18 16:55:28', '2010-04-18 16:55:28'),
+(9, NULL, 1, 1, 1, 1, NULL, '2010-04-18 16:55:28', '2010-04-18 16:55:28'),
+(16, NULL, 1, 1, 1, 1, NULL, '2010-04-18 16:55:28', '2010-04-18 16:55:28'),
+(10, NULL, 1, 1, 1, 1, NULL, '2010-04-18 16:55:28', '2010-04-18 16:55:28'),
+(13, NULL, 1, 1, 1, 1, NULL, '2010-04-18 16:55:28', '2010-04-18 16:55:28'),
+(22, NULL, 1, 1, 1, 1, NULL, '2010-04-18 16:55:28', '2010-04-18 16:55:28'),
+(8, NULL, 1, 1, 1, 1, NULL, '2010-04-18 16:55:28', '2010-04-18 16:55:28'),
+(19, 1, NULL, 1, 1, 1, NULL, '2010-04-18 16:54:54', '2010-04-18 16:54:54'),
+(18, 1, NULL, 1, 1, 1, NULL, '2010-04-18 16:54:54', '2010-04-18 16:54:54'),
+(4, 1, NULL, 1, 1, 1, NULL, '2010-04-18 16:54:54', '2010-04-18 16:54:54'),
+(14, 1, NULL, 1, 1, 1, NULL, '2010-04-18 16:54:54', '2010-04-18 16:54:54'),
+(20, 1, NULL, 1, 1, 1, NULL, '2010-04-18 16:54:54', '2010-04-18 16:54:54'),
+(2, 1, NULL, 1, 1, 1, NULL, '2010-04-18 16:54:54', '2010-04-18 16:54:54'),
+(19, 2, NULL, 1, 1, 1, NULL, '2010-04-16 13:40:17', '2010-04-16 13:40:17'),
+(19, 0, NULL, 1, 1, 1, NULL, '2010-04-16 13:40:04', '2010-04-16 13:40:04'),
+(3, 1, NULL, 1, 1, 1, NULL, '2010-04-18 16:54:54', '2010-04-18 16:54:54'),
+(20, 0, NULL, 1, 1, 1, NULL, '2010-04-16 13:40:04', '2010-04-16 13:40:04'),
+(20, 2, NULL, 1, 1, 1, NULL, '2010-04-16 13:40:17', '2010-04-16 13:40:17'),
+(21, 1, NULL, 1, 1, 1, NULL, '2010-04-18 16:54:54', '2010-04-18 16:54:54'),
+(11, 1, NULL, 1, 1, 1, NULL, '2010-04-18 16:54:54', '2010-04-18 16:54:54');
 
 -- --------------------------------------------------------
 
@@ -543,7 +642,7 @@ CREATE TABLE IF NOT EXISTS `mj_permission_types` (
   `upd` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
   PRIMARY KEY  (`permission_id`),
   UNIQUE KEY `c_a_uniq_idx` (`controller`,`action`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Permission types library' AUTO_INCREMENT=19 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Permission types library' AUTO_INCREMENT=25 ;
 
 --
 -- Dumping data for table `mj_permission_types`
@@ -566,7 +665,12 @@ INSERT INTO `mj_permission_types` (`permission_id`, `controller`, `action`, `des
 (15, 'permissions', 'manage', 'Allow manage permissions system', 1, NULL, '2010-03-29 00:10:00', '2010-03-29 00:10:00'),
 (16, 'awp_roles', 'manage', 'Allow manage AWP/Roles && their permissions', 1, NULL, '2010-03-29 00:10:54', '2010-03-29 00:10:54'),
 (17, 'users', 'manage', 'Allow manage users records', 1, NULL, '2010-03-29 00:11:30', '2010-03-29 00:11:30'),
-(18, 'translations', 'manage', 'Manage translations', 1, NULL, '2010-04-09 14:44:11', '2010-04-09 14:44:11');
+(18, 'translations', 'manage', 'Manage translations', 1, NULL, '2010-04-09 14:44:11', '2010-04-09 14:44:11'),
+(19, 'users', 'auth', 'Allow users do auth things login/logout, etc', 1, 1, '2010-04-15 12:43:56', '2010-04-17 18:09:44'),
+(20, 'urls', 'contentside_add', 'Allow add urls from content-side', 1, NULL, '2010-04-16 13:39:36', '2010-04-16 13:39:36'),
+(21, 'blocks', 'manage', 'Allow manage blocks', 1, 1, '2010-04-17 18:07:54', '2010-04-17 18:08:24'),
+(22, 'blocks', 'manage_any', 'Allow manage any user''s blocks', 1, NULL, '2010-04-17 18:08:14', '2010-04-17 18:08:14'),
+(23, 'blocks', 'manage_others', 'Allow manage same role user''s blocks', 1, NULL, '2010-04-17 18:08:50', '2010-04-17 18:08:50');
 
 -- --------------------------------------------------------
 
@@ -586,15 +690,17 @@ CREATE TABLE IF NOT EXISTS `mj_roles` (
   PRIMARY KEY  (`role_id`),
   KEY `awp_id_idx` (`awp_id`),
   KEY `alternatives_idx` (`role_id`,`awp_id`,`sequence`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='User''s roles @ workplaces [text_content/moderator, etc]' AUTO_INCREMENT=4 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='User''s roles @ workplaces [text_content/moderator, etc]' AUTO_INCREMENT=6 ;
 
 --
 -- Dumping data for table `mj_roles`
 --
 
 INSERT INTO `mj_roles` (`role_id`, `awp_id`, `name`, `ins`, `upd`, `member_id`, `whoedit`, `sequence`) VALUES
-(0, 0, 'MjCMS guest role', '2010-02-09 00:00:00', '2010-02-15 23:14:33', 1, NULL, 255),
-(1, 1, 'MjCMS admin role', '2010-02-09 00:00:00', '2010-02-15 23:14:43', 1, NULL, 0);
+(0, 0, 'MjNCMS guest role', '2010-02-09 00:00:00', '2010-04-15 11:45:27', 1, NULL, 255),
+(1, 1, 'MjNCMS admin role', '2010-02-09 00:00:00', '2010-04-15 11:45:35', 1, NULL, 0),
+(2, 2, 'Standart User', '2010-04-15 11:47:23', '2010-04-15 17:11:31', 1, 1, 200),
+(5, 1, 'Content editor', '2010-04-18 22:34:49', '2010-04-18 22:34:49', 1, NULL, 200);
 
 -- --------------------------------------------------------
 
@@ -613,6 +719,9 @@ CREATE TABLE IF NOT EXISTS `mj_role_alternatives` (
 -- Dumping data for table `mj_role_alternatives`
 --
 
+INSERT INTO `mj_role_alternatives` (`member_id`, `role_id`, `upd`, `whoedit`) VALUES
+(1, 2, '2010-04-18 22:36:45', 1),
+(1, 1, '2010-04-18 22:36:45', 1);
 
 -- --------------------------------------------------------
 
@@ -657,14 +766,16 @@ CREATE TABLE IF NOT EXISTS `mj_short_urls` (
   KEY `srch_idx` (`sugrp_id`,`alias`,`sha1_sum`),
   KEY `sugrp_id_idx` (`sugrp_id`),
   KEY `sugrp_id_is_custom_idx` (`sugrp_id`,`is_custom`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Short urls links' AUTO_INCREMENT=3 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Short urls links' AUTO_INCREMENT=5 ;
 
 --
 -- Dumping data for table `mj_short_urls`
 --
 
 INSERT INTO `mj_short_urls` (`alias_id`, `sugrp_id`, `is_custom`, `alias`, `sha1_sum`, `orig_url`, `ins`, `upd`, `member_id`, `whoedit`) VALUES
-(2, NULL, 1, 'mojo', '6338066e0e94370f64269743aa880b1aa7aaa956', 'http://search.cpan.org/~kraih/', '2010-03-24 17:29:02', '2010-03-24 17:29:02', 1, 0);
+(2, NULL, 1, 'mojo', '6338066e0e94370f64269743aa880b1aa7aaa956', 'http://search.cpan.org/~kraih/', '2010-03-24 17:29:02', '2010-03-24 17:29:02', 1, 0),
+(3, NULL, 0, '1', '252682bb9a8891c2ddd45d62eb597093def84b72', 'http://leprosorium.ru/', '2010-04-16 13:47:27', '2010-04-16 13:47:27', 1, 0),
+(4, NULL, 1, 'wowowowo', '37f07ecc66f7c5334e1b95ff0e7a0afefadc23b6', 'http://groups.google.com/group/mojolicious/', '2010-04-16 14:11:54', '2010-04-16 14:11:54', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -717,7 +828,8 @@ CREATE TABLE IF NOT EXISTS `mj_users` (
 
 INSERT INTO `mj_users` (`member_id`, `replace_member_id`, `is_cms_active`, `role_id`, `name`, `site_lng`, `ins`, `upd`, `whoedit`, `startpage`) VALUES
 (0, NULL, 1, 0, 'Guest', NULL, '2010-02-09 00:00:00', '2010-03-22 21:07:38', NULL, '/'),
-(1, NULL, 1, 1, 'Austin Powers', 'en', '2010-02-09 00:00:00', '2010-03-22 23:03:05', 1, '/mjadmin/pages');
+(1, 1, 1, 1, 'Austin Powers', 'en', '2010-02-09 00:00:00', '2010-04-19 00:14:28', 1, '/mjadmin/pages'),
+(20, NULL, 1, 5, 'Morbo', 'en', '0000-00-00 00:00:00', '2010-04-18 22:36:34', 1, '/');
 
 -- --------------------------------------------------------
 
@@ -738,3 +850,5 @@ CREATE TABLE IF NOT EXISTS `mj_users_extrareplaces` (
 -- Dumping data for table `mj_users_extrareplaces`
 --
 
+INSERT INTO `mj_users_extrareplaces` (`member_id`, `slave_id`, `upd`, `whoedit`) VALUES
+(1, 1, '2010-04-18 22:36:45', 1);
