@@ -44,7 +44,6 @@ use Mojo::Headers;
 use Mojo::Loader;
 use Mojo::URL;
 
-
 #C-based memcached api
 use Cache::Memcached::Fast;
 
@@ -63,11 +62,20 @@ sub register {
         before_dispatch => sub {
             #it's now also @daemon mode works for static files - hk later how tp skip
             my ($self, $c) = @_;
+            
+            my (
+                $server_scheme, $server_name, $server_port, 
+                $dbh_id, $dbh_rand, 
+                $dbh_settings_set, 
+                $dbh_settings, 
+                $memd_id, 
+            );
+
             $SESSION{'REDIR'} = undef; #redirect over plugin;
 
-            my $server_scheme = $c->tx->req->url->base->scheme;
-            my $server_name = $c->tx->req->url->base->host;
-            my $server_port = $c->tx->req->url->base->port;
+            $server_scheme = $c->tx->req->url->base->scheme;
+            $server_name = $c->tx->req->url->base->host;
+            $server_port = $c->tx->req->url->base->port;
             
             if (!$server_name || $server_name !~ /\w+/) {
                 $SESSION{'REDIR'} = '/_static/msg/no_server.shtml';
@@ -89,21 +97,13 @@ sub register {
             
             $SESSION{'THEME_URLPATH'} = $$cfg{'tt_tpls_theme_urlpath'} || '/tt_tpls/mjcms';
             
-            $SESSION{'SITE_URL_EXTENSIONS'} = $$cfg{'site_url_extensions'}
-                if $$cfg{'site_url_extensions'};
+            $SESSION{'SITE_URL_EXTENSIONS'} = $$cfg{'site_url_extensions'} || {};
             foreach my $ext (keys %{$SESSION{'SITE_URL_EXTENSIONS'}}){
                 $SESSION{'EXTENSIONS_' . uc($ext)} = ${$SESSION{'SITE_URL_EXTENSIONS'}}{$ext};
             }
             
             $SESSION{'USERFILES_URL'} = $$cfg{'userfiles_url'} || '/userfiles';
             $SESSION{'USERFILES_PATH'} = $$cfg{'userfiles_path'} || '../public_html/userfiles', ;
-            
-            my (
-                $dbh_id, $dbh_rand, 
-                $dbh_settings_set, 
-                $dbh_settings, 
-                $memd_id, 
-            );
             
             $SESSION{'SERVER_SCHEME'} = $server_scheme;
             $SESSION{'SERVER_NAME'} = $server_name;
@@ -114,7 +114,8 @@ sub register {
                 (scalar $SESSION{'SERVER_PORT'} != 80) 
             );
 
-            $SESSION{'ALLOW_T_OF'} = $$cfg{'allow_t_of'} if $$cfg{'allow_t_of'};#sub t_of(anything) 2file dumper MjNCMS::Service::t_of
+            #sub t_of(anything) 2file dumper MjNCMS::Service::t_of
+            $SESSION{'ALLOW_T_OF'} = $$cfg{'allow_t_of'} if $$cfg{'allow_t_of'};
 
             $$cfg{'log_level'} = defined($$cfg{'log_level'})? $$cfg{'log_level'}:'warn';
             $SESSION{'LOG'} = $c->app->log;
@@ -216,6 +217,7 @@ sub register {
                 $cookie->value($SESSION{'BS'}($cookie->value())->url_unescape()->to_string()) if $cookie->value();
                 ${$SESSION{'COOKIES_REQ'}}{$cookie->name} = $cookie;
             }
+
             $SESSION{'HTTP_REFERER'} = ${$SESSION{'REQ'}->env}{'HTTP_REFERER'};
             $SESSION{'HTTP_USER_AGENT'} = ${$SESSION{'REQ'}->env}{'HTTP_USER_AGENT'};#used @ smf auth
             $SESSION{'REMOTE_ADDR'} = ${$SESSION{'REQ'}->env}{'REMOTE_ADDR'};#used @ recaptcha #no this envs @ 'daemon' test mode
@@ -231,7 +233,7 @@ sub register {
                 #some another rules
             }
                 
-            $SESSION{'CURRENT_PAGE'} = $c->tx->req->url->clone; #->to_string;
+            $SESSION{'CURRENT_PAGE'} = $c->tx->req->url->clone; #->to_rel
             $SESSION{'CURRENT_PAGE'}->query->remove('rnd');
             $SESSION{'CURRENT_PAGE'}->query->remove('notifyid');
             $SESSION{'CURRENT_PAGE'}->query->remove('msg');
@@ -428,16 +430,23 @@ sub register {
                         ref ${${$$cfg{'memd_servers'}}{$memd_grp}}{'servers'} eq 'ARRAY'
                     );
 
-                    $SESSION{$memd_id} -> namespace(
-                        ${${$$cfg{'memd_servers'}}{$memd_grp}}{'vars_prefix'}? 
-                            ${${$$cfg{'memd_servers'}}{$memd_grp}}{'vars_prefix'}:$$cfg{'memd_vars_prefix'}
-                            ) if (
-                                $SESSION{$memd_id} && 
-                                (
-                                    ${${$$cfg{'memd_servers'}}{$memd_grp}}{'vars_prefix'} || 
-                                    $$cfg{'memd_vars_prefix'}
-                                )
-                            );
+                    if ($SESSION{$memd_id} -> set('is_memd_alive_chk', 1)) {
+                        #set return 1 if success
+                        $SESSION{$memd_id} -> namespace(
+                            ${${$$cfg{'memd_servers'}}{$memd_grp}}{'vars_prefix'}? 
+                                ${${$$cfg{'memd_servers'}}{$memd_grp}}{'vars_prefix'}:$$cfg{'memd_vars_prefix'}
+                                ) if (
+                                    $SESSION{$memd_id} && 
+                                    (
+                                        ${${$$cfg{'memd_servers'}}{$memd_grp}}{'vars_prefix'} || 
+                                        $$cfg{'memd_vars_prefix'}
+                                    )
+                                );
+                    }
+                    else {
+                        #no responce from memd server - no MEMD
+                        $SESSION{$memd_id} = undef;
+                    }
 
                 }
             }
@@ -480,6 +489,7 @@ sub register {
             
             $SESSION{'CRYPT_KEY'} = $$cfg{'crypt_key'} || '';
             $SESSION{'MD_CHK_KEY'} = $$cfg{'md_chk_key'} || '';
+            
             $SESSION{'COOKIE_SIGN_KEY'} = $$cfg{'cookie_sign_key'} || 'n0tjustpassw0rd';
             
             $c->app->secret($SESSION{'COOKIE_SIGN_KEY'});
@@ -488,7 +498,17 @@ sub register {
                 $$cfg{'site_langs'} && 
                 ref $$cfg{'site_langs'} && 
                 ref $$cfg{'site_langs'} eq 'HASH'
-                )? $$cfg{'site_langs'}:{'en' => 'MjNCMS/Locales/mjcms_en.po'};
+                )? $$cfg{'site_langs'}:{
+                    'en' => {
+                        'name' => 'English', 
+                        #strptime fmt
+                        'date_fmt_full' => '%m.%d.%Y', 
+                        'date_fmt_hrs' => '%I:%M%p', 
+                        #mysql fmt
+                        'date_mfmt_full' => '%m.%d.%Y', 
+                        'date_mfmt_hrs' => '%I:%i%p', 
+                    }, 
+                };
             
             unless (scalar keys %{$SESSION{'SITE_LANGS'}}) {
                 $SESSION{'REDIR'} = '/_static/msg/no_lang.shtml';
@@ -507,10 +527,15 @@ sub register {
             $SESSION{'AUTH_ENGINE'} = $$cfg{'auth_engine'} || 'smf';
             $SESSION{'AUTH_COOKIE'} = $$cfg{'auth_cookie'} || 'SMFCookie762';
             $SESSION{'REM_COOKIE'} = $$cfg{'rem_cookie'} || 'MjtAuthRem';
+            
+            $SESSION{'AUTH_ON_CONFIRM'} = $$cfg{'auth_on_confirm'} || 0;
+            
             $SESSION{'SESS_COOKIE'} = $$cfg{'sess_cookie'} || 'MjtSession';
             $SESSION{'SESS_COOKIE_PHP'} = $$cfg{'sess_cookie_php'} || 'PHPSESSID';
             $SESSION{'COOKIE_FOREVER_TIME'} = $$cfg{'cookie_forever_time'} || (time() + 155520000);#smw 5 years later
+            
             $SESSION{'GUESTUSER_ISACTIVE'} = defined($$cfg{'guestuser_isactive'})? $$cfg{'guestuser_isactive'}:1;
+            
             $SESSION{'DEFAULT_REG_ROLE'} = $$cfg{'default_reg_role'} || '0';
             
             $SESSION{'ADMIN_PANEL_ROLES'} = $$cfg{'admin_panel_roles'} || [1, ];#1==Admins
@@ -519,8 +544,8 @@ sub register {
             $SESSION{'ALLOW_SW_TOSLAVEUSERS'} = $$cfg{'allow_sw_toslaveusers'} || 0;
             $SESSION{'ALLOW_SW_AWPROLES'} = $$cfg{'allow_sw_awproles'} || 0;
 
-            $SESSION{'SESSION_PHP'} = 
-                ${$SESSION{'COOKIES_REQ'}}{$SESSION{'SESS_COOKIE_PHP'}} 
+            $SESSION{'PHP_SESSID'} = 
+                ${$SESSION{'COOKIES_REQ'}}{$SESSION{'SESS_COOKIE_PHP'}}->value 
                 if ${$SESSION{'COOKIES_REQ'}}{$SESSION{'SESS_COOKIE_PHP'}};
             
             $SESSION{'USR_PERMISSIONS_PREFEDINED'} = $$cfg{'usr_permissions_prfedined'} 
@@ -538,7 +563,7 @@ sub register {
                 $SESSION{'REDIR'} = '/_static/msg/no_auth.shtml'.'?state='. ($SESSION{'USR'} -> {'last_state'});
                 return 0;
             }
-            #&t_of('e',$SESSION{'LOC'}->{'CURRLANG'}, $SESSION{'USR'}->{'member_sitelng'},'e');
+            
             if($SESSION{'USR'}->{'member_sitelng'} && 
                 $SESSION{'USR'}->{'member_sitelng'} ne $SESSION{'LOC'}->{'CURRLANG'} && 
                 &inarray([keys %{$SESSION{'SITE_LANGS'}}], $SESSION{'USR'}->{'member_sitelng'})){

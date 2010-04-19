@@ -6,7 +6,7 @@ use utf8;
 
 Template::Document->new({
     METADATA => {
-        'modtime' => '1271617785',
+        'modtime' => '1271635583',
         'name' => '../public_html/tt_tpls/mjncms/admin/admin_index.html.tpl',
     },
     BLOCK => sub {
@@ -100,7 +100,7 @@ Template::Document->new({
     $output .=  "</b>\n                    </td>\n                </tr>\n            </table>\n            <br />\n        ";
     }
     
-    $output .=  "    <div class=\"tborder\" >\n    \n        <table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" >\n            <tr>\n                <td class=\"catbg lmal\" style=\"padding:0.2em 0.2em 0.2em 0.7em;\">\n            <a href=\"/\"><span style=\"font-size:1.15em; font-weight:bolder; text-transform: uppercase;\">Mojolicious-based PERL CMS</span></a>\n                </td>\n                <td class=\"catbg rmal\" style=\"padding:0.2em 0.7em 0.2em 0.2em;\">\n                    <a href=\"/\"><span style=\"font-size:1.15em; font-weight:bolder; text-transform: uppercase;\">MjNCMS</span></a>\n                </td>\n            </tr>\n            <tr id=\"upshrinkHeader\" style='display:";
+    $output .=  "    <div class=\"tborder\" >\n    \n        <table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" >\n            <tr>\n                <td class=\"catbg lmal\" style=\"padding:0.2em 0.2em 0.2em 0.7em;\">\n            <a href=\"/\"><span style=\"font-size:1.15em; font-weight:bolder; text-transform: uppercase;\">Mojolicious-based PERL NOT CMS :)</span></a>\n                </td>\n                <td class=\"catbg rmal\" style=\"padding:0.2em 0.7em 0.2em 0.2em;\">\n                    <a href=\"/\"><span style=\"font-size:1.15em; font-weight:bolder;\">MjNCMS</span></a>\n                </td>\n            </tr>\n            <tr id=\"upshrinkHeader\" style='display:";
 #line 55 "../public_html/tt_tpls/mjncms/admin/admin_index.html.tpl"
     $output .=  $stash->get('topblock_display');
     $output .=  ";'>\n                <td valign=\"top\" colspan=\"4\">\n                    <table width=\"100%\" class=\"bordercolor\" cellpadding=\"8\" cellspacing=\"0\" border=\"0\">\n                        <tr>\n                            <td class=\"windowbg2\" width=\"100%\" valign=\"top\">";

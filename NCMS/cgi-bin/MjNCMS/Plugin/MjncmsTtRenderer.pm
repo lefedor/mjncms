@@ -4,6 +4,9 @@ package MjNCMS::Plugin::MjncmsTtRenderer;
 #
 
 #
+# 10 SIN
+# 20 GOTO HELL
+#
 # Santa: Your Mistletoe Is No Match For My TOW Missile!
 # (c) Futurama
 #

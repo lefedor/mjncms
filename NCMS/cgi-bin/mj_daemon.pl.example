@@ -4,6 +4,8 @@ package MjNCMS;
 #
 # (c) Fedor F Lejepekov, ffl.public@gmail.com, 2010
 #
+
+#
 # Todu coach: If there’s such as thing as natural talent,
 # it just means that the person will improve just a little faster than everyone else.
 # There's no such thing as an innate talent that overcomes repeated effort and practice.
@@ -82,7 +84,17 @@ package MjNCMS;
         $mojo->plugin('mjncms_routes_extra');
         $mojo->plugin('mjncms_tt_renderer');
         
+        #
+        # Kiff: Sir, remember that course correction you made?
+        # Zapp: No.
+        # Kiff: It's proving a little more suicidal than we'd initially hoped.
+        # Zapp: I don't know what annoys me more, Kiff. Your cowardice or your stupidity. 
+        #   We'll simply set a new course in that empty region of space over there, 
+        #   near that blackish holish thing.
+        #
+        
         my $r = $mojo->routes;
+        
         #like 'ladder' @ Mojolicious::Lite
         #$r = $r->bridge->to(controller => 'Main', action => 'start_session');# vvv 
 
@@ -90,8 +102,7 @@ package MjNCMS;
         my $user_root = $SESSION{'USR_URL'} || '/user'; #--//--
         my $shortlinks_root = $SESSION{'SHORTLINKS_URL'} || '/sl'; #--//--
         my $shortlinks_redir_root = $SESSION{'SHORTLINKS_REDIR_URL'} || '/r'; #--//--
-        
-        
+         
         my $pages_extemsion = $SESSION{'EXTENSIONS_PAGE'} || '.html'; #--//--
         my $categoryes_extemsion = $SESSION{'EXTENSIONS_CATEGORY'} || '.htm'; #--//--
         
@@ -327,6 +338,8 @@ package MjNCMS;
         
         #Public user routes - login/logout/edit/reg/reg_confirm
         my $usr_r = $r->route($user_root);
+        $usr_r->route('/login')->via('get')->
+            to(controller => 'usercontroller', action => 'usercontroller_rt_user_login_get');
         $usr_r->route('/login')->via('post')->
             to(controller => 'usercontroller', action => 'usercontroller_rt_user_login_post');
         $usr_r->route('/logout')->
@@ -335,7 +348,6 @@ package MjNCMS;
             to(controller => 'usercontroller', action => 'usercontroller_rt_user_rolesw_post');
         $usr_r->route('/user_sw')->via('post')->
             to(controller => 'usercontroller', action => 'usercontroller_rt_user_usersw_post');
-        
         $usr_r->route('/register')->via('get')->
             to(controller => 'usercontroller', action => 'usercontroller_rt_user_register_get');
         $usr_r->route('/register')->via('post')->

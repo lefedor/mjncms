@@ -45,6 +45,8 @@ sub new {
   
   $self->{'MODE'} = 'smf' unless $self->{'MODE'};
   
+  $self->{'PHP_SESSID'} = '';
+  
   $self->{'last_state'} = undef;
   
   $self->{'awp_id'} = 0;
@@ -89,7 +91,7 @@ sub _smf_gen_pass ($$;$) {
     return sha1_hex(lc($login) . $password);
 }
 
-sub _smf_auth($) {
+sub _smf_auth ($;$) {
     my $self = $_[0];
 
     my $smfcookie = $SESSION{'COOKIES_REQ'}{$SESSION{'AUTH_COOKIE'}};
@@ -109,6 +111,7 @@ sub _smf_auth($) {
         member_id => 0, 
         member_email => undef, 
         member_name => 'Guest', 
+        member_login => 'guest', 
         member_is_active => $SESSION{'GUESTUSER_ISACTIVE'}, 
         time_offset => $SESSION{'SITE_TIME_OFFSET'},
     };
@@ -211,6 +214,7 @@ sub _smf_auth($) {
                 return {
                     member_id => $cookie_member_id, 
                     member_email => $res->{'emailaddress'}, 
+                    member_login => $res->{'membername'}, 
                     member_name => $res->{'realname'}? $res->{'realname'}:$res->{'membername'}, 
                     member_is_active => (scalar $res->{'is_activated'})? 1:0, 
                     time_offset => $res->{'timeOffset'},
@@ -223,7 +227,55 @@ sub _smf_auth($) {
     
     #no SMF Auth coockie - present usr sa guest
     return $guest_hash;
+    
 } #-- _smf_auth
+
+sub _smf_chk_pass ($$$$) {
+    
+    my (
+        $self, 
+        $password, $passhash, 
+        $member_id, 
+    ) = @_;
+    
+    return undef unless $member_id =~ /^\d+$/;
+    
+    return undef unless ($password || $passhash);
+
+    my (
+        $dbh, 
+        $q, $sth, $res, 
+        $sessid, 
+        
+    ) = (
+        $SESSION{'DBH'},
+    );
+    
+    $q = qq~ 
+        SELECT 
+            ID_MEMBER AS member_id, 
+            passwd, memberName AS login
+        FROM ${SESSION{FORUM_PREFIX}}members 
+        WHERE ID_MEMBER = ? 
+        LIMIT 0, 1; 
+    ~;
+    eval {
+      $sth = $dbh->prepare($q);
+      $sth -> execute($member_id);$res = $sth->fetchrow_hashref();
+      $sth -> finish();
+    };
+    
+    $sessid = $self->{'PHP_SESSID'};
+    $sessid = '' unless $sessid;
+    $passhash = sha1_hex(&_smf_gen_pass($res->{'login'}, $password) . $sessid) unless $passhash;
+    
+    #If password match
+    if (sha1_hex($res->{'passwd'} . $sessid) eq $passhash) {
+        return 1;
+    }
+    return 0;
+    
+} #-- _smf_chk_pass
 
 sub _smf_register ($$$;$$$$$$$) {
     my $self = $_[0];
@@ -325,7 +377,104 @@ sub _smf_register ($$$;$$$$$$$) {
     }
 } #-- _smf_register
 
-sub _smf_login($;$$$$) {
+sub _smf_reg_confirm ($$) {
+    
+    my $self = $_[0];
+    
+    my $confirmation_code = $_[1]? &trim($_[1]):undef; # $SESSION{'REQ'}->param('user');
+    my $auth_after = $_[2]? $_[2]:undef;
+    
+    return {
+        status => 'fail', 
+        message => 'no validation code', 
+        
+    } unless $confirmation_code && length $confirmation_code;
+    
+    my (
+        $dbh, 
+        $q, $sth, $res, 
+        $updcnt, 
+        $member_id, $login, 
+        $passhash, $sessid, 
+        
+    ) = (
+        $SESSION{'DBH'}, 
+        undef, 
+        undef, {}, 
+    );
+    
+    $q = qq~
+        SELECT 
+            ID_MEMBER AS member_id, 
+            memberName AS login, 
+            passwd AS passhash 
+        FROM ${SESSION{FORUM_PREFIX}}members 
+        WHERE validation_code = ? 
+            AND is_activated = 0 ; 
+    ~;
+
+    eval {
+        $sth = $dbh -> prepare($q); $sth -> execute($confirmation_code);
+        $res = $sth->fetchrow_hashref();
+        $sth -> finish();
+    };
+    return {
+        status => 'fail', 
+        message => 'unconfirmed user not exist', 
+    } unless scalar $res -> {'member_id'};
+    
+    $member_id = $res -> {'member_id'};
+    $login = $res -> {'login'};
+    $passhash = $res -> {'passhash'};
+    
+    $q = qq~
+        UPDATE 
+        ${SESSION{FORUM_PREFIX}}members 
+        SET 
+            validation_code = '', 
+            is_activated = 1
+        WHERE ID_MEMBER = $member_id ; 
+    ~;
+    
+    eval {
+        $updcnt = $dbh->do($q);
+    };
+    
+    return {
+        status => 'fail', 
+        message => 'fail to update user entry', 
+    } unless scalar $updcnt;
+    
+    if ($auth_after) {
+        
+        $sessid = $self->{'PHP_SESSID'};
+        $sessid = '' unless $sessid;
+        $passhash = sha1_hex($passhash . $sessid);
+        $res = &_smf_login($self, $login, undef, $passhash);
+        
+        return {
+            status => 'ok', 
+            message => 'OK, but auth failed', 
+            member_id => $member_id, 
+        } unless (
+            $res && 
+            ref $res && 
+            ref $res eq 'HASH'  && 
+            ${$res}{'auth_success'}
+        );
+        
+    }
+    
+    return {
+        status => 'ok', 
+        message => 'All OK', 
+        member_id => $member_id, 
+    };
+    
+} #-- _smf_reg_confirm
+
+sub _smf_login ($;$$$$) {
+    
     my $self = $_[0];
     
     #all input expected unquoted
@@ -338,16 +487,19 @@ sub _smf_login($;$$$$) {
     my $cookielength = $_[4]? &trim($_[4]):$SESSION{'REQ'}->param('cookielength');
     
     my $session_php = $SESSION{'COOKIES_REQ'}{$SESSION{'SESS_COOKIE_PHP'}};
-    my $sessid;
 
-    my $dbh = $SESSION{'DBH'};
     my (
+        $dbh, 
         $q, $sth, $res, 
         $cnt_chk, $rand_code, 
         $timeuntil, @arr2ser, 
-        $smfcookie, 
+        $smfcookie, $sessid, 
         
-    ) = (undef, undef, {}, );
+    ) = (
+        $SESSION{'DBH'}, 
+        undef, 
+        undef, {}, 
+    );
     
     if (!$session_php) {#no PHP session
         
@@ -453,9 +605,11 @@ sub _smf_login($;$$$$) {
         #passwordsalt => $res->{'passwordsalt'}, # -//- uncomment if req
         startpage => $res->{'startpage'}, 
     }
+    
 } #-- _smf_login
 
 sub _smf_rm_record($$) {
+    
     my $self = $_[0];
     my $member_id = $_[1];
     
@@ -468,9 +622,11 @@ sub _smf_rm_record($$) {
     eval {$SESSION{'DBH'}->do($q);};
     
     return 1;
+    
 }
 
 sub _smf_logout($) {
+    
     my $self = $_[0];
     
     my $smfcookie = Mojo::Cookie::Response->new;
@@ -484,9 +640,11 @@ sub _smf_logout($) {
     $SESSION{'COOKIES_RES'}{$SESSION{'AUTH_COOKIE'}} = $smfcookie; 
     
     return 1;
+    
 } #-- _smf_logout
 
 sub _smf_get_users ($$) {
+    
     my $self = shift;
     my $cfg = shift;
     $cfg = {} unless $cfg;
@@ -836,7 +994,7 @@ sub _smf_change_password ($$$$) {
 
     my (
         $dbh, $sth, $res, 
-        $q, $updcnt, 
+        $q, $updcnt, $sessid, 
         
     ) = ($SESSION{'DBH'}, );
     
@@ -877,6 +1035,14 @@ sub _smf_change_password ($$$$) {
     ){
         $self->{'last_state'} = 'update forum members table fail';
         return undef;
+    }
+    
+    if ($SESSION{'USR'}->{'member_id_real'} == $member_id) {
+        #if user shange own pass - stay auth
+        $sessid = $self->{'PHP_SESSID'};
+        $sessid = '' unless $sessid;
+        $passum = sha1_hex($passum . $sessid);
+        &_smf_login($self, $res -> {'login'}, undef, $passum);
     }
     
     return 1;
@@ -944,7 +1110,13 @@ sub _smf_change_active ($$$) {
 ########################################################################
 #public calls
 ########################################################################
+
 sub auth ($) {
+    
+    #
+    # Bender: I'm not giving my name to a machine!
+    #
+    
     my $self = $_[0];
     
     my $mode = $self->{'MODE'};
@@ -957,6 +1129,7 @@ sub auth ($) {
         $self->{'member_is_forum_active'} = defined($auth_member->{'member_is_active'})? $auth_member->{'member_is_active'}:$SESSION{'GUESTUSER_ISACTIVE'};
         ${$self->{'profile'}}{'member_email'} = $auth_member->{'member_email'} if $auth_member->{'member_email'};
         ${$self->{'profile'}}{'member_name'} = $auth_member->{'member_name'} if $auth_member->{'member_name'};
+        ${$self->{'profile'}}{'member_login'} = $auth_member->{'member_login'} if $auth_member->{'member_login'};
         ${$self->{'profile'}}{'time_offset'} = $auth_member->{'time_offset'} if defined($auth_member->{'member_name'});#can be 0
         ${$self->{'profile'}}{'time_offset'} = $SESSION{'SITE_TIME_OFFSET'} 
             unless (
@@ -969,8 +1142,7 @@ sub auth ($) {
         return undef;
     }
 
-    $self -> {'PHP_SESSID'} = $SESSION{'COOKIES_REQ'}{$SESSION{'SESS_COOKIE_PHP'}}->value 
-        if $SESSION{'COOKIES_REQ'}{$SESSION{'SESS_COOKIE_PHP'}};
+    $self -> {'PHP_SESSID'} = $SESSION{'PHP_SESSID'};
         
     my (
         $dbh, $uq, $q, 
@@ -1028,12 +1200,17 @@ sub auth ($) {
         $self->{'profile'} = {};
         $self->{'last_state'} = 'user_banned';
         
+        #Or once logged user will need wipe cookies by hands :)
+        $self->logout();
+        
         $dbh -> do("UNLOCK TABLES ; ");
         return undef;
     }
     
-    $self->{'member_sitelng'} = $ures->{'site_lng'} if $ures->{'site_lng'};
-    
+    $self->{'member_sitelng'} = #real lang used everywhere /jp/some - content in japan lang, 4example
+        ${$self->{'profile'}}{'member_lang'} = #lang @ profile
+            $ures->{'site_lng'} if $ures->{'site_lng'};
+            
     if (scalar $ures->{'member_id'}) { #no slaves for guests member_id=0 :)
         
         #Slaves - users @ current awp which @roles with highter seq (under/slaved/etc)
@@ -1224,7 +1401,7 @@ sub auth ($) {
     $self->{'awp_name'} = $ures -> {'awp_name'};
     $self->{'role_id'} = $ures -> {'role_id'};
     $self->{'role_name'} = $ures -> {'role_name'};
-    ${$self->{'profile'}}{'member_name'} = $ures -> {'name '} if $ures -> {'name '};
+    ${$self->{'profile'}}{'member_name'} = $ures -> {'name'} if $ures -> {'name'};
 
     if (scalar $ures->{'member_id'}) { #no role alternatives for guests member_id=0 :)
         #Role alternatives - user can be allowed to switch his awp:role place
@@ -1421,9 +1598,71 @@ sub register_hs ($$) {
         ${$cfg}{'startpage'}, ${$cfg}{'lang'}, #9 10
         ${$cfg}{'skip_login_chk'} #11
     );
-}
+} #-- register_hs
 
-sub login($;$$$$$) {
+sub confirm_registration () {
+
+    my $self = $_[0];
+    my $confirmation_code = $_[1];
+    my $auth_if_success = $_[2];
+
+    my $mode = $self->{'MODE'};
+    
+    my $res;
+    
+    if ($mode eq 'smf') {
+        $res = &_smf_reg_confirm($self, $confirmation_code, $auth_if_success);
+        unless (
+            $res && 
+            ref $res && 
+            ref $res eq 'HASH' && 
+            ${$res}{'status'} eq 'ok' &&
+            ${$res}{'member_id'} =~ /^\d+$/
+        ) {
+            $self->{'last_state'} = 'confirmation_failed';
+            return undef;
+        }
+    }
+    else {
+        $self->{'last_state'} = 'wrong_auth_mode';
+        return undef;
+    }
+    
+    #if (
+    #    $SESSION{'USR'}->set_cms_active(1, ${$res}{'member_id'}) 
+    #No permission - manual
+    
+    my (
+        $dbh, $q, 
+        $updcnt, 
+    ) = ($SESSION{'DBH'}, );
+    
+    $q = qq~
+        UPDATE 
+        ${SESSION{PREFIX}}users 
+        SET 
+            is_cms_active = 1 
+        WHERE member_id = ~ . ($dbh->quote(${$res}{'member_id'})) . q~ ; 
+    ~;
+    
+    eval{
+        $updcnt = $dbh -> do($q);
+    };
+    
+    if (scalar $updcnt) {
+        return 1;
+    }
+    else {
+        $self->{'last_state'} = 'Forum record activated, but cms NOT';
+        return undef;
+    }
+    
+    return undef;
+    
+} #-- confirm_registration
+
+sub login ($;$$$$$) {
+    
     my $self = $_[0];
 
     my @deny_reasons = ('', 
@@ -1454,7 +1693,7 @@ sub login($;$$$$$) {
         $timeuntil, $rem_cookie, 
     );
     
-    if($rememberme){
+    if ($rememberme) {
         $timeuntil = time() + 155520000; #psas@coockie expire [secs since yr 1970] = (now +5 years)
         $cookielength = -1 unless $cookielength =~ m/^\-{0,1}\d+$/;
         
@@ -1491,18 +1730,23 @@ sub login($;$$$$$) {
 } #-- login
 
 sub login_hs ($$$;) {
+
     #hashed api to &login
     my $self = $_[0];
     my $cfg = $_[1];
+    
     return undef unless ($cfg && ref $cfg && ref $cfg eq 'HASH');
+    
     return &login(
         $self, ${$cfg}{'login'}, ${$cfg}{'password'}, # 0 1 2
         ${$cfg}{'passhsh'}, ${$cfg}{'cookielength'}, # 3 4
         ${$cfg}{'rememberme'}, # 5
     );
-}
 
-sub logout($) {
+} #-- login_hs
+
+sub logout ($) {
+
     my $self = $_[0];
 
     my $mode = $self->{'MODE'};
@@ -1521,6 +1765,7 @@ sub logout($) {
 } #-- logout
 
 sub chk_access($$;$$) {
+    
     my $self = $_[0];
     my $controller = $_[1];
     my $action = $_[2];
@@ -1546,9 +1791,11 @@ sub chk_access($$;$$) {
     }
     
     return 0;
+    
 } #-- chk_access
 
 sub get_usersddata ($$) {
+    
     #is this sub used smw currently? get_users should be much better. but this faster
     #may be for user sw, there are need only role/name data by id
     my $self = $_[0];
@@ -1611,6 +1858,7 @@ sub get_usersddata ($$) {
 } #-- get_usersddata
 
 sub is_user_writable ($$) {
+    
     my ($self, $member_id) = @_;
     
     return undef unless $member_id =~ /^\d+$/;
@@ -1621,11 +1869,14 @@ sub is_user_writable ($$) {
             &inarray($self->{'slave_users_ids'}, $member_id) 
         );
     return undef;
+    
 } #-- is_user_writable
 
 sub users_get ($;$) {
+    
     my $self = shift;
     my $cfg = shift;
+    
     $cfg = {} unless $cfg;
 
     my $mode = $self->{'MODE'};
@@ -1703,9 +1954,17 @@ sub users_get ($;$) {
 } #-- users_get
 
 sub change_email ($$;$){
+    
     my $self = $_[0];
     my $email = $_[1];
     my $member_id = defined($_[2])? $_[2]:$self->{'member_id'};
+    
+    #?
+    return undef unless (
+        $member_id == $self->{'member_id'} || 
+        $self->is_user_writable( $member_id ) || 
+        $self->chk_access('users', 'manage', 'w') 
+    );
 
     my $mode = $self->{'MODE'};
     
@@ -1719,13 +1978,22 @@ sub change_email ($$;$){
     }
     
     return undef;
+    
 } #-- change_email
 
 sub change_password ($$$;$) {
+    
     my $self = $_[0];
     my $pass = $_[1];
     my $pass_retype = $_[2];
     my $member_id = defined($_[3])? $_[3]:$self->{'member_id'};
+    
+    #?
+    return undef unless (
+        $member_id == $self->{'member_id'} || 
+        $self->is_user_writable( $member_id ) || 
+        $self->chk_access('users', 'manage', 'w') 
+    );
 
     my $mode = $self->{'MODE'};
     
@@ -1739,14 +2007,23 @@ sub change_password ($$$;$) {
     }
     
     return undef;
+    
 } #-- change_password
 
-sub set_cms_active ($$;$){
+sub set_cms_active ($$;$) {
+    
     my $self = $_[0];
     my $status = $_[1];
     my $member_id = defined($_[2])? $_[2]:$self->{'member_id'};
     
     $status = $status? 1:0;
+    
+    #?
+    return undef unless (
+        $member_id == $self->{'member_id'} || 
+        $self->is_user_writable( $member_id ) || 
+        $self->chk_access('users', 'manage', 'w') 
+    );
     
     my (
         $dbh, $q, 
@@ -1769,15 +2046,24 @@ sub set_cms_active ($$;$){
         return 1;
     }
     return undef;
-}
+    
+} #-- set_cms_active
 
 sub set_forum_active ($$;$){
+    
     my $self = $_[0];
     my $status = $_[1];
     my $member_id = defined($_[2])? $_[2]:$self->{'member_id'};
     
     $status = $status? 1:0;
-
+    
+    #?
+    return undef unless (
+        $member_id == $self->{'member_id'} || 
+        $self->is_user_writable( $member_id ) || 
+        $self->chk_access('users', 'manage', 'w') 
+    );
+    
     my $mode = $self->{'MODE'};
     
     if ($mode eq 'smf') {
@@ -1790,6 +2076,45 @@ sub set_forum_active ($$;$){
     }
     
     return undef;
-}
+    
+} #-- set_forum_active
+
+sub chk_pass ($$$;$) {
+    
+    #Check if typed pass correct - profile update, etc 
+    
+    my (
+        $self, 
+        $password, $passhash, 
+        $member_id, 
+    ) = @_;
+
+    my $member_id = $self->{'member_id'} 
+        unless defined $member_id;
+    
+    #?
+    return undef unless (
+        $member_id == $self->{'member_id'} || 
+        $self->is_user_writable( $member_id ) || 
+        $self->chk_access('users', 'manage', 'w') 
+    );
+
+    my $mode = $self->{'MODE'};
+    
+    if ($mode eq 'smf') {
+        return &_smf_chk_pass(
+            $self, 
+            $password, $passhash, 
+            $member_id, 
+        );
+    }
+    else {
+        $self->{'last_state'} = 'wrong_auth_mode';
+        return undef;
+    }
+    
+    return undef;
+
+} #-- chk_pass
 
 1;

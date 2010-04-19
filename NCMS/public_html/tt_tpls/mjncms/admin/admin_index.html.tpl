@@ -46,10 +46,10 @@
         <table width="100%" cellpadding="0" cellspacing="0" border="0" >
             <tr>
                 <td class="catbg lmal" style="padding:0.2em 0.2em 0.2em 0.7em;">
-            <a href="/"><span style="font-size:1.15em; font-weight:bolder; text-transform: uppercase;">Mojolicious-based PERL CMS</span></a>
+            <a href="/"><span style="font-size:1.15em; font-weight:bolder; text-transform: uppercase;">Mojolicious-based PERL NOT CMS :)</span></a>
                 </td>
                 <td class="catbg rmal" style="padding:0.2em 0.7em 0.2em 0.2em;">
-                    <a href="/"><span style="font-size:1.15em; font-weight:bolder; text-transform: uppercase;">MjNCMS</span></a>
+                    <a href="/"><span style="font-size:1.15em; font-weight:bolder;">MjNCMS</span></a>
                 </td>
             </tr>
             <tr id="upshrinkHeader" style='display:[% topblock_display %];'>

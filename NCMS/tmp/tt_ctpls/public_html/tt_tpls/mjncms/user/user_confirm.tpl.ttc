@@ -6,7 +6,7 @@ use utf8;
 
 Template::Document->new({
     METADATA => {
-        'modtime' => '1271627760',
+        'modtime' => '1271668444',
         'name' => 'user/user_confirm.tpl',
     },
     BLOCK => sub {
@@ -138,7 +138,7 @@ Template::Document->new({
         my $_tt_filter = $context->filter('html')
                   || $context->throw($context->error);
     
-    $output .=  $stash->get(['loc', [ 'Register' ]]);
+    $output .=  $stash->get(['loc', [ 'Confirm' ]]);
         
         &$_tt_filter($output);
     };
@@ -146,7 +146,7 @@ Template::Document->new({
     $output .=  "?');\" name=\"reguser_frm\" id=\"reguser_frm\" action=\"";
 #line 13 "../public_html/tt_tpls/mjncms/user/user_confirm.tpl"
     $output .=  $stash->get(['bytestream', [ $stash->get(['SESSION', 0, 'USR_URL', 0]), 'url_escape', 'A-Za-z0-9\/\-\.\_\~' ]]);
-    $output .=  "/register\" method=\"post\" accept-charset=\"";
+    $output .=  "/confirm\" method=\"post\" accept-charset=\"";
 #line 13 "../public_html/tt_tpls/mjncms/user/user_confirm.tpl"
     $output .=  $stash->get(['TT_VARS', 0, 'html_charset', 0]);
     $output .=  "\">\n            <table class=\"transp_table\">\n                <tr>\n                    <td>\n                        <label for=\"confirmation_code\" >";
@@ -188,7 +188,7 @@ Template::Document->new({
     
     $output .=  "                <tr>\n                    <td colspan=\"2\" class=\"rmal\">\n                        <input type=\"submit\" value=\"";
 #line 32 "../public_html/tt_tpls/mjncms/user/user_confirm.tpl"
-    $output .=  $stash->get(['loc', [ 'Confirm code' ]]);
+    $output .=  $stash->get(['loc', [ 'Confirm regstration' ]]);
     $output .=  "\" />\n                    </td>\n                </tr>\n            </table>\n        </form>\n        \n    ";
     }
     

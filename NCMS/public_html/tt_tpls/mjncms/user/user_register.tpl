@@ -48,10 +48,7 @@
                             <label for="usr_lang">[% loc('Site default lng') | html %]:</label> 
                         </td>
                         <td>
-                            [% UNLESS usr.site_lng -%]
-                                [% usr.site_lng='no' -%]
-                            [% END -%]
-                            [% INCLUDE common_langlist_fmt.tpl t_name='usr_lang', t_selected={ ${usr.site_lng} => 1 }, t_nolang=1 -%]
+                            [% INCLUDE common_langlist_fmt.tpl t_name='usr_lang', t_selected={ ${SESSION.USR.member_sitelng} => 1 }, t_nolang=1 -%]
                         </td>
                     </tr>
                     [% IF SESSION.CAPTCHA -%]

@@ -153,6 +153,7 @@ my %CFG_COMMON = (
     
     auth_engine => 'smf', 
     auth_cookie => 'MjCoockSMF', #if auth over SMF - same as SMF coockie 
+    auth_on_confirm => 1, #1/0 auth on confirm code/link follow
     rem_cookie => 'MjAuthRem', #'remember_me' @ login data store
     sess_cookie => 'MjSession', 
     sess_cookie_php => 'PHPSESSID', 
@@ -249,6 +250,8 @@ my %CFG_COMMON = (
     #Fast crypt and crc settings
     crypt_key => '<KEJ*#(J)@CSKAFDJ', #16 symbols enough - for crypt && decrypt smth fast && in easy way. JS decrypt also supported [ http://search.cpan.org/dist/Crypt-Tea/Tea.pm ]
     md_chk_key => ';giweJXE392CDasf ', #16 symbols enough - for checking smth data by CRC [for example some values going trough 2->n pages over browser && should be unchanged - set crc && verify :) ]
+    
+    #Mojolicious cookie signed key
     cookie_sign_key => 'o*(EFC,eofpkj', #16 symbols enough - for signing cookies - default key is unsecure (since mojo 0.999922)
     
     #http://search.cpan.org/~gbarr/TimeDate-1.20/lib/Date/Format.pm
@@ -406,6 +409,8 @@ sub get_config ($) {
         #Fast crypt and crc settings
         crypt_key => 'IfteISZ8d(%82cdn', 
         md_chk_key => 'wadO*EWYDHcxoew;', 
+
+        #Mojolicious cookie sign key
         cookie_sign_key => '_d+@OYAEBU!@*DSs', 
         
         site_langs => {

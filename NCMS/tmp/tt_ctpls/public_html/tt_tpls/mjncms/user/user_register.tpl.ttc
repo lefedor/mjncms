@@ -6,7 +6,7 @@ use utf8;
 
 Template::Document->new({
     METADATA => {
-        'modtime' => '1271625026',
+        'modtime' => '1271675413',
         'name' => 'user/user_register.tpl',
     },
     BLOCK => sub {
@@ -20,7 +20,7 @@ Template::Document->new({
     # USE
     $stash->set('loc',
                 $context->plugin('loc'));
-#line 74 "../public_html/tt_tpls/mjncms/user/user_register.tpl"
+#line 71 "../public_html/tt_tpls/mjncms/user/user_register.tpl"
     if (!($stash->get(['SESSION', 0, 'USR', 0, 'member_id', 0]))) {
     $output .=  "\n    <h2>";
 #line 3 "../public_html/tt_tpls/mjncms/user/user_register.tpl"
@@ -169,34 +169,25 @@ Template::Document->new({
     };
     
     $output .=  ":</label> \n                        </td>\n                        <td>\n                            ";
-#line 53 "../public_html/tt_tpls/mjncms/user/user_register.tpl"
-    if (!($stash->get(['usr', 0, 'site_lng', 0]))) {
-    $output .=  "                                ";
-#line 52 "../public_html/tt_tpls/mjncms/user/user_register.tpl"
-    $stash->set(['usr', 0, 'site_lng', 0], 'no');
-    $output .=  "                            ";
-    }
-    
-    $output .=  "                            ";
-#line 54 "../public_html/tt_tpls/mjncms/user/user_register.tpl"
-    $output .=  $context->include('common_langlist_fmt.tpl', { 't_name' => 'usr_lang', 't_selected' => { $stash->get(['usr', 0, 'site_lng', 0]) => 1  }, 't_nolang' => 1 });
+#line 51 "../public_html/tt_tpls/mjncms/user/user_register.tpl"
+    $output .=  $context->include('common_langlist_fmt.tpl', { 't_name' => 'usr_lang', 't_selected' => { $stash->get(['SESSION', 0, 'USR', 0, 'member_sitelng', 0]) => 1  }, 't_nolang' => 1 });
     $output .=  "                        </td>\n                    </tr>\n                    ";
-#line 63 "../public_html/tt_tpls/mjncms/user/user_register.tpl"
+#line 60 "../public_html/tt_tpls/mjncms/user/user_register.tpl"
     if ($stash->get(['SESSION', 0, 'CAPTCHA', 0])) {
     $output .=  "                        <tr>\n                            <td colspan=\"2\" style=\"height:130px;\">\n                                ";
-#line 60 "../public_html/tt_tpls/mjncms/user/user_register.tpl"
+#line 57 "../public_html/tt_tpls/mjncms/user/user_register.tpl"
     $output .=  $stash->get(['SESSION', 0, 'CAPTCHA', 0, 'get_mjcaptcha', 0]);
     $output .=  "                            </td>\n                        </tr>\n                    ";
     }
     
     $output .=  "                    <tr>\n                        <td colspan=\"2\" class=\"rmal\">\n                            <input type=\"submit\" value=\"";
-#line 66 "../public_html/tt_tpls/mjncms/user/user_register.tpl"
+#line 63 "../public_html/tt_tpls/mjncms/user/user_register.tpl"
     $output .=  $stash->get(['loc', [ 'Register me' ]]);
     $output .=  "\" />\n                        </td>\n                    </tr>\n                </table>\n    </form>\n";
     }
     else {
     $output .=  "\n    <h2>";
-#line 72 "../public_html/tt_tpls/mjncms/user/user_register.tpl"
+#line 69 "../public_html/tt_tpls/mjncms/user/user_register.tpl"
     
     # FILTER
     $output .=  do {
@@ -210,10 +201,10 @@ Template::Document->new({
     };
     
     $output .=  "</h2>\n    <a href=\"";
-#line 73 "../public_html/tt_tpls/mjncms/user/user_register.tpl"
+#line 70 "../public_html/tt_tpls/mjncms/user/user_register.tpl"
     $output .=  $stash->get(['SESSION', 0, 'USR_URL', 0]);
     $output .=  "/profile\">";
-#line 73 "../public_html/tt_tpls/mjncms/user/user_register.tpl"
+#line 70 "../public_html/tt_tpls/mjncms/user/user_register.tpl"
     
     # FILTER
     $output .=  do {

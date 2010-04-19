@@ -88,9 +88,14 @@ sub loc($$;$) {
 }
 
 sub set_lang($$) { 
+    
+    #
+    # Morbo: Kittens gives morbo gas...
+    #
+    
     my $self = $_[0];
     my $locale;
-    
+
     return undef unless ${$self->{'ACTIVE_LANGS'}}{$_[1]};#is @init?
     
     $self->{'CURRLANG'} = $_[1];

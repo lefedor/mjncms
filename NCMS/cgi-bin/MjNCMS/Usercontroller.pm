@@ -4,6 +4,11 @@ package MjNCMS::Usercontroller;
 #
 
 #
+# Leela: Professor, are we even allowed in the Forbidden Zone?
+# Professor: Why of course. It's just a name, like 
+#   the Death Zone, or the Zone of No Return. 
+#   All the zones have names like that in the Galaxy of Terror.
+#
 # Morbo: Hello little man. I WILL DESTROY YOU!
 #
 # (c) Futurama
@@ -1597,8 +1602,6 @@ sub usercontroller_rt_user_register_post () {
     
 } #-- usercontroller_rt_user_register_post
 
-
-
 sub usercontroller_rt_user_confirm_get () {
 
     my $self = shift;
@@ -1647,7 +1650,7 @@ sub usercontroller_rt_user_confirm_post () {
     
     my $res;
     
-    unless ($res) {
+    #unless ($res) {
         if ( 
             $SESSION{'CAPTCHA'} && 
             !$SESSION{'CAPTCHA'}->{'check_mjcaptcha'}()
@@ -1657,24 +1660,30 @@ sub usercontroller_rt_user_confirm_post () {
                 message => 'captcha do not match', 
             }
         }
-    }
+    #}
     
     unless ($res) {
-    if ($SESSION{'USR'}->confirm_registration({
-        confirm => scalar $SESSION{'REQ'}->param('confirmation_code'), 
-    })) {
-        $res = {
-            status => 'ok', 
-            message => 'All OK', 
+        if (
+            $SESSION{'USR'}->confirm_registration(
+                scalar $SESSION{'REQ'}->param('confirmation_code'), 
+                $SESSION{'AUTH_ON_CONFIRM'} 
+            ) 
+        ) {
             
-        };
-    }
-    else {
-        $res = {
-            status => 'fail', 
-            message => 'Confirm failed. Wrong code or alredy confirmed?', 
-            
-        };
+            $res = {
+                status => 'ok', 
+                message => 'All OK', 
+                
+            };
+        }
+        else {
+            $res = {
+                status => 'fail', 
+                message => 'Confirm failed. Wrong code or alredy confirmed?', 
+                
+            };
+            $$res{'message'} .= ' '.$self->{'last_state'} if $self->{'last_state'};
+        }
     }
 
     $SESSION{'PAGE_CACHABLE'} = 1;
@@ -1692,6 +1701,210 @@ sub usercontroller_rt_user_confirm_post () {
     $self->render('site_index', format => 'html');
     
 } #-- usercontroller_rt_user_confirm_post
+
+sub usercontroller_rt_user_login_get () {
+
+    my $self = shift;
+
+    unless ($SESSION{'USR'}->chk_access('users', 'auth')) {
+        $TT_CFG{'tt_controller'} = 
+            $TT_VARS{'tt_controller'} = 
+                'commmon';
+        $TT_CFG{'tt_action'} = 
+            $TT_VARS{'tt_action'} = 
+                'no_access_perm';
+        $self->render('site_index', format => 'html');
+        return;
+    }
+    else {
+        $SESSION{'PAGE_CACHABLE'} = 1;
+        $TT_CFG{'tt_controller'} = 
+            $TT_VARS{'tt_controller'} = 
+                'user';
+        $TT_CFG{'tt_action'} = 
+            $TT_VARS{'tt_action'} = 
+                'login';
+    }
+    $self->render('site_index', format => 'html');
+
+} #-- usercontroller_rt_user_login_get
+
+sub usercontroller_rt_user_profile_post () {
+
+    my $self = shift;
+    
+    unless ($SESSION{'USR'}->chk_access('users', 'auth', 'w')) {
+        $TT_CFG{'tt_controller'} = 
+            $TT_VARS{'tt_controller'} = 
+                'common';
+        $TT_CFG{'tt_action'} = 
+            $TT_VARS{'tt_action'} = 
+                'no_access_perm';
+        $self->render('index');
+        return;
+    }
+    
+    my (
+        $dbh, $q, $updcnt, 
+        $res, 
+        
+    ) = (
+        $SESSION{'DBH'}, 
+    );
+        
+    #unless ($res) {
+        unless (
+            $SESSION{'USR'}->chk_pass(
+                scalar $SESSION{'REQ'}->param('usr_pass') 
+            )
+        ) {
+            $res = {
+                status => 'fail', 
+                message => 'old password is not correct', 
+            }
+        }
+    #}
+
+    unless ($res) {
+        if (
+            (scalar $SESSION{'REQ'}->param('usr_lang')) && 
+            !&inarray([keys %{$SESSION{'SITE_LANGS'}}], scalar $SESSION{'REQ'}->param('usr_lang'))
+        ) {
+            $res = {
+                status => 'fail', 
+                message => 'lang unknown', 
+            };
+        }
+    }
+    
+    unless ($res) {
+        if (
+            scalar $SESSION{'REQ'}->param('new_usr_pass') 
+        ) {
+            unless (
+                $SESSION{'USR'}->change_password(
+                    scalar $SESSION{'REQ'}->param('new_usr_pass'), 
+                    scalar $SESSION{'REQ'}->param('new_usr_pass_retype') 
+                )
+            ) {
+                $res = {
+                    status => 'fail', 
+                    message => 'pass did not changed', 
+                };
+            }
+        }
+    }
+    
+    unless ($res) {
+        if (
+            scalar $SESSION{'REQ'}->param('new_usr_email') && 
+            scalar $SESSION{'REQ'}->param('new_usr_email') ne 
+            $SESSION{'USR'}->{'profile'}->{'member_email'}
+        ) {
+            unless (
+                $SESSION{'USR'}->change_email(
+                    scalar $SESSION{'REQ'}->param('new_usr_email') 
+                )
+            ) {
+                $res = {
+                    status => 'fail', 
+                    message => 'email did not changed', 
+                };
+            }
+        }
+    }
+    
+    unless ($res) {
+        if (
+            (scalar $SESSION{'REQ'}->param('new_usr_lang')) && 
+            !&inarray([keys %{$SESSION{'SITE_LANGS'}}], scalar $SESSION{'REQ'}->param('new_usr_lang'))
+        ) {
+            $res = {
+                status => 'fail', 
+                message => 'lang unknown', 
+            };
+        }
+    }
+    
+    unless ($res) {
+        unless (
+            scalar $SESSION{'REQ'}->param('new_usr_name')
+        ) {
+            $res = {
+                status => 'fail', 
+                message => 'name chk fail', 
+            };
+        }
+    }
+    
+    unless ($res) {
+        if (
+            scalar $SESSION{'REQ'}->param('new_usr_name') ne 
+                $SESSION{'USR'}->{'profile'}->{'member_name'} || 
+            scalar $SESSION{'REQ'}->param('new_usr_lang') ne 
+                $SESSION{'USR'}->{'profile'}->{'member_lang'}
+        ) {
+                
+            $q = qq~
+                UPDATE 
+                ${SESSION{PREFIX}}users 
+                SET 
+                    name = ~ . ($dbh->quote(scalar $SESSION{'REQ'}->param('new_usr_name'))) . qq~, 
+                    site_lng = ~ . ($dbh->quote(scalar $SESSION{'REQ'}->param('new_usr_lang'))) . qq~ 
+                WHERE 
+                    member_id = ~ . ($dbh->quote($SESSION{'USR'}->{'member_id'})) . qq~ 
+                ;
+            ~;
+            eval {
+                $updcnt = $dbh->do($q);
+            };
+
+            $res = {
+                status => 'fail', 
+                message => 'sql upd into users entry fail', 
+            } unless scalar $updcnt;
+            
+            $res = {
+                status => 'ok', 
+                message => 'All OK', 
+            }
+        }
+        else {
+            $res = {
+                status => 'ok', 
+                message => 'All OK', 
+            }
+        }
+    }
+    
+    unless ($SESSION{'REQ_ISAJAX'}) {
+        
+        if ($SESSION{'REFERER'}) {
+            $$res{'url'} = $SESSION{'REFERER'};
+        }
+        elsif ($SESSION{'HTTP_REFERER'}) {
+            $$res{'url'} = $SESSION{'HTTP_REFERER'};
+        }
+        else {
+            $$res{'url'} = $SESSION{'USR'}->{'profile'}->{'startpage'};
+        }
+        $$res{'url'} = $SESSION{'USR_URL'}.'/profile' unless $$res{'url'};
+        
+        $SESSION{'REDIR'} = {
+            url => $$res{'url'}, 
+            msg => $res->{'message'}, 
+        };
+        return;
+    }
+    else {
+        $self->render_json({
+            status => $res->{'status'}, 
+            message => $SESSION{'LOC'}->loc($res->{'message'}), 
+            
+        });
+    }
+    
+} #-- usercontroller_rt_user_profile_post
 
 ########################################################################
 #                           INTERNAL SUBS
@@ -1899,7 +2112,7 @@ sub permissions_mk_entry ($) {
     return {
         status => 'ok', 
         perm_id => $perm_id, 
-        message => 'All ok', 
+        message => 'All OK', 
     };
     
 } #-- permissions_mk_entry
@@ -2001,7 +2214,7 @@ sub permissions_edit_entry ($) {
     return {
         status => 'ok', 
         perm_id => ${$cfg}{'perm_id'}, 
-        message => 'All ok', 
+        message => 'All OK', 
     };
     
 } #-- permissions_edit_entry
@@ -2072,7 +2285,7 @@ sub permissions_delete_entry ($) {
     return {
         status => 'ok', 
         perm_id => ${$cfg}{'perm_id'}, 
-        message => 'All ok', 
+        message => 'All OK', 
     };
     
 } #-- permissions_delete_entry
@@ -2258,7 +2471,7 @@ sub awp_add_entry ($) {
     return {
         status => 'ok', 
         awp_id => $awp_id, 
-        message => 'All ok', 
+        message => 'All OK', 
     };
     
 } #-- awp_add_entry
@@ -2355,7 +2568,7 @@ sub awp_edit_entry ($) {
     return {
         status => 'ok', 
         awp_id => ${$cfg}{'awp_id'}, 
-        message => 'All ok', 
+        message => 'All OK', 
     };
     
 } #-- awp_edit_entry
@@ -2439,7 +2652,7 @@ sub awp_delete_entry ($) {
     return {
         status => 'ok', 
         awp_id => ${$cfg}{'awp_id'}, 
-        message => 'All ok', 
+        message => 'All OK', 
     };
     
 } #-- awp_delete_entry
@@ -2546,7 +2759,7 @@ sub role_add_entry ($) {
     return {
         status => 'ok', 
         role_id => $role_id, 
-        message => 'All ok', 
+        message => 'All OK', 
     };
     
 } #-- role_add_entry
@@ -2676,7 +2889,7 @@ sub role_edit_entry ($) {
     return {
         status => 'ok', 
         role_id => ${$cfg}{'role_id'}, 
-        message => 'All ok', 
+        message => 'All OK', 
     };
     
 } #-- role_edit_entry
@@ -2753,12 +2966,17 @@ sub role_delete_entry ($) {
     return {
         status => 'ok', 
         role_id => ${$cfg}{'role_id'}, 
-        message => 'All ok', 
+        message => 'All OK', 
     };
     
 } #-- role_delete_entry
 
 sub setperm_awp ($) {
+    
+    #
+    # Professor: I always feared he might run off like this. 
+    #   Why, why, why didn't I break his legs?
+    #
     
     my $cfg = shift;
     
@@ -2878,7 +3096,7 @@ sub setperm_awp ($) {
     return {
         status => 'ok', 
         awp_id => ${$cfg}{'awp_id'}, 
-        message => 'All ok', 
+        message => 'All OK', 
     };
     
 } #-- setperm_awp
@@ -2989,7 +3207,7 @@ sub setperm_role ($) {
     return {
         status => 'ok', 
         role_id => ${$cfg}{'role_id'}, 
-        message => 'All ok', 
+        message => 'All OK', 
     };
     
 } #-- setperm_role
@@ -3251,7 +3469,7 @@ sub users_add ($) {
     return {
         status => 'ok', 
         member_id => $member_id, 
-        message => 'All ok', 
+        message => 'All OK', 
     };
 } #-- users_add
 
@@ -3583,7 +3801,7 @@ sub users_edit ($) {
     return {
         status => 'ok', 
         member_id => ${$cfg}{'member_id'}, 
-        message => 'All ok', 
+        message => 'All OK', 
     };
     
 } #-- users_edit
@@ -3667,7 +3885,7 @@ sub users_delete ($) {
     return {
         status => 'ok', 
         member_id => ${$cfg}{'member_id'}, 
-        message => 'All ok', 
+        message => 'All OK', 
     };
     
 } #-- users_delete

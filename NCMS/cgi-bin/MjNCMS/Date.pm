@@ -4,7 +4,15 @@ package MjNCMS::Date;
 #
 
 #
-# Fry: Let's see, a giant brain is basically a giant nerd. Where would a nerd go? 
+# Professor: Good news, everyone. 
+#   Tomorrow, you'll all be making a delivery to Ebola 9, the virus planet.
+# Hermes: Why can't they go today?
+# Professor: Because tonight's a special night 
+#   and I want you all to be alive. 
+#   It's the Academy of Inventors annual symposium. 
+#
+# Fry: Wow, you guys have every kind of meat here except human.
+# Neptunian Vendor: What? You want human? 
 #
 # (c) Futurama
 #

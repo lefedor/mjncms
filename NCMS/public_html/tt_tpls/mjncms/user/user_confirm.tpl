@@ -10,7 +10,7 @@
     [% END -%]
     [% UNLESS TT_VARS.status && TT_VARS.status=='fail' -%]
     
-        <form onSubmit="javascript:return confirm('[% loc('Register') | html %]?');" name="reguser_frm" id="reguser_frm" action="[% bytestream(SESSION.USR_URL, 'url_escape', 'A-Za-z0-9\/\-\.\_\~') %]/confirm" method="post" accept-charset="[% TT_VARS.html_charset %]">
+        <form onSubmit="javascript:return confirm('[% loc('Confirm') | html %]?');" name="reguser_frm" id="reguser_frm" action="[% bytestream(SESSION.USR_URL, 'url_escape', 'A-Za-z0-9\/\-\.\_\~') %]/confirm" method="post" accept-charset="[% TT_VARS.html_charset %]">
             <table class="transp_table">
                 <tr>
                     <td>
@@ -29,7 +29,7 @@
                 [% END #IF SESSION.CAPTCHA -%]
                 <tr>
                     <td colspan="2" class="rmal">
-                        <input type="submit" value="[% loc('Confirm code') %]" />
+                        <input type="submit" value="[% loc('Confirm regstration') %]" />
                     </td>
                 </tr>
             </table>
