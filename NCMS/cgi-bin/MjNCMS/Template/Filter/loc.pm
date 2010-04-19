@@ -19,7 +19,7 @@ sub new {
 }
 
 sub filter {
-    my ($selft, $text, $enc) = @_;
+    my ($self, $text, $enc) = @_;
     return $SESSION{'LOC'}->loc($text, $enc);
 }
 

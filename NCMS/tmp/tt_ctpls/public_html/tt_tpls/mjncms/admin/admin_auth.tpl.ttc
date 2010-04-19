@@ -6,7 +6,7 @@ use utf8;
 
 Template::Document->new({
     METADATA => {
-        'modtime' => '1271336257',
+        'modtime' => '1271670826',
         'name' => 'admin/admin_auth.tpl',
     },
     BLOCK => sub {
@@ -28,7 +28,7 @@ Template::Document->new({
     $output .=  $stash->get(['TT_VARS', 0, 'JS', 0, 'push', [ $stash->get(['SESSION', 0, 'FORUM_URL', 0])  . '/Themes/default/sha1.js' ]]);
 #line 4 "../public_html/tt_tpls/mjncms/admin/admin_auth.tpl"
     $output .=  $stash->get(['TT_VARS', 0, 'JS', 0, 'push', [ $stash->get(['SESSION', 0, 'FORUM_URL', 0])  . '/Themes/default/script.js' ]]);
-    $output .=  "<script language=\"JavaScript\" type=\"text/javascript\"><!-- // --><![CDATA[\n	var smf_iso_case_folding = true;\n	var smf_charset = \"";
+    $output .=  "<script language=\"JavaScript\" type=\"text/javascript\"><!-- // --><![CDATA[\n    var smf_iso_case_folding = true;\n    var smf_charset = \"";
 #line 7 "../public_html/tt_tpls/mjncms/admin/admin_auth.tpl"
     $output .=  $stash->get(['TT_VARS', 0, 'html_charset', 0]);
     $output .=  "\";\n// ]]></script>\n\n<table width=\"100%\" cellpadding=\"3\" cellspacing=\"1\" border=\"0\" class=\"bordercolor\">\n    <tr class=\"titlebg\">\n        <td align=\"center\" ";
@@ -52,7 +52,7 @@ Template::Document->new({
     $output .=  "\"";
     }
     
-    $output .=  ">\n			<form action=\"";
+    $output .=  ">\n            <form action=\"";
 #line 18 "../public_html/tt_tpls/mjncms/admin/admin_auth.tpl"
     $output .=  $stash->get(['bytestream', [ $stash->get(['SESSION', 0, 'USR_URL', 0]), 'url_escape', 'A-Za-z0-9\/\-\.\_\~' ]]);
     $output .=  "/login\" method=\"post\" accept-charset=\"";
@@ -61,55 +61,55 @@ Template::Document->new({
     $output .=  "\" style=\"margin: 3px 1ex 1px 0;\" onsubmit=\"hashLoginPassword(this, '";
 #line 18 "../public_html/tt_tpls/mjncms/admin/admin_auth.tpl"
     $output .=  $stash->get(['SESSION', 0, 'USR', 0, 'PHP_SESSID', 0]);
-    $output .=  "');\">\n				<table style=\"width:340px;\">\n					<tr>\n						<td colspan=\"2\">\n							<span class=\"middletext\">";
+    $output .=  "');\">\n                <table style=\"width:340px;\">\n                    <tr>\n                        <td colspan=\"2\">\n                            <span class=\"middletext\">";
 #line 22 "../public_html/tt_tpls/mjncms/admin/admin_auth.tpl"
     $output .=  $stash->get(['loc', [ 'Please, fill this form' ]]);
-    $output .=  ": </span>\n						</td>\n					</tr>\n					<tr>\n						<td>\n							<label for=\"admin_auth_user\">";
+    $output .=  ": </span>\n                        </td>\n                    </tr>\n                    <tr>\n                        <td>\n                            <label for=\"admin_auth_user\">";
 #line 27 "../public_html/tt_tpls/mjncms/admin/admin_auth.tpl"
     $output .=  $stash->get(['loc', [ 'Login' ]]);
-    $output .=  ":<label>\n						</td>\n						<td>\n							<input type=\"text\" name=\"user\" id=\"admin_auth_user\" size=\"14\" />\n						</td>\n					</tr>\n					<tr>\n						<td>\n							<label for=\"admin_auth_passwrd\">";
+    $output .=  ":<label>\n                        </td>\n                        <td>\n                            <input type=\"text\" name=\"user\" id=\"admin_auth_user\" size=\"14\" />\n                        </td>\n                    </tr>\n                    <tr>\n                        <td>\n                            <label for=\"admin_auth_passwrd\">";
 #line 35 "../public_html/tt_tpls/mjncms/admin/admin_auth.tpl"
     $output .=  $stash->get(['loc', [ 'Password' ]]);
-    $output .=  ":</label>\n						</td>\n						<td>\n							<input type=\"password\" name=\"passwrd\" id=\"admin_auth_passwrd\" size=\"14\" />\n						</td>\n					</tr>\n					<tr>\n						<td>\n							<label for=\"admin_auth_cookielength\">";
+    $output .=  ":</label>\n                        </td>\n                        <td>\n                            <input type=\"password\" name=\"passwrd\" id=\"admin_auth_passwrd\" size=\"14\" />\n                        </td>\n                    </tr>\n                    <tr>\n                        <td>\n                            <label for=\"admin_auth_cookielength\">";
 #line 43 "../public_html/tt_tpls/mjncms/admin/admin_auth.tpl"
     $output .=  $stash->get(['loc', [ 'Auth for' ]]);
-    $output .=  ":</label>\n						</td>\n						<td>\n							<select name=\"cookielength\" id=\"admin_auth_cookielength\">\n								<option value=\"60\">1 ";
+    $output .=  ":</label>\n                        </td>\n                        <td>\n                            <select name=\"cookielength\" id=\"admin_auth_cookielength\">\n                                <option value=\"60\">1 ";
 #line 47 "../public_html/tt_tpls/mjncms/admin/admin_auth.tpl"
     $output .=  $stash->get(['loc', [ 'hour' ]]);
-    $output .=  "</option>\n								<option value=\"1440\">1 ";
+    $output .=  "</option>\n                                <option value=\"1440\">1 ";
 #line 48 "../public_html/tt_tpls/mjncms/admin/admin_auth.tpl"
     $output .=  $stash->get(['loc', [ 'day' ]]);
-    $output .=  "</option>\n								<option value=\"10080\">1 ";
+    $output .=  "</option>\n                                <option value=\"10080\">1 ";
 #line 49 "../public_html/tt_tpls/mjncms/admin/admin_auth.tpl"
     $output .=  $stash->get(['loc', [ 'week' ]]);
-    $output .=  "</option>\n								<option value=\"43200\">1 ";
+    $output .=  "</option>\n                                <option value=\"43200\">1 ";
 #line 50 "../public_html/tt_tpls/mjncms/admin/admin_auth.tpl"
     $output .=  $stash->get(['loc', [ 'month' ]]);
-    $output .=  "</option>\n								<option value=\"-1\" selected=\"selected\">";
+    $output .=  "</option>\n                                <option value=\"-1\" selected=\"selected\">";
 #line 51 "../public_html/tt_tpls/mjncms/admin/admin_auth.tpl"
     $output .=  $stash->get(['loc', [ 'forever' ]]);
-    $output .=  "</option>\n							</select>\n						</td>\n					</tr>\n					<tr>\n						<td colspan=\"2\">\n							<input name=\"rememberme\" id=\"admin_auth_rememberme\" type=\"checkbox\" class=\"vam\"/><label for=\"admin_auth_rememberme\"> ";
+    $output .=  "</option>\n                            </select>\n                        </td>\n                    </tr>\n                    <tr>\n                        <td colspan=\"2\">\n                            <input name=\"rememberme\" id=\"admin_auth_rememberme\" type=\"checkbox\" class=\"vam\"/><label for=\"admin_auth_rememberme\"> ";
 #line 57 "../public_html/tt_tpls/mjncms/admin/admin_auth.tpl"
     $output .=  $stash->get(['loc', [ 'remember me' ]]);
-    $output .=  "</label>\n						</td>\n					</tr>\n					";
+    $output .=  "</label>\n                        </td>\n                    </tr>\n                    ";
 #line 66 "../public_html/tt_tpls/mjncms/admin/admin_auth.tpl"
     if ($stash->get(['SESSION', 0, 'CAPTCHA', 0])) {
-    $output .=  "						<tr>\n							<td colspan=\"2\" style=\"height:130px;\">\n								";
+    $output .=  "                        <tr>\n                            <td colspan=\"2\" style=\"height:130px;\">\n                                ";
 #line 63 "../public_html/tt_tpls/mjncms/admin/admin_auth.tpl"
     $output .=  $stash->get(['SESSION', 0, 'CAPTCHA', 0, 'get_mjcaptcha', 0]);
-    $output .=  "							</td>\n						</tr>\n					";
+    $output .=  "                            </td>\n                        </tr>\n                    ";
     }
     
-    $output .=  "					<tr>\n						<td>\n							<input type=\"hidden\" name=\"referer\" value=\"";
+    $output .=  "                    <tr>\n                        <td>\n                            <input type=\"hidden\" name=\"referer\" value=\"";
 #line 69 "../public_html/tt_tpls/mjncms/admin/admin_auth.tpl"
     $output .=  $stash->get(['bytestream', [ $stash->get(['SESSION', 0, 'ADM_URL', 0]), 'url_escape', 'A-Za-z0-9\/\-\.\_\~' ]]);
-    $output .=  "\" />\n							<input type=\"hidden\" name=\"rnd\" value=\"";
+    $output .=  "\" />\n                            <input type=\"hidden\" name=\"rnd\" value=\"";
 #line 70 "../public_html/tt_tpls/mjncms/admin/admin_auth.tpl"
     $output .=  $stash->get(['SESSION', 0, 'RND', 0]);
-    $output .=  "\" />\n							<input type=\"hidden\" name=\"hash_passwrd\" value=\"\" />\n						</td>\n						<td class=\"rmal\">\n							<input type=\"submit\" value=\"";
+    $output .=  "\" />\n                            <input type=\"hidden\" name=\"hash_passwrd\" value=\"\" />\n                        </td>\n                        <td class=\"rmal\">\n                            <input type=\"submit\" value=\"";
 #line 74 "../public_html/tt_tpls/mjncms/admin/admin_auth.tpl"
     $output .=  $stash->get(['loc', [ 'Log me inside' ]]);
-    $output .=  "\" />\n						</td>\n					</tr>\n			</form>\n        </td>\n    </tr>\n</table>\n";
+    $output .=  "\" />\n                        </td>\n                    </tr>\n                </table>\n            </form>\n        </td>\n    </tr>\n</table>\n";
         } };
         if ($@) {
             $_tt_error = $context->catch($@, \$output);

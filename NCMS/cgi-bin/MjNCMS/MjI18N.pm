@@ -80,9 +80,9 @@ sub loc($$;$) {
         foreach my $transfail_str (@to_trans){
             unless(defined(${$untrans_hash}{$SESSION{'SERVER_URL'}}{$self->{'CURRLANG'}}{$md5_sum = $SESSION{'BS'}($transfail_str)->md5_sum()->to_string()})){
                 ${$untrans_hash}{$SESSION{'SERVER_URL'}}{$self->{'CURRLANG'}}{$md5_sum} = $transfail_str;
+                $SESSION{'MEMD'}->set('untrans_hash', $untrans_hash);
             }
         }
-        $SESSION{'MEMD'}->set('untrans_hash', $untrans_hash);
     }
     return join ' ', @to_trans;
 }

@@ -3,8 +3,8 @@
     [% IF TT_VARS.status -%]
         [% loc('Status') | html %]: [% IF TT_VARS.status=='ok' %][% loc('OK') %][% ELSE %][% loc('FAIL')%][% END %]<br />
         [% loc('Message') | html %]: [% TT_VARS.message | html %]<br />
-        <h2>[% loc('Since we have no email module') | html -%]</h2>
-        <h2>[% loc('Since we send confirm code to your browser') | html -%]</h2>
+        <h2>[% loc('Since we have no email module yet') | html -%]</h2>
+        <h2>[% loc('We send confirm code directly to your browser') | html -%]</h2>
     [% ELSE %]
         <h2>[% loc('Confirm your registration') | html -%]</h2>
     [% END -%]

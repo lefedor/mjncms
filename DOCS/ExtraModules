@@ -12,3 +12,4 @@ Filesys:Tree
 #Locale::Maketext::Lexicon #Wiped
 PHP::Serialization
 Template
+HTML::StripScripts::Parser #safe_page_html TT filter

@@ -1739,6 +1739,10 @@ sub content_rt_blocks_delete_get () {
 #                           INTERNAL SUBS
 ########################################################################
 
+#sub _clear_html ($) {
+#MjNCMS::Template::Filter::safe_page_html;# AS TT filter - on demand
+#}; #-- _clear_html
+
 sub _surl_next_url_alias ($) {
     my $alias = shift;
 

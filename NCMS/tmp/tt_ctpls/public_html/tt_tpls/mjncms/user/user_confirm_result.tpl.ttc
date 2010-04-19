@@ -6,7 +6,7 @@ use utf8;
 
 Template::Document->new({
     METADATA => {
-        'modtime' => '1271668656',
+        'modtime' => '1271670323',
         'name' => 'user/user_confirm_result.tpl',
     },
     BLOCK => sub {
@@ -80,7 +80,7 @@ Template::Document->new({
     else {
     $output .=  "    ";
 #line 10 "../public_html/tt_tpls/mjncms/user/user_confirm_result.tpl"
-    if (!($stash->get(['SESSION', 0, 'USR', 0, 'member_id', 0]))) {
+    if (!($stash->get(['SESSION', 0, 'AUTH_ON_CONFIRM', 0]))) {
     $output .=  "        <a href=\"";
 #line 7 "../public_html/tt_tpls/mjncms/user/user_confirm_result.tpl"
     $output .=  $stash->get(['SESSION', 0, 'USR_URL', 0]);

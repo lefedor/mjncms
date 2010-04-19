@@ -68,7 +68,6 @@
   Mess with date and offsets... I've been to clever with it and lost what where alredy 
   modify content_get_catrecord like get_pagerecord: not ([], {extraparams}), but get_pagerecord: ({cat_ids=>[],extraparams})
   add all standart Mojolicious error pages  - 404, etc, since current set is done from scratch and don't have any
-  Add filter to page content - cut iframes and cut JS inside
   ShortUrl groups should also have own alias to allow /r/grp_alias/9sd32, /r/grp_id=\d+/skyd76 now (.
   Mojolicious app log parser (at least, access, say last 1000-10000 strings) @box? Would be fun.
     btw, mess with log, now daemon itself put logs at ./, client request as defined @ cfg...

@@ -431,11 +431,15 @@ package MjNCMS::Main;
 
     #admin panel main page
     sub mjadmin_index_get () {
+        
         my $self = shift;
-        $SESSION{'PAGE_CACHABLE'} = 1;
+        
+        #$SESSION{'PAGE_CACHABLE'} = 1;
+        
         $TT_CFG{'tt_controller'}=$TT_VARS{'tt_controller'}='admin';
         $TT_CFG{'tt_action'}=$TT_VARS{'tt_action'}='index';
         $self->render('admin/admin_index');
+        
     };
     
     #sub test_render_this_is_it{
