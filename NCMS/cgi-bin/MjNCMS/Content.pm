@@ -4032,7 +4032,7 @@ sub pages_get_access_roles ($) {
 sub content_get_pagerecord ($) {
     
     #
-    # Female-Mutant: Nice try Leela, but we're all se Zapp
+    # Female-Mutant: Nice try Leela, but we're all saw Zapp
     #   Brannigan's webpage!
     #
     

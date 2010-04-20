@@ -12,6 +12,8 @@ package MjNCMS::Mail;
 #   Did either of you ever stop to think about Dr. Zoidberg's feelings? 
 # FRY No! I swear! 
 #
+# Bender: Lick my frozen metall ass!
+#
 #   (c) Futurama
 #
 
@@ -20,18 +22,10 @@ use FindBin;
 use lib "$FindBin::Bin/../";
 
 use MjNCMS::Config qw/:vars /;
-use MjNCMS::Service qw/:subs /;
+#use MjNCMS::Service qw/:subs /;
 
 use MIME::Lite;
 use MIME::Base64 qw/encode_base64 /;
-use Encode qw(encode);
-
-use locale;
-use POSIX qw/locale_h /;
-my $locale = 'ru_RU.UTF-8';
-        setlocale(LC_CTYPE, $locale);
-        setlocale(LC_ALL, $locale);
-
 
 sub new () {
     my $self = {}; shift;
@@ -43,9 +37,26 @@ sub new () {
     #return undef unless $$cfg{'to'};
     $$cfg{'to'} = $SESSION{'SITE_CONTACTEMAIL'} 
         unless $$cfg{'to'};    
+    $$cfg{'to'} = 
+        $SESSION{'SITE_NAME'} . ' ' . $SESSION{'LOC'}->loc('User') .
+            '<' . $$cfg{'to'} . '>' 
+                unless $$cfg{'to'} =~ /<[A-Za-z0-9_\-\.]+\@/;
+    
     
     $$cfg{'from'} = $SESSION{'SITE_CONTACTEMAIL'} 
         unless $$cfg{'from'};    
+        
+    $$cfg{'from'} = 
+        $SESSION{'SITE_NAME'} . ' ' . $SESSION{'LOC'}->loc('Administrator') .
+            '<' . $$cfg{'from'} . '>' 
+                unless $$cfg{'from'} =~ /<[A-Za-z0-9_\-\.]+\@/;
+    
+    if ($$cfg{'cc'}) {
+        $$cfg{'from'} = 
+            $SESSION{'SITE_NAME'} . ' ' . $SESSION{'LOC'}->loc('User') .
+                '<' . $$cfg{'to'} . '>' 
+                    unless $$cfg{'cc'} =~ /<[A-Za-z0-9_\-\.]+\@/;
+    }
     
     $$cfg{'subject'} = $SESSION{'SITE_NAME'} 
         unless $$cfg{'subject'};
@@ -60,23 +71,36 @@ sub new () {
     unless ($$cfg{'skip_enc'}){
         $$cfg{'from_enc'} = 
             &_field_to_base($$cfg{'from'})
-                unless $$cfg{'from_enc'};
+                unless (
+                    !$$cfg{'from'} ||
+                    $$cfg{'from_enc'}
+                );
         $$cfg{'to_enc'} = 
             &_field_to_base($$cfg{'to'})
-                unless $$cfg{'to_enc'};
+                unless (
+                    !$$cfg{'to'} ||
+                    $$cfg{'to_enc'}
+                );
         $$cfg{'cc_enc'} = 
             &_field_to_base($$cfg{'cc'})
-                unless $$cfg{'cc_enc'};
+                unless (
+                    !$$cfg{'cc'} ||
+                    $$cfg{'cc_enc'}
+                );
         $$cfg{'subject_enc'} = 
             &_field_to_base($$cfg{'subject'})
-                unless $$cfg{'subject_enc'};
+                unless (
+                    !$$cfg{'subject'} ||
+                    $$cfg{'subject_enc'}
+                );
     }
     $self->{'MESSAGE'} = MIME::Lite->new(
-        From    => $$cfg{'from_enc'},
-        To      => $$cfg{'to_enc'},
-        Cc      => $$cfg{'cc_enc'},
-        Subject => $$cfg{'subject_enc'},
-        Type    => 'multipart/mixed'
+        From       => $$cfg{'from_enc'} || $$cfg{'from'},
+        To         => $$cfg{'to_enc'} || $$cfg{'to'},
+        Cc         => $$cfg{'cc_enc'} || $$cfg{'cc'},
+        Subject    => $$cfg{'subject_enc'} || $$cfg{'subject_enc'},
+        Type       => $$cfg{'type'} || 'multipart/alternative', #'multipart/mixed', one of html|txt || both
+        'X-Mailer' => 'MjNCMS Mailer',
     );
     
     $self->{'MIMETYPES'} = MIME::Types->new();
@@ -156,7 +180,8 @@ sub _field_to_base ($) {
         $field = &_str_to_base($field);
     }
     return $field
-}
+} #-- _field_to_base
+
 sub attach_text ($$) {
     my ($self, $text) = @_;
     
@@ -200,7 +225,7 @@ sub attach_file ($$) {
             $file_cfg = {path => $$file_cfg{'path'}};
         }
         
-        return unless -e $$file_cfg{'path'};
+        return unless $$file_cfg{'path'} && -e $$file_cfg{'path'};
      
         unless ($$file_cfg{'filename'}) {
             $$file_cfg{'filename'} = pop @{[split '/', $$file_cfg{'path'}]}; 
@@ -256,9 +281,9 @@ sub attach_file ($$) {
 sub send ($;$) {
     my $self = shift;
     
-    $self->{'MESSAGE'}->send(@_);
+    return $self->{'MESSAGE'}->send(@_);
     
-    return $self;
+    #return $self;
 } #-- send
 
 sub as_string ($) {
@@ -272,6 +297,35 @@ sub to_string ($) {
     
     return $self->as_string();
 } #-- to_string
+
+sub sign ($$) {
+    
+    #is it broken?
+    
+    my ($self, $cfg) = @_;
+    
+    $cfg = {} unless ($cfg && ref $cfg && ref $cfg eq 'HASH');
+    
+    unless ($cfg && 
+        (
+            $$cfg{'data'} || 
+            $$cfg{'path'} 
+        )
+    ) {
+        $$cfg{'data'} = $SESSION{'EMAIL_SIGNATURE'};
+        $$cfg{'path'} = undef;
+    }
+    
+    $$cfg{'data'} = &_field_to_base($$cfg{'data'})
+        if $$cfg{'data'};
+    
+    $self->{'MESSAGE'}->sign({
+        Data => $$cfg{'data'}, 
+        Path => $$cfg{'path'}
+    });
+    
+    return $self;
+} #-- sign
 
 =pod
 

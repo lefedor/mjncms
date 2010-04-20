@@ -170,7 +170,7 @@ sub register {
                 html_charset => $$cfg{'site_coding'}? $$cfg{'site_coding'}:'utf-8',
                 CSS => [], 
                 JS => [], 
-                site_name => $$cfg{'site_name'}? $$cfg{'site_name'}:'MjNCMS',
+                site_name => $SESSION{'SITE_NAME'},
                 
                 robots_noindex => $$cfg{'robots_noindex'}? 1:0, 
                 robots_nofollow => $$cfg{'robots_nofollow'}? 1:0, 
@@ -579,6 +579,13 @@ sub register {
 
             $SESSION{'MAILER'} = MjNCMS::Mail->new({});
             
+            $SESSION{'EMAIL_SIGNATURE'} = $$cfg{'email_signature'} || 
+#>>>>>>>>>>>            
+qq~
+Sincerely yours, 
+${SESSION{SITE_NAME}} support team 
+$SESSION{'SERVER_NAME'} ~;
+#<<<<<<<<<<<
             $SESSION{'SHORT_URLS_ALLOW_MULTIALIAS'} = $$cfg{'short_urls_allow_multialias'} || 0;
             
             $SESSION{'PREROUTE_CALLS'} = $$cfg{'preroute_calls'} if (

@@ -6,7 +6,7 @@ use utf8;
 
 Template::Document->new({
     METADATA => {
-        'modtime' => '1271668444',
+        'modtime' => '1271796171',
         'name' => 'user/user_confirm.tpl',
     },
     BLOCK => sub {
@@ -20,10 +20,10 @@ Template::Document->new({
     # USE
     $stash->set('loc',
                 $context->plugin('loc'));
-#line 42 "../public_html/tt_tpls/mjncms/user/user_confirm.tpl"
+#line 44 "../public_html/tt_tpls/mjncms/user/user_confirm.tpl"
     if (!($stash->get(['SESSION', 0, 'USR', 0, 'member_id', 0]))) {
     $output .=  "\n    ";
-#line 10 "../public_html/tt_tpls/mjncms/user/user_confirm.tpl"
+#line 12 "../public_html/tt_tpls/mjncms/user/user_confirm.tpl"
     if ($stash->get(['TT_VARS', 0, 'status', 0])) {
     $output .=  "        ";
 #line 4 "../public_html/tt_tpls/mjncms/user/user_confirm.tpl"
@@ -78,21 +78,10 @@ Template::Document->new({
         &$_tt_filter($output);
     };
     
-    $output .=  "<br />\n        <h2>";
-#line 6 "../public_html/tt_tpls/mjncms/user/user_confirm.tpl"
-    
-    # FILTER
-    $output .=  do {
-        my $output = '';
-        my $_tt_filter = $context->filter('html')
-                  || $context->throw($context->error);
-    
-    $output .=  $stash->get(['loc', [ 'Since we have no email module' ]]);
-        
-        &$_tt_filter($output);
-    };
-    
-    $output .=  "</h2>\n        <h2>";
+    $output .=  "<br />\n        ";
+#line 9 "../public_html/tt_tpls/mjncms/user/user_confirm.tpl"
+    if ($stash->get(['TT_VARS', 0, 'status', 0]) eq 'ok') {
+    $output .=  "            <h2>";
 #line 7 "../public_html/tt_tpls/mjncms/user/user_confirm.tpl"
     
     # FILTER
@@ -101,16 +90,33 @@ Template::Document->new({
         my $_tt_filter = $context->filter('html')
                   || $context->throw($context->error);
     
-    $output .=  $stash->get(['loc', [ 'Since we send confirm code to your browser' ]]);
+    $output .=  $stash->get(['loc', [ 'Some error while sending you email' ]]);
         
         &$_tt_filter($output);
     };
     
-    $output .=  "</h2>\n    ";
+    $output .=  "</h2>\n            <h2>";
+#line 8 "../public_html/tt_tpls/mjncms/user/user_confirm.tpl"
+    
+    # FILTER
+    $output .=  do {
+        my $output = '';
+        my $_tt_filter = $context->filter('html')
+                  || $context->throw($context->error);
+    
+    $output .=  $stash->get(['loc', [ 'So we send confirm code directly to your browser' ]]);
+        
+        &$_tt_filter($output);
+    };
+    
+    $output .=  "</h2>\n        ";
+    }
+    
+    $output .=  "    ";
     }
     else {
     $output .=  "\n        <h2>";
-#line 9 "../public_html/tt_tpls/mjncms/user/user_confirm.tpl"
+#line 11 "../public_html/tt_tpls/mjncms/user/user_confirm.tpl"
     
     # FILTER
     $output .=  do {
@@ -127,10 +133,10 @@ Template::Document->new({
     }
     
     $output .=  "    ";
-#line 38 "../public_html/tt_tpls/mjncms/user/user_confirm.tpl"
+#line 40 "../public_html/tt_tpls/mjncms/user/user_confirm.tpl"
     if (!($stash->get(['TT_VARS', 0, 'status', 0]) && $stash->get(['TT_VARS', 0, 'status', 0]) eq 'fail')) {
     $output .=  "    \n        <form onSubmit=\"javascript:return confirm('";
-#line 13 "../public_html/tt_tpls/mjncms/user/user_confirm.tpl"
+#line 15 "../public_html/tt_tpls/mjncms/user/user_confirm.tpl"
     
     # FILTER
     $output .=  do {
@@ -144,13 +150,13 @@ Template::Document->new({
     };
     
     $output .=  "?');\" name=\"reguser_frm\" id=\"reguser_frm\" action=\"";
-#line 13 "../public_html/tt_tpls/mjncms/user/user_confirm.tpl"
+#line 15 "../public_html/tt_tpls/mjncms/user/user_confirm.tpl"
     $output .=  $stash->get(['bytestream', [ $stash->get(['SESSION', 0, 'USR_URL', 0]), 'url_escape', 'A-Za-z0-9\/\-\.\_\~' ]]);
     $output .=  "/confirm\" method=\"post\" accept-charset=\"";
-#line 13 "../public_html/tt_tpls/mjncms/user/user_confirm.tpl"
+#line 15 "../public_html/tt_tpls/mjncms/user/user_confirm.tpl"
     $output .=  $stash->get(['TT_VARS', 0, 'html_charset', 0]);
     $output .=  "\">\n            <table class=\"transp_table\">\n                <tr>\n                    <td>\n                        <label for=\"confirmation_code\" >";
-#line 17 "../public_html/tt_tpls/mjncms/user/user_confirm.tpl"
+#line 19 "../public_html/tt_tpls/mjncms/user/user_confirm.tpl"
     
     # FILTER
     $output .=  do {
@@ -164,7 +170,7 @@ Template::Document->new({
     };
     
     $output .=  ":</label>\n                    </td>\n                    <td>\n                        <input value=";
-#line 20 "../public_html/tt_tpls/mjncms/user/user_confirm.tpl"
+#line 22 "../public_html/tt_tpls/mjncms/user/user_confirm.tpl"
     
     # FILTER
     $output .=  do {
@@ -178,16 +184,16 @@ Template::Document->new({
     };
     
     $output .=  " type=\"text\" name=\"confirmation_code\" id=\"confirmation_code\" size=\"20\" maxlength=\"20\" />\n                    </td>\n                </tr>\n                ";
-#line 29 "../public_html/tt_tpls/mjncms/user/user_confirm.tpl"
+#line 31 "../public_html/tt_tpls/mjncms/user/user_confirm.tpl"
     if ($stash->get(['SESSION', 0, 'CAPTCHA', 0])) {
     $output .=  "                    <tr>\n                        <td colspan=\"2\" style=\"height:130px;\">\n                            ";
-#line 26 "../public_html/tt_tpls/mjncms/user/user_confirm.tpl"
+#line 28 "../public_html/tt_tpls/mjncms/user/user_confirm.tpl"
     $output .=  $stash->get(['SESSION', 0, 'CAPTCHA', 0, 'get_mjcaptcha', 0]);
     $output .=  "                        </td>\n                    </tr>\n                ";
     }
     
     $output .=  "                <tr>\n                    <td colspan=\"2\" class=\"rmal\">\n                        <input type=\"submit\" value=\"";
-#line 32 "../public_html/tt_tpls/mjncms/user/user_confirm.tpl"
+#line 34 "../public_html/tt_tpls/mjncms/user/user_confirm.tpl"
     $output .=  $stash->get(['loc', [ 'Confirm regstration' ]]);
     $output .=  "\" />\n                    </td>\n                </tr>\n            </table>\n        </form>\n        \n    ";
     }
@@ -195,7 +201,7 @@ Template::Document->new({
     }
     else {
     $output .=  "\n    <h2>";
-#line 40 "../public_html/tt_tpls/mjncms/user/user_confirm.tpl"
+#line 42 "../public_html/tt_tpls/mjncms/user/user_confirm.tpl"
     
     # FILTER
     $output .=  do {
@@ -209,10 +215,10 @@ Template::Document->new({
     };
     
     $output .=  "</h2>\n    <a href=\"";
-#line 41 "../public_html/tt_tpls/mjncms/user/user_confirm.tpl"
+#line 43 "../public_html/tt_tpls/mjncms/user/user_confirm.tpl"
     $output .=  $stash->get(['SESSION', 0, 'USR_URL', 0]);
     $output .=  "/profile\">";
-#line 41 "../public_html/tt_tpls/mjncms/user/user_confirm.tpl"
+#line 43 "../public_html/tt_tpls/mjncms/user/user_confirm.tpl"
     
     # FILTER
     $output .=  do {

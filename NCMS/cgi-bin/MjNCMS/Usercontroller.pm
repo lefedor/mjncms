@@ -1706,7 +1706,10 @@ sub usercontroller_rt_user_register_post () {
         return;
     }
     
-    my ($res, $member_id, $valcode) = (undef, );
+    my (
+        $res, $member_id, 
+        $valcode, $html, $text 
+    );
 
     #unless ($res) {
         if (
@@ -1790,19 +1793,61 @@ sub usercontroller_rt_user_register_post () {
         }
     }
     
+    
     $TT_CFG{'tt_controller'} = 
         $TT_VARS{'tt_controller'} = 
             'user';
-    $TT_CFG{'tt_action'} = 
-        $TT_VARS{'tt_action'} = 
-            'confirm';
-            
+    
     $TT_VARS{'status'} = $res->{'status'};
     $TT_VARS{'message'} = $SESSION{'LOC'}->loc($res->{'message'});
     $TT_VARS{'member_id'} = $member_id;
     $TT_VARS{'confirmation_code'} = $valcode;
 
-    $self->render('site_index', format => 'html');
+    if ($res->{'status'} ne 'ok') {
+        
+        $TT_CFG{'tt_action'} = 
+            $TT_VARS{'tt_action'} = 
+                'confirm';
+
+        $self->render('site_index', format => 'html');
+    
+    }
+    else {
+        
+        $TT_VARS{'make_it_simple'} = 1;
+        $html = $self->render_partial(template => 'user/mail/confirm', format => 'html');
+        $text = $self->render_partial('user/mail/confirm', format => 'txt');
+        $TT_VARS{'make_it_simple'} = 0;
+        
+        if (
+            $SESSION{'MAILER'}->new({
+                to => scalar $SESSION{'REQ'}->param('usr_email'), 
+                subject => $SESSION{'LOC'}->loc('Confirm registartion at') . ' ' . $SESSION{'SITE_NAME'}, 
+                html => $html, 
+                text => $text, 
+            })->send()
+        ){
+        
+            $TT_CFG{'tt_action'} = 
+                $TT_VARS{'tt_action'} = 
+                    'confirm_req';
+
+            $self->render('site_index', format => 'html');
+        }
+        else {
+
+            $TT_CFG{'tt_action'} = 
+                $TT_VARS{'tt_action'} = 
+                    'confirm';
+
+            $self->render('site_index', format => 'html');
+        
+        }
+    
+    }
+    
+    
+    my $body = $self->render_partial;
     
 } #-- usercontroller_rt_user_register_post
 
