@@ -28,9 +28,6 @@ use Mojo::Cookie::Response;
 use Digest::SHA1 qw/sha1_hex /;#smf reg requirement
 use PHP::Serialization qw/serialize unserialize /;#smf auth req
 
-use locale;
-use POSIX qw/locale_h /;
-
 sub new {
   my $self = {}; shift;
 

@@ -25,7 +25,6 @@
     member can select active session then 
     [like shop cart - previous temporary order should not be lost]
     all sessions stored @ db like forever
-  E-mail messaging core (plain text, html, attaches @email max easily api as possible)
   
       
   OTHER STUFF:

@@ -24,6 +24,7 @@ use MjNCMS::NS;
 ########################################################################
 
 sub menus_rt_menus_get () {
+    
     my $self = shift;
 
     $SESSION{'PAGE_CACHABLE'} = 1;

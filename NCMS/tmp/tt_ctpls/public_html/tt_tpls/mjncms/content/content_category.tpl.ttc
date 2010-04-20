@@ -6,7 +6,7 @@ use utf8;
 
 Template::Document->new({
     METADATA => {
-        'modtime' => '1271357253',
+        'modtime' => '1271702285',
         'name' => 'content/content_category.tpl',
     },
     BLOCK => sub {
@@ -21,15 +21,19 @@ Template::Document->new({
     $stash->set('loc',
                 $context->plugin('loc'));
 #line 2 "../public_html/tt_tpls/mjncms/content/content_category.tpl"
+    # USE
+    $stash->set('safe_page_html',
+                $context->plugin('safe_page_html'));
+#line 3 "../public_html/tt_tpls/mjncms/content/content_category.tpl"
     if ($stash->get(['TT_VARS', 0, 'category_id', 0])) {
-#line 2 "../public_html/tt_tpls/mjncms/content/content_category.tpl"
+#line 3 "../public_html/tt_tpls/mjncms/content/content_category.tpl"
     $stash->set(['TT_VARS', 0, 'category_slug', 0], '');
     }
     
-#line 5 "../public_html/tt_tpls/mjncms/content/content_category.tpl"
+#line 6 "../public_html/tt_tpls/mjncms/content/content_category.tpl"
     if (! $stash->get(['TT_VARS', 0, 'category_id', 0]) && ! $stash->get(['TT_VARS', 0, 'category_slug', 0])) {
-    $output .=  "\n	";
-#line 4 "../public_html/tt_tpls/mjncms/content/content_category.tpl"
+    $output .=  "\n    ";
+#line 5 "../public_html/tt_tpls/mjncms/content/content_category.tpl"
     
     # FILTER
     $output .=  do {
@@ -42,17 +46,17 @@ Template::Document->new({
         &$_tt_filter($output);
     };
     
-#line 4 "../public_html/tt_tpls/mjncms/content/content_category.tpl"
+#line 5 "../public_html/tt_tpls/mjncms/content/content_category.tpl"
     $context->throw('return', '', \$output);
     }
     
-#line 6 "../public_html/tt_tpls/mjncms/content/content_category.tpl"
+#line 7 "../public_html/tt_tpls/mjncms/content/content_category.tpl"
     $stash->set('cats_res', $stash->get(['TT_CALLS', 0, 'content_get_catrecord', [ [ ], { 'cat_id' => $stash->get(['TT_VARS', 0, 'category_id', 0]), 'slug' => $stash->get(['TT_VARS', 0, 'category_slug', 0])  } ]]));
-#line 13 "../public_html/tt_tpls/mjncms/content/content_category.tpl"
+#line 14 "../public_html/tt_tpls/mjncms/content/content_category.tpl"
     $stash->set('cat', $stash->get(['cats_res', 0, 'records', 0, 'values', 0, 'shift', 0]));
-#line 14 "../public_html/tt_tpls/mjncms/content/content_category.tpl"
+#line 15 "../public_html/tt_tpls/mjncms/content/content_category.tpl"
     if (!($stash->get(['cat', 0, 'cat_id', 0]))) {
-#line 14 "../public_html/tt_tpls/mjncms/content/content_category.tpl"
+#line 15 "../public_html/tt_tpls/mjncms/content/content_category.tpl"
     
     # FILTER
     $output .=  do {
@@ -65,22 +69,22 @@ Template::Document->new({
         &$_tt_filter($output);
     };
     
-#line 14 "../public_html/tt_tpls/mjncms/content/content_category.tpl"
+#line 15 "../public_html/tt_tpls/mjncms/content/content_category.tpl"
     $context->throw('return', '', \$output);
     }
     
-#line 15 "../public_html/tt_tpls/mjncms/content/content_category.tpl"
+#line 16 "../public_html/tt_tpls/mjncms/content/content_category.tpl"
     $stash->set('slug_base', '');
-#line 24 "../public_html/tt_tpls/mjncms/content/content_category.tpl"
+#line 25 "../public_html/tt_tpls/mjncms/content/content_category.tpl"
     if ($stash->get(['cat', 0, 'level', 0]) > 1) {
-    $output .=  "\n	";
-#line 17 "../public_html/tt_tpls/mjncms/content/content_category.tpl"
-    $stash->set('parents', $stash->get(['TT_CALLS', 0, 'content_get_catparent_tree', [ $stash->get(['cat', 0, 'cat_id', 0]) ]]));
-    $output .=  "	";
+    $output .=  "\n    ";
 #line 18 "../public_html/tt_tpls/mjncms/content/content_category.tpl"
+    $stash->set('parents', $stash->get(['TT_CALLS', 0, 'content_get_catparent_tree', [ $stash->get(['cat', 0, 'cat_id', 0]) ]]));
+    $output .=  "    ";
+#line 19 "../public_html/tt_tpls/mjncms/content/content_category.tpl"
     $stash->set('cats_res', $stash->get(['TT_CALLS', 0, 'content_get_catrecord', [ [ $stash->get('parents') ] ]]));
-    $output .=  "\n	";
-#line 21 "../public_html/tt_tpls/mjncms/content/content_category.tpl"
+    $output .=  "\n    ";
+#line 22 "../public_html/tt_tpls/mjncms/content/content_category.tpl"
     
     # FOREACH 
     do {
@@ -98,7 +102,7 @@ Template::Document->new({
         eval {
     FOR1:   while (! $_tt_error) {
                 $stash->{'cid'} = $_tt_value;
-#line 21 "../public_html/tt_tpls/mjncms/content/content_category.tpl"
+#line 22 "../public_html/tt_tpls/mjncms/content/content_category.tpl"
     $stash->set('slug_base', $stash->get('slug_base')  . '/'  . $stash->get(['cats_res', 0, 'records', 0, $stash->get('cid'), 0, 'cname', 0]));;
                 ($_tt_value, $_tt_error) = $_tt_list->get_next();
             }
@@ -111,16 +115,16 @@ Template::Document->new({
     
     }
     else {
-    $output .=  "\n	";
-#line 23 "../public_html/tt_tpls/mjncms/content/content_category.tpl"
+    $output .=  "\n    ";
+#line 24 "../public_html/tt_tpls/mjncms/content/content_category.tpl"
     $stash->set('slug_base', $stash->get('slug_base')  . '/'  . $stash->get(['cat', 0, 'cname', 0]));
     }
     
     $output .=  "\n";
-#line 25 "../public_html/tt_tpls/mjncms/content/content_category.tpl"
+#line 26 "../public_html/tt_tpls/mjncms/content/content_category.tpl"
     $stash->set('pages_res', $stash->get(['TT_CALLS', 0, 'content_get_pagerecord', [ { 'cat_id' => $stash->get(['cat', 0, 'cat_id', 0])  } ]]));
     $output .=  "\n<h2>";
-#line 31 "../public_html/tt_tpls/mjncms/content/content_category.tpl"
+#line 32 "../public_html/tt_tpls/mjncms/content/content_category.tpl"
     
     # FILTER
     $output .=  do {
@@ -134,10 +138,10 @@ Template::Document->new({
     };
     
     $output .=  "</h2>\n\n";
-#line 43 "../public_html/tt_tpls/mjncms/content/content_category.tpl"
+#line 44 "../public_html/tt_tpls/mjncms/content/content_category.tpl"
     if (!($stash->get(['pages_res', 0, 'pages_res', 0, 'size', 0]))) {
-    $output .=  "	";
-#line 34 "../public_html/tt_tpls/mjncms/content/content_category.tpl"
+    $output .=  "    ";
+#line 35 "../public_html/tt_tpls/mjncms/content/content_category.tpl"
     
     # FILTER
     $output .=  do {
@@ -152,8 +156,8 @@ Template::Document->new({
     
     }
     else {
-    $output .=  "	";
-#line 42 "../public_html/tt_tpls/mjncms/content/content_category.tpl"
+    $output .=  "    ";
+#line 43 "../public_html/tt_tpls/mjncms/content/content_category.tpl"
     
     # FOREACH 
     do {
@@ -171,8 +175,8 @@ Template::Document->new({
         eval {
     FOR1:   while (! $_tt_error) {
                 $stash->{'page'} = $_tt_value;
-    $output .=  "		<h3>";
-#line 37 "../public_html/tt_tpls/mjncms/content/content_category.tpl"
+    $output .=  "        <h3>";
+#line 38 "../public_html/tt_tpls/mjncms/content/content_category.tpl"
     
     # FILTER
     $output .=  do {
@@ -185,17 +189,28 @@ Template::Document->new({
         &$_tt_filter($output);
     };
     
-    $output .=  "</h3>\n		";
-#line 38 "../public_html/tt_tpls/mjncms/content/content_category.tpl"
-    $output .=  $stash->get(['page', 0, 'intro', 0]);
-    $output .=  "<br />\n		";
+    $output .=  "</h3>\n        ";
 #line 39 "../public_html/tt_tpls/mjncms/content/content_category.tpl"
+    
+    # FILTER
+    $output .=  do {
+        my $output = '';
+        my $_tt_filter = $context->filter('safe_page_html')
+                  || $context->throw($context->error);
+    
+    $output .=  $stash->get(['page', 0, 'intro', 0]);
+        
+        &$_tt_filter($output);
+    };
+    
+    $output .=  "<br />\n        ";
+#line 40 "../public_html/tt_tpls/mjncms/content/content_category.tpl"
     if ($stash->get(['page', 0, 'body', 0])) {
     $output .=  "<a href=\"";
-#line 39 "../public_html/tt_tpls/mjncms/content/content_category.tpl"
+#line 40 "../public_html/tt_tpls/mjncms/content/content_category.tpl"
     $output .=  $stash->get('slug_base');
     $output .=  "/";
-#line 39 "../public_html/tt_tpls/mjncms/content/content_category.tpl"
+#line 40 "../public_html/tt_tpls/mjncms/content/content_category.tpl"
     
     # FILTER
     $output .=  do {
@@ -208,16 +223,16 @@ Template::Document->new({
         &$_tt_filter($output);
     };
     
-#line 39 "../public_html/tt_tpls/mjncms/content/content_category.tpl"
+#line 40 "../public_html/tt_tpls/mjncms/content/content_category.tpl"
     $output .=  $stash->get(['SESSION', 0, 'EXTENSIONS_PAGE', 0]);
     $output .=  "\">";
-#line 39 "../public_html/tt_tpls/mjncms/content/content_category.tpl"
+#line 40 "../public_html/tt_tpls/mjncms/content/content_category.tpl"
     $output .=  $stash->get(['loc', [ 'Read more' ]]);
     $output .=  "...</a><br />";
     }
     
-    $output .=  "		<i>";
-#line 40 "../public_html/tt_tpls/mjncms/content/content_category.tpl"
+    $output .=  "        <i>";
+#line 41 "../public_html/tt_tpls/mjncms/content/content_category.tpl"
     
     # FILTER
     $output .=  do {
@@ -231,7 +246,7 @@ Template::Document->new({
     };
     
     $output .=  ", ";
-#line 40 "../public_html/tt_tpls/mjncms/content/content_category.tpl"
+#line 41 "../public_html/tt_tpls/mjncms/content/content_category.tpl"
     
     # FILTER
     $output .=  do {
@@ -244,7 +259,7 @@ Template::Document->new({
         &$_tt_filter($output);
     };
     
-    $output .=  "</i>\n		<hr class=\"w80\" />\n	";;
+    $output .=  "</i>\n        <hr class=\"w80\" />\n    ";;
                 ($_tt_value, $_tt_error) = $_tt_list->get_next();
             }
         };

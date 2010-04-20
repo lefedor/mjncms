@@ -4,12 +4,15 @@ Mojolicious
 Mojo::Server::FCGI  
 Cache::Memcached::Fast
 Captcha::reCAPTCHA
-common::sense
-Crypt::Tea
+common::sense #use strict, etc
+Crypt::Tea 
 Data::Serializer
 Date::Calc
-Filesys:Tree
-#Locale::Maketext::Lexicon #Wiped
-PHP::Serialization
-Template
+Filesys:Tree #Filemanager
 HTML::StripScripts::Parser #safe_page_html TT filter
+#Locale::Maketext::Lexicon #Wiped
+MIME::Base64 #Email messaging
+MIME::Lite #Email messaging
+MIME::Types #Email messaging
+PHP::Serialization #SMF Auth
+Template #TT2

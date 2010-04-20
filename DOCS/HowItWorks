@@ -150,5 +150,8 @@ This is temporary descr just u should know if u've started MjNCMS
    just set up nginx right :)
    Just use Config, Service, enable plugins i18n, MjncmsInit, and you have user/etc model inbox.
 
+8. Emails easyly could be send over $SESSION{'MAILER'}->new({to=>'me@me.me', text=>'hello'})->send()
+    Also attchmens are possible, etc, see MjCMS::Mail
+
     
 ..not finished yet...

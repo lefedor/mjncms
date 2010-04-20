@@ -403,7 +403,7 @@ sub get_config ($) {
         site_locale => 'ru_RU.UTF-8', #Russian_Russia.1251
         site_xmlenc => 'utf8', #cp1251
         site_name => 'MjNCMS Demo site', #default title
-        site_contactemail => 'ffl.public@gmail.com', 
+        site_contactemail => 'ФедьКа <ffl.public@gmail.com>', 
         site_time_offset => 3, #default GMT time offset
         
         #Fast crypt and crc settings

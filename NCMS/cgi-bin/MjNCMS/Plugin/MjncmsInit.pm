@@ -36,6 +36,7 @@ use lib "$FindBin::Bin/../../";
 use MjNCMS::Config qw/:subs :vars /;
 use MjNCMS::Service qw/:subs /;
 
+use MjNCMS::Mail;
 use MjNCMS::MjI18N;
 use MjNCMS::User;
 use MjNCMS::Date;
@@ -129,13 +130,14 @@ sub register {
                 $SESSION{'LOG'}->level(0);
             }
             
+            $SESSION{'SITE_NAME'} = $$cfg{'site_name'} || 'MjNCMS';
+            
             $SESSION{'SITE_LOCALE'} = $$cfg{'site_locale'} || 'en_US.UTF-8';
             
-            $SESSION{'SITE_CONTACTEMAIL'} = $$cfg{'site_contectemail'} if $$cfg{'site_contectemail'};
+            $SESSION{'SITE_CONTACTEMAIL'} = $$cfg{'site_contactemail'} if $$cfg{'site_contactemail'};
             $SESSION{'SITE_TIME_OFFSET'} = $$cfg{'site_time_offset'} || 0;
             
-            $$cfg{'site_coding'} = 'utf-8' unless $$cfg{'site_coding'};
-            $SESSION{'SITE_CODING'} = $$cfg{'site_coding'};
+            $SESSION{'SITE_CODING'} = $$cfg{'site_coding'} || 'utf-8';
             $$cfg{'site_powered_by'} = 'MjNCMS - Mojolicious Perl CMS' unless $$cfg{'site_powered_by'};
             $c->tx->res->headers->header('X-Powered-By' => $$cfg{'site_powered_by'});
             $c->tx->res->headers->header('Content-Type' => 'text/html; charset='.$$cfg{'site_coding'});
@@ -574,6 +576,8 @@ sub register {
             }
             
             $SESSION{'DATE'} = MjNCMS::Date->new();
+
+            $SESSION{'MAILER'} = MjNCMS::Mail->new({});
             
             $SESSION{'SHORT_URLS_ALLOW_MULTIALIAS'} = $$cfg{'short_urls_allow_multialias'} || 0;
             

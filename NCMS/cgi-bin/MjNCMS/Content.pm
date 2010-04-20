@@ -4031,6 +4031,11 @@ sub pages_get_access_roles ($) {
 
 sub content_get_pagerecord ($) {
     
+    #
+    # Female-Mutant: Nice try Leela, but we're all se Zapp
+    #   Brannigan's webpage!
+    #
+    
     my $cfg = shift;
     
     $cfg = {} unless ($cfg && ref $cfg && ref $cfg eq 'HASH');
