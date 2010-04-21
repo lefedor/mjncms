@@ -96,7 +96,7 @@ sub register {
             $SESSION{'SHORTLINKS_REDIR_URL'} = $$cfg{'shortlinks_url'} ||  '/r';
             $SESSION{'FORUM_URL'} = $$cfg{'forum_url'} || undef;
             
-            $SESSION{'THEME_URLPATH'} = $$cfg{'tt_tpls_theme_urlpath'} || '/tt_tpls/mjcms';
+            $SESSION{'THEME_URLPATH'} = $$cfg{'tt_tpls_theme_urlpath'} || '/tt_tpls/mjncms';
             
             $SESSION{'SITE_URL_EXTENSIONS'} = $$cfg{'site_url_extensions'} || {};
             foreach my $ext (keys %{$SESSION{'SITE_URL_EXTENSIONS'}}){
@@ -152,7 +152,7 @@ sub register {
                 $c->app->renderer->root($$cfg{'tt_tpls_root'});
             }
             else {
-                $c->app->renderer->root('../public_html/tt_tpls/mjcms');
+                $c->app->renderer->root('../public_html/tt_tpls/mjncms');
             }
             
             @{$TT_CFG{'includepath'}} = ();
@@ -577,15 +577,19 @@ sub register {
             
             $SESSION{'DATE'} = MjNCMS::Date->new();
 
+            #Not much sense, but looks c00l :)
+            $SESSION{'MAILER_ID'} = $$cfg{'email_signature'} || 'MjNCMS Mailer';
+            
             $SESSION{'MAILER'} = MjNCMS::Mail->new({});
             
             $SESSION{'EMAIL_SIGNATURE'} = $$cfg{'email_signature'} || 
-#>>>>>>>>>>>            
+#=>=>=>=>=>=>
 qq~
 Sincerely yours, 
 ${SESSION{SITE_NAME}} support team 
 $SESSION{'SERVER_NAME'} ~;
-#<<<<<<<<<<<
+#<=<=<=<=<=<=
+
             $SESSION{'SHORT_URLS_ALLOW_MULTIALIAS'} = $$cfg{'short_urls_allow_multialias'} || 0;
             
             $SESSION{'PREROUTE_CALLS'} = $$cfg{'preroute_calls'} if (

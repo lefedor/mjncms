@@ -338,6 +338,8 @@ package MjNCMS;
         
         #Public user routes - login/logout/edit/reg/reg_confirm
         my $usr_r = $r->route($user_root);
+        $usr_r->route('/')->via('get')->
+            to(controller => 'usercontroller', action => 'usercontroller_rt_user_profile_get');
         $usr_r->route('/login')->via('get')->
             to(controller => 'usercontroller', action => 'usercontroller_rt_user_login_get');
         $usr_r->route('/login')->via('post')->
@@ -356,16 +358,20 @@ package MjNCMS;
             to(controller => 'usercontroller', action => 'usercontroller_rt_user_confirm_get');
         $usr_r->route('/confirm')->via('post')->
             to(controller => 'usercontroller', action => 'usercontroller_rt_user_confirm_post');
-        $usr_r->route('/')->via('get')->
-            to(controller => 'usercontroller', action => 'usercontroller_rt_user_profile_get');
+        $usr_r->route('/reconfirm_email')->via('get')->
+            to(controller => 'usercontroller', action => 'usercontroller_rt_user_reconfirm_email_get');
+        $usr_r->route('/reconfirm_email')->via('post')->
+            to(controller => 'usercontroller', action => 'usercontroller_rt_user_reconfirm_email_post');
         $usr_r->route('/profile')->via('get')->
             to(controller => 'usercontroller', action => 'usercontroller_rt_user_profile_get');
-        $usr_r->route('/profile')->via('post')->#update profile post
+        $usr_r->route('/profile')->via('post')->
             to(controller => 'usercontroller', action => 'usercontroller_rt_user_profile_post');
-        $usr_r->route('/remind_password')->via('get')->#ask email/login
-            to(controller => 'usercontroller', action => 'usercontroller_rt_user_remind_password_get');
-        $usr_r->route('/remind_password')->via('post')->
-            to(controller => 'usercontroller', action => 'usercontroller_rt_user_remind_password_post');
+        $usr_r->route('/forgot_password')->via('get')->
+            to(controller => 'usercontroller', action => 'usercontroller_rt_user_forgot_password_get');
+        $usr_r->route('/forgot_password')->via('post')->
+            to(controller => 'usercontroller', action => 'usercontroller_rt_user_forgot_password_post');
+        $usr_r->route('/rest_pass/(:login)/(:crc)')->via('get')->
+            to(controller => 'usercontroller', action => 'usercontroller_rt_user_rest_pass_get');
 
         #Shortlinks thing
         my $sl_r = $r->route($shortlinks_root);

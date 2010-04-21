@@ -456,7 +456,7 @@ sub _smf_reg_confirm ($$) {
         } unless (
             $res && 
             ref $res && 
-            ref $res eq 'HASH'  && 
+            ref $res eq 'HASH' && 
             ${$res}{'auth_success'}
         );
         
@@ -668,9 +668,23 @@ sub _smf_get_users ($$) {
     }
     
     if (defined ${$cfg}{'login'} && length ${$cfg}{'login'}){
-        ${$cfg}{'login'} = $dbh->quote(${$cfg}{'login'});
-        ${$cfg}{'login'} =~ s/^\'|\*|\'$/%/g;
-        $where_rule .= ' AND m.memberName LIKE \'' . ${$cfg}{'login'} . '\' ';
+        $where_rule .= ' AND m.memberName = ' . ($dbh->quote(${$cfg}{'login'})) . ' ';
+    }
+    
+    if (defined ${$cfg}{'login_like'} && length ${$cfg}{'login_like'}){
+        ${$cfg}{'login_like'} = $dbh->quote(${$cfg}{'login_like'});
+        ${$cfg}{'login_like'} =~ s/^\'|\*|\'$/%/g;
+        $where_rule .= ' AND m.memberName LIKE \'' . ${$cfg}{'login_like'} . '\' ';
+    }
+    
+    if (defined ${$cfg}{'email'} && length ${$cfg}{'email'}){
+        $where_rule .= ' AND m.emailAddress = ' . ($dbh->quote(${$cfg}{'email'})) . ' ';
+    }
+    
+    if (defined ${$cfg}{'email_like'} && length ${$cfg}{'email_like'}){
+        ${$cfg}{'email_like'} = $dbh->quote(${$cfg}{'email_like'});
+        ${$cfg}{'email_like'} =~ s/^\'|\*|\'$/%/g;
+        $where_rule .= ' AND m.emailAddress LIKE \'' . ${$cfg}{'email_like'} . '\' ';
     }
     
     if (
@@ -800,12 +814,14 @@ sub _smf_get_users ($$) {
             
             u.startpage, #10
             
+            u.salt, #10.5 :)
+            
             m.memberName AS login, #11
             m.realName AS forum_name, #12
             m.emailAddress AS email, #13
             m.timeOffset AS time_offset, #14
             m.is_activated AS is_forum_active, #15
-            m. validation_code AS val_code, #16
+            m.validation_code AS val_code, #16
             
             a.awp_id, a.name AS awp_name, #17
             r.role_id, r.name AS role_name, #20
@@ -848,12 +864,14 @@ sub _smf_get_users ($$) {
                     
                     NULL, #10
                     
+                    NULL, #10.5
+                    
                     m.memberName AS login, #11
                     m.realName AS forum_name, #12
                     m.emailAddress AS email, #13
                     m.timeOffset AS time_offset, #14
                     m.is_activated, #15
-                    m. validation_code AS val_code, #16
+                    m.validation_code AS val_code, #16
                     
                     NULL, NULL, #18
                     NULL, NULL, #20
@@ -926,9 +944,11 @@ sub _smf_get_users ($$) {
         pages => \%pages, 
         foundrows => $foundrows, 
     }
+    
 } #-- _smf_get_user
 
 sub _smf_change_email ($$$) {
+    
     my $self = $_[0];
     my $email = $_[1];
     my $member_id = $_[2];
@@ -967,9 +987,11 @@ sub _smf_change_email ($$$) {
     }
     
     return 1;
+    
 } #-- _smf_change_email
 
 sub _smf_change_password ($$$$) {
+    
     my $self = $_[0];
     my $pass = $_[1];
     my $pass_retype = $_[2];
@@ -1043,9 +1065,11 @@ sub _smf_change_password ($$$$) {
     }
     
     return 1;
-} #-- _smf_changepass
+    
+} #-- _smf_change_password
 
 sub _smf_change_active ($$$) {
+    
     my $self = $_[0];
     my $status = $_[1];
     my $member_id = $_[2];
@@ -1102,6 +1126,7 @@ sub _smf_change_active ($$$) {
     }
     
     return 1;
+    
 } #-- _smf_change_active
 
 ########################################################################
@@ -1508,6 +1533,8 @@ sub register ($$$) {
     my $is_cms_active = $_[6]? 1:0;    
     my $is_forum_active = $_[7]? 1:0;
     
+    my $salt = undef;
+    
     unless ($role_id =~ m/^\d+$/) {
         $self->{'last_state'} = 'wrong_role';
         return undef;
@@ -1537,6 +1564,8 @@ sub register ($$$) {
     
     if (ref $member_id && ref $member_id eq 'HASH' && ${$member_id}{'member_id'} =~ /^\d+$/) {
         
+        $salt = substr($SESSION{'BS'}(rand() . time())->md5_sum()->to_string(), 0, 16);
+        
         $dbh -> do(qq~ LOCK TABLES ${SESSION{PREFIX}}users WRITE ; ~);
         
         $q = qq~
@@ -1544,7 +1573,8 @@ sub register ($$$) {
             ${SESSION{PREFIX}}users (
                 member_id, role_id, name, # 0 1 2
                 site_lng, whoedit, startpage, # 3 4 5
-                is_cms_active #6
+                salt, #6
+                is_cms_active #7
             ) VALUES (
                 ~ . ($dbh->quote(${$member_id}{'member_id'})) . q~, #0
                 ~ . ($dbh->quote($role_id)) . q~, #1
@@ -1552,7 +1582,8 @@ sub register ($$$) {
                 ~ . ($dbh->quote($lang)) . q~, #3
                 ~ . ($dbh->quote($SESSION{'USR'}->{'member_id'})) . q~, #4
                 ~ . ($dbh->quote($startpage)) . q~, #5
-                ~ . ($dbh->quote($is_cms_active)) . q~ #5
+                ~ . ($dbh->quote($salt)) . q~, #6
+                ~ . ($dbh->quote($is_cms_active)) . q~ #7
             ) ; ~;
             
             eval {
@@ -1950,18 +1981,31 @@ sub users_get ($;$) {
     
 } #-- users_get
 
+sub get_users ($;$) {
+    
+    my $self = $_[0];
+    my $cfg = $_[1];
+    
+    return $self->users_get($cfg);
+    
+} #-- get_users
+
 sub change_email ($$;$){
     
     my $self = $_[0];
     my $email = $_[1];
     my $member_id = defined($_[2])? $_[2]:$self->{'member_id'};
     
+    return undef unless $member_id; #No guests id = 0
+    
     #?
-    return undef unless (
-        $member_id == $self->{'member_id'} || 
-        $self->is_user_writable( $member_id ) || 
-        $self->chk_access('users', 'manage', 'w') 
-    );
+    #
+    #return undef unless (
+    #    $member_id == $self->{'member_id'} || 
+    #    $self->is_user_writable( $member_id ) || 
+    #    $self->chk_access('users', 'manage', 'w') 
+    #);
+    #
 
     my $mode = $self->{'MODE'};
     
@@ -1985,12 +2029,16 @@ sub change_password ($$$;$) {
     my $pass_retype = $_[2];
     my $member_id = defined($_[3])? $_[3]:$self->{'member_id'};
     
+    return undef unless $member_id; #No guests id = 0
+    
     #?
-    return undef unless (
-        $member_id == $self->{'member_id'} || 
-        $self->is_user_writable( $member_id ) || 
-        $self->chk_access('users', 'manage', 'w') 
-    );
+    #
+    #return undef unless (
+    #    $member_id == $self->{'member_id'} || 
+    #    $self->is_user_writable( $member_id ) || 
+    #    $self->chk_access('users', 'manage', 'w') 
+    #);
+    #
 
     my $mode = $self->{'MODE'};
     
@@ -2016,11 +2064,13 @@ sub set_cms_active ($$;$) {
     $status = $status? 1:0;
     
     #?
-    return undef unless (
-        $member_id == $self->{'member_id'} || 
-        $self->is_user_writable( $member_id ) || 
-        $self->chk_access('users', 'manage', 'w') 
-    );
+    #
+    #return undef unless (
+    #    $member_id == $self->{'member_id'} || 
+    #    $self->is_user_writable( $member_id ) || 
+    #    $self->chk_access('users', 'manage', 'w') 
+    #);
+    #
     
     my (
         $dbh, $q, 
@@ -2042,6 +2092,7 @@ sub set_cms_active ($$;$) {
     if (scalar $updcnt) {
         return 1;
     }
+    
     return undef;
     
 } #-- set_cms_active
@@ -2076,6 +2127,51 @@ sub set_forum_active ($$;$){
     
 } #-- set_forum_active
 
+sub set_new_salt ($;$$){
+    
+    my $self = $_[0];
+    my $salt = $_[1];
+    my $member_id = defined($_[2])? $_[2]:$self->{'member_id'};
+    
+    return undef unless $member_id; #No guests id = 0
+    
+    $salt = substr($SESSION{'BS'}(rand())->md5_sum()->to_string(), 0, 16)
+        unless $salt;
+    
+    #?
+    #
+    #return undef unless (
+    #    $member_id == $self->{'member_id'} || 
+    #    $self->is_user_writable( $member_id ) || 
+    #    $self->chk_access('users', 'manage', 'w') 
+    #);
+    #
+    
+    my (
+        $dbh, $q, 
+        $updcnt, 
+    ) = ($SESSION{'DBH'}, );
+    
+    $q = qq~
+        UPDATE 
+        ${SESSION{PREFIX}}users 
+        SET 
+            salt = ~ . ($dbh->quote($salt)) . qq~ 
+        WHERE member_id = ~ . ($dbh->quote($member_id)) . qq~ ; 
+    ~;
+    
+    eval{
+        $updcnt = $dbh -> do($q);
+    };
+    
+    if (scalar $updcnt) {
+        return $salt;
+    }
+    
+    return undef;
+    
+} #-- set_new_salt
+
 sub chk_pass ($$$;$) {
     
     #Check if typed pass correct - profile update, etc 
@@ -2089,12 +2185,16 @@ sub chk_pass ($$$;$) {
     my $member_id = $self->{'member_id'} 
         unless defined $member_id;
     
+    return undef unless $member_id; #No guests id = 0
+    
     #?
-    return undef unless (
-        $member_id == $self->{'member_id'} || 
-        $self->is_user_writable( $member_id ) || 
-        $self->chk_access('users', 'manage', 'w') 
-    );
+    #
+    #return undef unless (
+    #    $member_id == $self->{'member_id'} || 
+    #    $self->is_user_writable( $member_id ) || 
+    #    $self->chk_access('users', 'manage', 'w') 
+    #);
+    #
 
     my $mode = $self->{'MODE'};
     

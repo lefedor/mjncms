@@ -10,7 +10,6 @@ package MjNCMS::Service;
 #
 
 use common::sense;
-
 use FindBin;
 use lib "$FindBin::Bin/../";
 

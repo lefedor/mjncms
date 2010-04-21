@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 19, 2010 at 04:05 PM
+-- Generation Time: Apr 22, 2010 at 12:25 AM
 -- Server version: 5.0.51
 -- PHP Version: 5.3.1-5
 
@@ -87,7 +87,7 @@ CREATE TABLE IF NOT EXISTS `mjsmf_members` (
   KEY `lastLogin` (`lastLogin`),
   KEY `lngfile` (`lngfile`(30)),
   KEY `ID_POST_GROUP` (`ID_POST_GROUP`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=22 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=38 ;
 
 --
 -- Dumping data for table `mjsmf_members`
@@ -97,7 +97,9 @@ INSERT INTO `mjsmf_members` (`ID_MEMBER`, `memberName`, `dateRegistered`, `posts
 (0, 'guest', 0, 0, 0, '', 0, 'Guest', 0, 0, '', '', '', '9474d8c82a7bdef16bb503f7dbd1b02f5aaf601f', '', 'I''m guest', 0, '0001-01-01', '', '', '', '', '', '', '', 1, 0, '', '', 0, '', 0, 0, 0, '', 1, 1, 0, 2, '', '', '', '', 0, 0, 'oyaebu', 0, '', '', 0, 0, '!QAZa'),
 (1, 'austin', 0, 0, 0, '', 0, 'Austin Powers', 0, 0, '', '', '', 'affed750772acc7816bdfb3740357b6e40c9e18f', 'austin@powers.ap', '', 0, '1939-11-12', '', '', '', '', '', '', '', 0, 1, '', '', 3, '', 0, 0, 0, '', 1, 1, 0, 2, '', '', '', '', 0, 1, '', 0, '', '', 0, 0, 'AuSt!'),
 (20, 'Morbo', 1271615794, 0, 0, '', 0, 'Morbo', 0, 0, '', '', '', 'ecafe79de815678b999f15a90b4e1cc32a35c09f', 'morbo@powers.app', '', 0, '0001-01-01', '', '', '', '', '', '', '', 1, 1, '', '', 0, '', 0, 0, 0, '', 1, 1, 0, 2, '', '', '', '', 0, 0, '395bd7cd21', 0, '', '', 0, 0, '5a71'),
-(21, 'pepyaka', 1271627335, 0, 0, '', 0, 'pepyaka', 0, 0, '', '', '', '39c17d4c979a0312c04c074e4cde55ad96601d2f', 'pepyaka21@powers.apw', '', 0, '0001-01-01', '', '', '', '', '', '', '', 1, 1, '', '', 0, '', 0, 0, 0, '', 1, 1, 0, 2, '', '', '', '', 0, 1, '', 0, '', '', 0, 0, 'b7f7');
+(21, 'pepyaka', 1271627335, 0, 0, '', 0, 'pepyaka', 0, 0, '', '', '', '39c17d4c979a0312c04c074e4cde55ad96601d2f', 'pepyaka21@powers.apw', '', 0, '0001-01-01', '', '', '', '', '', '', '', 1, 1, '', '', 0, '', 0, 0, 0, '', 1, 1, 0, 2, '', '', '', '', 0, 1, '', 0, '', '', 0, 0, 'b7f7'),
+(22, 'chupakabra', 1271687788, 0, 0, '', 0, 'chupakabra', 0, 0, '', '', '', '8976fe787e7a12ef44d2237c94abee426125aa3c', 'chupakabra@powers.app', '', 0, '0001-01-01', '', '', '', '', '', '', '', 1, 1, '', '', 0, '', 0, 0, 0, '', 1, 1, 0, 2, '', '', '', '', 0, 1, '', 0, '', '', 0, 0, 'e2af'),
+(37, 'Fry', 1271880017, 0, 0, '', 0, 'Fry', 0, 0, '', '', '', 'ccd720c03d4e26501f09c8c9a573fbc86898c74e', 'ffl-public@yandex.ru', '', 0, '0001-01-01', '', '', '', '', '', '', '', 1, 1, '', '', 0, '', 0, 0, 0, '', 1, 1, 0, 2, '', '', '', '', 0, 0, 'e6a22296d4', 0, '', '', 0, 0, '494d');
 
 -- --------------------------------------------------------
 
@@ -129,7 +131,11 @@ INSERT INTO `mjsmf_sessions` (`session_id`, `last_update`, `data`) VALUES
 ('f1b76994a7fb9002ad35b5d77f0f91a1', 1271409820, 'rand_code|s:32:"2058676fc8c3afeefc3c6ab774cd1b67";USER_AGENT|s:103:"Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.8) Gecko/20100308 Iceweasel/3.5.8 (like Firefox/3.5.8)";'),
 ('4f5b80a66385d1267dfd5224cf72eead', 1271490299, 'rand_code|s:32:"07b3030d1d51cdac8c8d53be10bc16b1";USER_AGENT|s:103:"Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.8) Gecko/20100308 Iceweasel/3.5.8 (like Firefox/3.5.8)";'),
 ('8dd646045c2f0d2acac397ecff2103a6', 1271571671, 'rand_code|s:32:"31181c61db465da7ac91b5bf25fcb798";USER_AGENT|s:103:"Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.8) Gecko/20100308 Iceweasel/3.5.8 (like Firefox/3.5.8)";'),
-('d5dee676a0f02fdd4a5fb020b83f06a8', 1271668450, 'rand_code|s:32:"8a0322a4f4845231fd3241b2bc292b31";USER_AGENT|s:79:"Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.8) Gecko/20100308 Iceape/2.0.3";');
+('d5dee676a0f02fdd4a5fb020b83f06a8', 1271668450, 'rand_code|s:32:"8a0322a4f4845231fd3241b2bc292b31";USER_AGENT|s:79:"Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.8) Gecko/20100308 Iceape/2.0.3";'),
+('020c416d56fc9facbce6bc3ec05ff8fb', 1271687691, 'rand_code|s:32:"0af7678245fd9e847b7fd40d241de6da";USER_AGENT|s:103:"Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.8) Gecko/20100308 Iceweasel/3.5.8 (like Firefox/3.5.8)";'),
+('bb7b92305f6279d6b9aebae1bedc4392', 1271709968, 'rand_code|s:32:"f718429cbc6ded2b57212cbcbe1eba38";USER_AGENT|s:107:"Mozilla/5.0 (X11; U; Linux i686; en-US) AppleWebKit/533.4 (KHTML, like Gecko) Chrome/5.0.366.2 Safari/533.4";'),
+('be667308e54455a1eb7326dcfa6e807b', 1271710216, 'rand_code|s:32:"b3b3c921c82bc2b949f6518d1d75af2a";USER_AGENT|s:71:"Mozilla/5.0 (compatible; Konqueror/4.3; Linux) KHTML/4.3.4 (like Gecko)";'),
+('dd89f87ffc64922daa25a81a7277bea7', 1271710353, 'rand_code|s:32:"32a34f42ab302248da5179ef944a24d2";USER_AGENT|s:63:"Opera/9.80 (X11; Linux i686; U; ru) Presto/2.2.15 Version/10.10";');
 
 -- --------------------------------------------------------
 
@@ -464,7 +470,7 @@ INSERT INTO `mj_pages` (`page_id`, `is_published`, `cat_id`, `lang`, `slug`, `in
 (1, 1, 0, 'en', 'justpage', '<p>\n	<img alt="" ilo-full-src="http://mojotest:82/userfiles/mjncms/1/avopingvo.jpg" src="/userfiles/mjncms/1/avopingvo.jpg" style="width: 96px; height: 96px;" /></p>\n<p>\n	This is justpage intro. hi! cool!</p>\n<p>\n	&nbsp;</p>\n<p>\n', '<p>\n	This is justpagebody</p>\n', 'just single page', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 1, '2010-04-12 14:14:38', '2010-04-14 22:38:35', '2010-04-12 02:13:00', '2010-04-12 02:13:00', NULL),
 (2, 1, 8, 'en', 'd1cp1', '<p>\n	iintro</p>\n', '<p>\n	bbody</p>\n', 'demo1 cat page 1', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 0, '2010-04-12 14:15:14', '2010-04-12 14:15:14', '2010-04-12 03:14:00', '2010-04-12 03:14:00', NULL),
 (3, 1, 8, 'en', 'd1cp2', '<p>\n	introoo</p>\n', '<p>\n	bodyyy</p>\n', 'demo1 cat page 2', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 1, '2010-04-12 14:15:44', '2010-04-12 14:18:35', '2010-04-12 04:15:00', '2010-04-12 04:15:00', NULL),
-(4, 1, 0, 'en', 'index', '<p>\n	Index page</p>\n', '<p>\n	bla</p>\n<p>\n	bla</p>\n<p>\n	&nbsp;</p>\n<p>\n	be careful this demo runs on lowerclocked NAS :)</p>\n<p>\n	&nbsp;</p>\n<p>\n	bla</p>\n<p>\n	Index so index....</p>\n<p>\n	&nbsp;</p>\n<p>\n	btw, <a href="/mjadmin">admin side</a></p>', 'Main index page', 'MjNCMS project - PERL Mojolicious CMS demo site index page', 'MjNCMS, Mojolicious, Mojo, CMS', 1, 1, 'MjNCMS project demo site index page', 1, 'comment', 0, '', 0, 0, 1, 1, 1, '2010-04-15 19:45:55', '2010-04-18 10:36:08', '2010-04-15 11:45:00', '2010-04-15 11:45:00', NULL);
+(4, 1, 0, 'en', 'index', '<p>\n	Index page</p>\n', '<p some="thing">\n	bla</p>\n<p>\n	bla</p>\n<p>\n	&nbsp;</p>\n<p>\n	be careful this demo runs on lowerclocked NAS :)</p>\n<p>\n	&nbsp;</p>\n<p>\n	bla</p>\n<p>\n	Index so index....</p>\n<p>\n	&nbsp;</p>\n<p>\n	btw, <a href="/mjadmin">admin side</a></p>\n', 'Main index page', 'MjNCMS project - PERL Mojolicious CMS demo site index page', 'MjNCMS, Mojolicious, Mojo, CMS', 1, 1, 'MjNCMS project demo site index page', 1, 'comment', 0, '', 0, 0, 1, 1, 1, '2010-04-15 19:45:55', '2010-04-19 22:33:50', '2010-04-15 12:45:00', '2010-04-15 12:45:00', NULL);
 
 -- --------------------------------------------------------
 
@@ -522,7 +528,7 @@ CREATE TABLE IF NOT EXISTS `mj_pages_archive` (
   `dt_publishstart` datetime NOT NULL,
   `dt_publishend` datetime NOT NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Archive posts table' AUTO_INCREMENT=20 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Archive posts table' AUTO_INCREMENT=21 ;
 
 --
 -- Dumping data for table `mj_pages_archive`
@@ -547,7 +553,8 @@ INSERT INTO `mj_pages_archive` (`id`, `page_id`, `is_published`, `cat_id`, `lang
 (16, 1, 1, 0, 'en', 'justpage', '<p>\n	<img alt="" ilo-full-src="http://mojotest:82/userfiles/mjcms/1/avopingvo.jpg" src="/userfiles/mjcms/1/avopingvo.jpg" style="width: 96px; height: 96px;" /></p>\n<p>\n	This is justpage intro. hi! cool!</p>\n<p>\n	&nbsp;</p>\n<p>\n	А вот хуй!</p>\n', '<p>\n	This is justpagebody</p>\n', 'just single page', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 1, '2010-04-12 14:14:38', '2010-04-14 22:38:35', '2010-04-12 01:13:00', '2010-04-12 01:13:00', '0000-00-00 00:00:00'),
 (17, 4, 1, 0, 'en', 'index', '<p>\n	Index page</p>\n', '<p>\n	bla</p>\n<p>\n	bla</p>\n<p>\n	bla</p>\n<p>\n	Index so index....</p>\n', 'Main index page', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 1, '2010-04-15 19:45:55', '2010-04-15 20:40:43', '2010-04-15 08:45:00', '2010-04-15 08:45:00', '0000-00-00 00:00:00'),
 (18, 4, 1, 0, 'en', 'index', '<p>\n	Index page</p>\n', '<p>\n	bla</p>\n<p>\n	bla</p>\n<p>\n	bla</p>\n<p>\n	Index so index....</p>\n', 'Main index page', 'MjNCMS project demo site index page', 'MjNCMS, Mojolicious, Mojo', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 1, '2010-04-15 19:45:55', '2010-04-18 01:16:18', '2010-04-15 09:45:00', '2010-04-15 09:45:00', '0000-00-00 00:00:00'),
-(19, 4, 1, 0, 'en', 'index', '<p>\n	Index page</p>\n', '<p>\n	bla</p>\n<p>\n	bla</p>\n<p>\n	&nbsp;</p>\n<p>\n	be careful this demo runs on lowerclocked NAS :)</p>\n<p>\n	&nbsp;</p>\n<p>\n	bla</p>\n<p>\n	Index so index....</p>\n<p>\n	&nbsp;</p>\n<p>\n	btw, <a href="/mjadmin">admin side</a></p>\n<p>\n	&nbsp;</p>', 'Main index page', 'MjNCMS project demo site index page', 'MjNCMS, Mojolicious, Mojo', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 1, '2010-04-15 19:45:55', '2010-04-18 10:36:08', '2010-04-15 10:45:00', '2010-04-15 10:45:00', '0000-00-00 00:00:00');
+(19, 4, 1, 0, 'en', 'index', '<p>\n	Index page</p>\n', '<p>\n	bla</p>\n<p>\n	bla</p>\n<p>\n	&nbsp;</p>\n<p>\n	be careful this demo runs on lowerclocked NAS :)</p>\n<p>\n	&nbsp;</p>\n<p>\n	bla</p>\n<p>\n	Index so index....</p>\n<p>\n	&nbsp;</p>\n<p>\n	btw, <a href="/mjadmin">admin side</a></p>\n<p>\n	&nbsp;</p>', 'Main index page', 'MjNCMS project demo site index page', 'MjNCMS, Mojolicious, Mojo', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 1, '2010-04-15 19:45:55', '2010-04-18 10:36:08', '2010-04-15 10:45:00', '2010-04-15 10:45:00', '0000-00-00 00:00:00'),
+(20, 4, 1, 0, 'en', 'index', '<p>\n	Index page</p>\n', '<p>\n	bla</p>\n<p>\n	bla</p>\n<p>\n	&nbsp;</p>\n<p>\n	be careful this demo runs on lowerclocked NAS :)</p>\n<p>\n	&nbsp;</p>\n<p>\n	bla</p>\n<p>\n	Index so index....</p>\n<p>\n	&nbsp;</p>\n<p>\n	btw, <a href="/mjadmin">admin side</a></p>', 'Main index page', 'MjNCMS project - PERL Mojolicious CMS demo site index page', 'MjNCMS, Mojolicious, Mojo, CMS', 1, 1, 'MjNCMS project demo site index page', 1, 'comment', 0, '', 0, 0, 1, 1, 1, '2010-04-15 19:45:55', '2010-04-19 22:33:50', '2010-04-15 11:45:00', '2010-04-15 11:45:00', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -815,6 +822,7 @@ CREATE TABLE IF NOT EXISTS `mj_users` (
   `role_id` smallint(5) unsigned NOT NULL default '0',
   `name` tinytext NOT NULL,
   `site_lng` char(4) default NULL,
+  `salt` char(16) default NULL,
   `ins` datetime NOT NULL default '0000-00-00 00:00:00',
   `upd` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
   `whoedit` mediumint(8) unsigned default NULL,
@@ -828,11 +836,13 @@ CREATE TABLE IF NOT EXISTS `mj_users` (
 -- Dumping data for table `mj_users`
 --
 
-INSERT INTO `mj_users` (`member_id`, `replace_member_id`, `is_cms_active`, `role_id`, `name`, `site_lng`, `ins`, `upd`, `whoedit`, `startpage`) VALUES
-(0, NULL, 1, 0, 'Guest', NULL, '2010-02-09 00:00:00', '2010-03-22 21:07:38', NULL, '/'),
-(1, 1, 1, 1, 'Austin Powers', 'en', '2010-02-09 00:00:00', '2010-04-19 00:14:28', 1, '/mjadmin/pages'),
-(20, NULL, 1, 5, 'Morbo', 'en', '0000-00-00 00:00:00', '2010-04-18 22:36:34', 1, '/'),
-(21, NULL, 1, 2, 'pepyaka222', 'en', '0000-00-00 00:00:00', '2010-04-19 15:59:47', 0, '/');
+INSERT INTO `mj_users` (`member_id`, `replace_member_id`, `is_cms_active`, `role_id`, `name`, `site_lng`, `salt`, `ins`, `upd`, `whoedit`, `startpage`) VALUES
+(0, NULL, 1, 0, 'Guest', NULL, '', '2010-02-09 00:00:00', '2010-03-22 21:07:38', NULL, '/'),
+(1, 1, 1, 1, 'Austin Powers', 'en', '', '2010-02-09 00:00:00', '2010-04-19 00:14:28', 1, '/mjadmin/pages'),
+(20, NULL, 1, 5, 'Morbo', 'en', '', '0000-00-00 00:00:00', '2010-04-18 22:36:34', 1, '/'),
+(21, NULL, 1, 2, 'pepyaka222', 'en', '', '0000-00-00 00:00:00', '2010-04-19 15:59:47', 0, '/'),
+(22, NULL, 1, 2, 'chupakabra', 'ru', '', '0000-00-00 00:00:00', '2010-04-19 18:37:20', 0, '/'),
+(37, NULL, 0, 2, 'Fry', 'ru', 'aed9e1cf5984603e', '0000-00-00 00:00:00', '2010-04-22 00:00:17', 0, '/');
 
 -- --------------------------------------------------------
 

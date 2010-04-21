@@ -43,10 +43,10 @@ package MjNCMS::Usercontroller;
 #   
 
 use common::sense;
-use base 'Mojolicious::Controller';
-
 use FindBin;
 use lib "$FindBin::Bin/../";
+
+use base 'Mojolicious::Controller';
 
 use MjNCMS::Config qw/:vars /;
 use MjNCMS::Service qw/:subs /;
@@ -135,7 +135,7 @@ sub usercontroller_rt_permissions_add_post () {
         $url = $SESSION{'ADM_URL'}.'/permissions' unless $url;
         $SESSION{'REDIR'} = {
             url => $url, 
-            msg => $res->{'message'}, 
+            msg => $SESSION{'LOC'}->loc($res->{'message'}), 
         };
         return;
     }
@@ -209,7 +209,7 @@ sub usercontroller_rt_permissions_edit_post () {
         $url = $SESSION{'ADM_URL'}.'/permissions' unless $url;
         $SESSION{'REDIR'} = {
             url => $url, 
-            msg => $res->{'message'}, 
+            msg => $SESSION{'LOC'}->loc($res->{'message'}), 
         };
         return;
     }
@@ -253,7 +253,7 @@ sub usercontroller_rt_permissions_delete_get () {
         $url = $SESSION{'ADM_URL'}.'/permissions' unless $url;
         $SESSION{'REDIR'} = {
             url => $url, 
-            msg => $res->{'message'}, 
+            msg => $SESSION{'LOC'}->loc($res->{'message'}), 
         };
         return;
     }
@@ -348,7 +348,7 @@ sub usercontroller_rt_awproles_add_awp_post () {
         $url = $SESSION{'ADM_URL'}.'/awp_roles' unless $url;
         $SESSION{'REDIR'} = {
             url => $url, 
-            msg => $res->{'message'}, 
+            msg => $SESSION{'LOC'}->loc($res->{'message'}), 
         };
         return;
     }
@@ -421,7 +421,7 @@ sub usercontroller_rt_awproles_edit_awp_post () {
         $url = $SESSION{'ADM_URL'}.'/awp_roles' unless $url;
         $SESSION{'REDIR'} = {
             url => $url, 
-            msg => $res->{'message'}, 
+            msg => $SESSION{'LOC'}->loc($res->{'message'}), 
         };
         return;
     }
@@ -465,7 +465,7 @@ sub usercontroller_rt_awproles_delete_awp_get () {
         $url = $SESSION{'ADM_URL'}.'/permissions' unless $url;
         $SESSION{'REDIR'} = {
             url => $url, 
-            msg => $res->{'message'}, 
+            msg => $SESSION{'LOC'}->loc($res->{'message'}), 
         };
         return;
     }
@@ -507,6 +507,7 @@ sub usercontroller_rt_awproles_add_role_get () {
 
 
 sub usercontroller_rt_awproles_add_role_post () {
+    
     my $self = shift;
     
     unless ($SESSION{'USR'}->chk_access('awp_roles', 'manage', 'w')) {
@@ -537,7 +538,7 @@ sub usercontroller_rt_awproles_add_role_post () {
         $url = $SESSION{'ADM_URL'}.'/awp_roles' unless $url;
         $SESSION{'REDIR'} = {
             url => $url, 
-            msg => $res->{'message'}, 
+            msg => $SESSION{'LOC'}->loc($res->{'message'}), 
         };
         return;
     }
@@ -611,7 +612,7 @@ sub usercontroller_rt_awproles_edit_role_post () {
         $url = $SESSION{'ADM_URL'}.'/awp_roles' unless $url;
         $SESSION{'REDIR'} = {
             url => $url, 
-            msg => $res->{'message'}, 
+            msg => $SESSION{'LOC'}->loc($res->{'message'}), 
         };
         return;
     }
@@ -655,7 +656,7 @@ sub usercontroller_rt_awproles_delete_role_get () {
         $url = $SESSION{'ADM_URL'}.'/permissions' unless $url;
         $SESSION{'REDIR'} = {
             url => $url, 
-            msg => $res->{'message'}, 
+            msg => $SESSION{'LOC'}->loc($res->{'message'}), 
         };
         return;
     }
@@ -732,7 +733,7 @@ sub usercontroller_rt_awproles_setperm_awp_post () {
         $url = $SESSION{'ADM_URL'}.'/awp_roles' unless $url;
         $SESSION{'REDIR'} = {
             url => $url, 
-            msg => $res->{'message'}, 
+            msg => $SESSION{'LOC'}->loc($res->{'message'}), 
         };
         return;
     }
@@ -809,7 +810,7 @@ sub usercontroller_rt_awproles_setperm_role_post () {
         $url = $SESSION{'ADM_URL'}.'/awp_roles' unless $url;
         $SESSION{'REDIR'} = {
             url => $url, 
-            msg => $res->{'message'}, 
+            msg => $SESSION{'LOC'}->loc($res->{'message'}), 
         };
         return;
     }
@@ -917,7 +918,7 @@ sub usercontroller_rt_users_add_post () {
         $url = $SESSION{'ADM_URL'}.'/users' unless $url;
         $SESSION{'REDIR'} = {
             url => $url, 
-            msg => $res->{'message'}, 
+            msg => $SESSION{'LOC'}->loc($res->{'message'}), 
         };
         return;
     }
@@ -1002,7 +1003,7 @@ sub usercontroller_rt_users_edit_post () {
         $url = $SESSION{'ADM_URL'}.'/users' unless $url;
         $SESSION{'REDIR'} = {
             url => $url, 
-            msg => $res->{'message'}, 
+            msg => $SESSION{'LOC'}->loc($res->{'message'}), 
         };
         return;
     }
@@ -1046,7 +1047,7 @@ sub usercontroller_rt_users_delete_get () {
         $url = $SESSION{'ADM_URL'}.'/users' unless $url;
         $SESSION{'REDIR'} = {
             url => $url, 
-            msg => $res->{'message'}, 
+            msg => $SESSION{'LOC'}->loc($res->{'message'}), 
         };
         return;
     }
@@ -1142,7 +1143,7 @@ sub usercontroller_rt_user_login_post () {
         
         $SESSION{'REDIR'} = {
             url => $$res{'url'}, 
-            msg => $res->{'message'}, 
+            msg => $SESSION{'LOC'}->loc($res->{'message'}), 
         };
         return;
     }
@@ -1202,7 +1203,7 @@ sub usercontroller_rt_user_logout_any () {
         $url = '/' unless $url;
         $SESSION{'REDIR'} = {
             url => $url, 
-            msg => $res->{'message'}, 
+            msg => $SESSION{'LOC'}->loc($res->{'message'}), 
         };
         return;
     }
@@ -1321,7 +1322,7 @@ sub usercontroller_rt_user_rolesw_post () {
         
         $SESSION{'REDIR'} = {
             url => $$res{'url'}, 
-            msg => $res->{'message'}, 
+            msg => $SESSION{'LOC'}->loc($res->{'message'}), 
         };
         return;
     }
@@ -1404,7 +1405,7 @@ sub usercontroller_rt_user_usersw_post () {
         #we update original user, so 'member_id_real' is must
         
         $replace_member_id = undef 
-            if $replace_member_id == $dbh->quote($SESSION{'USR'}->{'member_id_real'});
+            if $replace_member_id == $SESSION{'USR'}->{'member_id_real'};
         
         $q = qq~
             UPDATE 
@@ -1445,7 +1446,7 @@ sub usercontroller_rt_user_usersw_post () {
         
         $SESSION{'REDIR'} = {
             url => $$res{'url'}, 
-            msg => $res->{'message'}, 
+            msg => $SESSION{'LOC'}->loc($res->{'message'}), 
         };
         return;
     }
@@ -1650,7 +1651,7 @@ sub usercontroller_rt_user_profile_post () {
         
         $SESSION{'REDIR'} = {
             url => $$res{'url'}, 
-            msg => $res->{'message'}, 
+            msg => $SESSION{'LOC'}->loc($res->{'message'}), 
         };
         return;
     }
@@ -1816,12 +1817,15 @@ sub usercontroller_rt_user_register_post () {
         
         $TT_VARS{'make_it_simple'} = 1;
         $html = $self->render_partial(template => 'user/mail/confirm', format => 'html');
-        $text = $self->render_partial('user/mail/confirm', format => 'txt');
+        $text = $self->render_partial(template => 'user/mail/confirm', format => 'txt');
         $TT_VARS{'make_it_simple'} = 0;
         
         if (
             $SESSION{'MAILER'}->new({
-                to => scalar $SESSION{'REQ'}->param('usr_email'), 
+                to => (scalar $SESSION{'REQ'}->param('usr_name')) . 
+                    ' <' . 
+                        (scalar $SESSION{'REQ'}->param('usr_email')) . 
+                            '>', 
                 subject => $SESSION{'LOC'}->loc('Confirm registartion at') . ' ' . $SESSION{'SITE_NAME'}, 
                 html => $html, 
                 text => $text, 
@@ -1845,7 +1849,6 @@ sub usercontroller_rt_user_register_post () {
         }
     
     }
-    
     
     my $body = $self->render_partial;
     
@@ -1950,6 +1953,218 @@ sub usercontroller_rt_user_confirm_post () {
     $self->render('site_index', format => 'html');
     
 } #-- usercontroller_rt_user_confirm_post
+
+sub usercontroller_rt_user_forgot_password_get () {
+
+    my $self = shift;
+
+    unless ($SESSION{'USR'}->chk_access('users', 'auth')) {
+        $TT_CFG{'tt_controller'} = 
+            $TT_VARS{'tt_controller'} = 
+                'commmon';
+        $TT_CFG{'tt_action'} = 
+            $TT_VARS{'tt_action'} = 
+                'no_access_perm';
+        $self->render('site_index', format => 'html');
+        return;
+    }
+    else {
+        $SESSION{'PAGE_CACHABLE'} = 1;
+        $TT_CFG{'tt_controller'} = 
+            $TT_VARS{'tt_controller'} = 
+                'user';
+        $TT_CFG{'tt_action'} = 
+            $TT_VARS{'tt_action'} = 
+                'forgot';
+    }
+    $self->render('site_index', format => 'html');
+
+} #-- usercontroller_rt_user_forgot_password_get
+
+sub usercontroller_rt_user_forgot_password_post () {
+    
+    my $self = shift;
+    
+    unless ($SESSION{'USR'}->chk_access('users', 'auth')) {
+        $TT_CFG{'tt_controller'} = 
+            $TT_VARS{'tt_controller'} = 
+                'commmon';
+        $TT_CFG{'tt_action'} = 
+            $TT_VARS{'tt_action'} = 
+                'no_access_perm';
+        $self->render('site_index', format => 'html');
+        return;
+    }
+    
+    if ( 
+        $SESSION{'CAPTCHA'} && 
+        !$SESSION{'CAPTCHA'}->{'check_mjcaptcha'}()
+    ) {
+        $SESSION{'REDIR'} = {
+            url => $SESSION{'USR_URL'} . '/forgot_password', 
+            msg => $SESSION{'LOC'}->loc('Captcha typed incorrectly'), 
+        };
+        return;
+    }
+    
+    my $res = &MjNCMS::Usercontroller::forgot_password({
+        c => $self, 
+        login => scalar $SESSION{'REQ'}->param('login'), 
+        email => scalar $SESSION{'REQ'}->param('email'), 
+    });
+    
+    my $url;
+    unless ($SESSION{'REQ_ISAJAX'}) {
+        if ($SESSION{'REFERER'}) {
+            $url = $SESSION{'REFERER'};
+        }
+        elsif ($SESSION{'HTTP_REFERER'}) {
+            $url = $SESSION{'HTTP_REFERER'};
+        }
+        $url = $SESSION{'USR_URL'}.'/forgot_password' unless $url;
+        $SESSION{'REDIR'} = {
+            url => $url, 
+            msg => $SESSION{'LOC'}->loc($res->{'message'}), 
+        };
+        return;
+    }
+    else {
+        $self->render_json({
+            status => $res->{'status'}, 
+            message => $SESSION{'LOC'}->loc($res->{'message'}), 
+            role_id => $res->{'role_id'}, 
+            
+        });
+    }
+    
+} #-- usercontroller_rt_user_forgot_password_post
+
+sub usercontroller_rt_user_rest_pass_get () {
+
+    my $self = shift;
+
+    unless ($SESSION{'USR'}->chk_access('users', 'auth')) {
+        $TT_CFG{'tt_controller'} = 
+            $TT_VARS{'tt_controller'} = 
+                'commmon';
+        $TT_CFG{'tt_action'} = 
+            $TT_VARS{'tt_action'} = 
+                'no_access_perm';
+        $self->render('site_index', format => 'html');
+        return;
+    }
+    else {
+        my $res = &MjNCMS::Usercontroller::rest_password({
+            c => $self, 
+            login => scalar $self->param('login'), 
+            crc => scalar $self->param('crc'), 
+        });
+        
+        my $url;
+        if ($SESSION{'REFERER'}) {
+            $url = $SESSION{'REFERER'};
+        }
+        elsif ($SESSION{'HTTP_REFERER'}) {
+            $url = $SESSION{'HTTP_REFERER'};
+        }
+        $url = $SESSION{'USR_URL'}.'/login' unless $url;
+        $SESSION{'REDIR'} = {
+            url => $url, 
+            msg => $SESSION{'LOC'}->loc($res->{'message'}), 
+        };
+        return;
+        
+    }
+    
+    return;
+
+} #-- usercontroller_rt_user_rest_pass_get
+
+sub usercontroller_rt_user_reconfirm_email_get () {
+
+    my $self = shift;
+
+    unless ($SESSION{'USR'}->chk_access('users', 'auth')) {
+        $TT_CFG{'tt_controller'} = 
+            $TT_VARS{'tt_controller'} = 
+                'commmon';
+        $TT_CFG{'tt_action'} = 
+            $TT_VARS{'tt_action'} = 
+                'no_access_perm';
+        $self->render('site_index', format => 'html');
+        return;
+    }
+    else {
+        $SESSION{'PAGE_CACHABLE'} = 1;
+        $TT_CFG{'tt_controller'} = 
+            $TT_VARS{'tt_controller'} = 
+                'user';
+        $TT_CFG{'tt_action'} = 
+            $TT_VARS{'tt_action'} = 
+                'reconfirm';
+    }
+    $self->render('site_index', format => 'html');
+
+} #-- usercontroller_rt_user_reconfirm_email_get
+
+
+sub usercontroller_rt_user_reconfirm_email_post () {
+    
+    my $self = shift;
+    
+    unless ($SESSION{'USR'}->chk_access('users', 'auth')) {
+        $TT_CFG{'tt_controller'} = 
+            $TT_VARS{'tt_controller'} = 
+                'commmon';
+        $TT_CFG{'tt_action'} = 
+            $TT_VARS{'tt_action'} = 
+                'no_access_perm';
+        $self->render('site_index', format => 'html');
+        return;
+    }
+    
+    if ( 
+        $SESSION{'CAPTCHA'} && 
+        !$SESSION{'CAPTCHA'}->{'check_mjcaptcha'}()
+    ) {
+        $SESSION{'REDIR'} = {
+            url => $SESSION{'USR_URL'} . '/forgot_password', 
+            msg => $SESSION{'LOC'}->loc('Captcha typed incorrectly'), 
+        };
+        return;
+    }
+    
+    my $res = &MjNCMS::Usercontroller::reconfirm_email({
+        c => $self, 
+        login => scalar $SESSION{'REQ'}->param('login'), 
+        email => scalar $SESSION{'REQ'}->param('email'), 
+    });
+    
+    my $url;
+    unless ($SESSION{'REQ_ISAJAX'}) {
+        if ($SESSION{'REFERER'}) {
+            $url = $SESSION{'REFERER'};
+        }
+        elsif ($SESSION{'HTTP_REFERER'}) {
+            $url = $SESSION{'HTTP_REFERER'};
+        }
+        $url = $SESSION{'USR_URL'}.'/login' unless $url;
+        $SESSION{'REDIR'} = {
+            url => $url, 
+            msg => $SESSION{'LOC'}->loc($res->{'message'}), 
+        };
+        return;
+    }
+    else {
+        $self->render_json({
+            status => $res->{'status'}, 
+            message => $SESSION{'LOC'}->loc($res->{'message'}), 
+            role_id => $res->{'role_id'}, 
+            
+        });
+    }
+    
+} #-- usercontroller_rt_user_reconfirm_email_post
 
 ########################################################################
 #                           INTERNAL SUBS
@@ -3934,5 +4149,328 @@ sub users_delete ($) {
     };
     
 } #-- users_delete
+
+sub forgot_password ($) {
+    
+    my $cfg = shift;
+    
+    return {
+            status => 'fail', 
+            message => 'no input cfg', 
+    } unless ($cfg && ref $cfg && ref $cfg eq 'HASH');
+
+    return {
+        status => 'fail', 
+        message => 'no input data',
+    } unless (
+        ${$cfg}{'c'} && 
+        (
+            ${$cfg}{'login'} ||
+            ${$cfg}{'email'}
+        )
+    ); 
+    
+    my (
+        $dbh, $q , 
+        $res, $ttv_save, 
+        $html, $text, 
+        
+    ) = ($SESSION{'DBH'}, );
+    
+    if (${$cfg}{'login'}){
+        
+        $res = $SESSION{'USR'}->get_users({
+                login => ${$cfg}{'login'}, 
+            });
+        
+        $res = pop @{$$res{'users'}};
+        
+    }
+    
+    if (!$res && ${$cfg}{'email'}){
+        
+        $res = $SESSION{'USR'}->get_users({
+                email => ${$cfg}{'email'}, 
+            });
+        
+        $res = pop @{$$res{'users'}};
+        
+    }
+    
+    if ($res && $$res{'member_id'}) { #Also guest protection :)
+        
+        $ttv_save = $TT_VARS{'make_it_simple'};
+        $TT_VARS{'make_it_simple'} = 1;
+        
+        $TT_VARS{'passrest_login'} = $$res{'login'};
+        $TT_VARS{'passrest_crc'} = 
+            $SESSION{'BS'}(
+                $$res{'member_id'} . 
+                $$res{'salt'} . 
+                $$res{'ut_ins'} . 
+                $SESSION{'MD_CHK_KEY'} . 
+                ($SESSION{'DATE'}->get_by_fmt('-%Y-%m-%d-')) 
+                    )->md5_sum()->to_string();
+        
+        $html = ${$cfg}{'c'}->render_partial(template => 'user/mail/forgot', format => 'html');
+        $text = ${$cfg}{'c'}->render_partial(template => 'user/mail/forgot', format => 'txt');
+        
+        $TT_VARS{'make_it_simple'} = $ttv_save;
+        delete $TT_VARS{'passrest_login'};
+        delete $TT_VARS{'passrest_crc'};
+        
+        if (
+            $SESSION{'MAILER'}->new({
+                to => ($$res{'name'}) . 
+                    ' <' . 
+                        ($$res{'email'}) . 
+                            '>', 
+                subject => $SESSION{'LOC'}->loc('Rest password at') . ' ' . $SESSION{'SITE_NAME'}, 
+                html => $html, 
+                text => $text, 
+            })->send()
+        ){
+            return {
+                    status => 'ok', 
+                    message => 'Check your email for password rest link', 
+            }
+        }
+        else {
+            return {
+                    status => 'fail', 
+                    message => 'fail to send password rest email', 
+            }
+        }
+    }
+    
+    return {
+            status => 'fail', 
+            message => 'user not found', 
+    }
+    
+}
+
+sub rest_password ($) {
+    
+    my $cfg = shift;
+    
+    return {
+            status => 'fail', 
+            message => 'no input cfg', 
+    } unless ($cfg && ref $cfg && ref $cfg eq 'HASH');
+
+    return {
+        status => 'fail', 
+        message => 'no input data',
+    } unless (
+        ${$cfg}{'login'} &&
+        ${$cfg}{'crc'} && 
+        ${$cfg}{'c'}
+    ); 
+    
+    my (
+        $dbh, $q , 
+        $res, $ttv_save, 
+        $html, $text, $new_pass, 
+        
+    ) = ($SESSION{'DBH'}, );
+    
+    if (${$cfg}{'login'}){
+        
+        $res = $SESSION{'USR'}->get_users({
+                login => ${$cfg}{'login'}, 
+            });
+        
+        $res = pop @{$$res{'users'}};
+        
+    }
+    
+    if ($res && $$res{'member_id'}) { #Also guest protection :)
+        
+        $ttv_save = $TT_VARS{'make_it_simple'};
+        $TT_VARS{'make_it_simple'} = 1;
+        
+        $TT_VARS{'passrest_login'} = $$res{'login'};
+        $TT_VARS{'passrest_name'} = $$res{'name'};
+        
+        $TT_VARS{'passrest_crc'} = 
+            $SESSION{'BS'}(
+                $$res{'member_id'} . 
+                $$res{'salt'} . 
+                $$res{'ut_ins'} . 
+                $SESSION{'MD_CHK_KEY'} . 
+                ($SESSION{'DATE'}->get_by_fmt('-%Y-%m-%d-')) 
+                    )->md5_sum()->to_string();
+        
+        unless (
+            $TT_VARS{'passrest_crc'} eq 
+            ${$cfg}{'crc'}
+        ) {
+            return {
+                status => 'fail', 
+                message => 'Password rest link You\'ve followed is not valid', 
+            }
+        }
+        
+        unless (
+            $SESSION{'USR'}->set_new_salt(undef, $$res{'member_id'})
+        ) {
+            return {
+                status => 'fail', 
+                message => 'Password rest failed. Try please again or contact administrator. Error E01.', 
+            }
+        }
+
+        $new_pass = substr($SESSION{'BS'}(rand())->md5_sum()->to_string(), 0, (int(rand(27))+5));
+        
+        unless (
+            $SESSION{'USR'}->change_password($new_pass, $new_pass, $$res{'member_id'})
+        ) {
+            return {
+                status => 'fail', 
+                message => 'Password rest failed. Try please again or contact administrator. Error E02.', 
+            }
+        }
+        
+        $TT_VARS{'passrest_password'} = $new_pass;
+        
+        $html = ${$cfg}{'c'}->render_partial(template => 'user/mail/new_pass', format => 'html');
+        $text = ${$cfg}{'c'}->render_partial(template => 'user/mail/new_pass', format => 'txt');
+        
+        $TT_VARS{'make_it_simple'} = $ttv_save;
+        delete $TT_VARS{'passrest_login'};
+        delete $TT_VARS{'passrest_crc'};
+        delete $TT_VARS{'passrest_password'};
+        
+        if (
+            $SESSION{'MAILER'}->new({
+                to => ($$res{'name'}) . 
+                    ' <' . 
+                        ($$res{'email'}) . 
+                            '>', 
+                subject => $SESSION{'LOC'}->loc('Your new password at') . ' ' . $SESSION{'SITE_NAME'}, 
+                html => $html, 
+                text => $text, 
+            })->send()
+        ){
+            return {
+                    status => 'ok', 
+                    message => 'Check your email for new password', 
+            }
+        }
+        else {
+            return {
+                    status => 'fail', 
+                    message => 'fail to send new password email', 
+            }
+        }
+    }
+    
+    return {
+            status => 'fail', 
+            message => 'user not found', 
+    }
+
+} #-- rest_password
+
+sub reconfirm_email ($) {
+    
+    my $cfg = shift;
+    
+    return {
+            status => 'fail', 
+            message => 'no input cfg', 
+    } unless ($cfg && ref $cfg && ref $cfg eq 'HASH');
+
+    return {
+        status => 'fail', 
+        message => 'no input data',
+    } unless (
+        ${$cfg}{'c'} && 
+        (
+            ${$cfg}{'login'} ||
+            ${$cfg}{'email'}
+        )
+    ); 
+    
+    my (
+        $dbh, $q , 
+        $res, $ttv_save, 
+        $html, $text, 
+        
+    ) = ($SESSION{'DBH'}, );
+    
+    if (${$cfg}{'login'}){
+        
+        $res = $SESSION{'USR'}->get_users({
+                login => ${$cfg}{'login'}, 
+            });
+        
+        $res = pop @{$$res{'users'}};
+        
+    }
+    
+    if (!$res && ${$cfg}{'email'}){
+        
+        $res = $SESSION{'USR'}->get_users({
+                email => ${$cfg}{'email'}, 
+            });
+        
+        $res = pop @{$$res{'users'}};
+        
+    }
+    
+    if ($res && $$res{'member_id'}) { #Also guest protection :)
+        
+        unless (
+            $$res{'val_code'} &&
+            !$$res{'is_forum_active'}
+        ) {
+            return {
+                status => 'fail', 
+                message => 'Seems like user email alredy confirmed', 
+            }
+        }
+        
+        $ttv_save = $TT_VARS{'make_it_simple'};
+        $TT_VARS{'make_it_simple'} = 1;
+        $TT_VARS{'confirmation_code'} = $$res{'val_code'};
+        
+        $html = ${$cfg}{'c'}->render_partial(template => 'user/mail/confirm', format => 'html');
+        $text = ${$cfg}{'c'}->render_partial(template => 'user/mail/confitm', format => 'txt');
+        
+        $TT_VARS{'make_it_simple'} = $ttv_save;
+        delete $TT_VARS{'confirmation_code'};
+        
+        if (
+            $SESSION{'MAILER'}->new({
+                to => ($$res{'name'}) . 
+                    ' <' . 
+                        ($$res{'email'}) . 
+                            '>', 
+                subject => $SESSION{'LOC'}->loc('New confirmation email for') . ': ' . $SESSION{'SITE_NAME'}, 
+                html => $html, 
+                text => $text, 
+            })->send()
+        ){
+            return {
+                status => 'ok', 
+                message => 'Check your mail for confirmation link', 
+            }
+        }
+        else {
+            return {
+                status => 'fail', 
+                message => 'fail to send confirmation email', 
+            }
+        }
+    }
+    
+    return {
+        status => 'fail', 
+        message => 'user not found', 
+    }
+    
+}
 
 1;

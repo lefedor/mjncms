@@ -1,10 +1,6 @@
 #Things in mind, volunteers/suggestions are welcome:
 
   HOT:
-  User reg/login/confirm @ content-side
-    with lame predefined role
-    profile page
-    change email/pass form
   MEMD use @ pages, @categories, @blocks
   Paging @ category list - adv ..slug/[index|page_(2..n)].htm
   Paging @ pages display - adv ..[slug|slug_page_(2..n)].html
@@ -75,5 +71,6 @@
   Update all JS dialogs and evrything as Mootools locales, not hash like now, 
     which was about temporary solution, before locales extension man was read )
   Update FileManager.js to use locales 
+  Add namespace not visible from TT to prevent call some functions from templates. Like some of {'USR'}->new_salt/change_email. (more secure then)
   
 ..not complete...

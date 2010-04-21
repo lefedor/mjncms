@@ -10,10 +10,10 @@ package MjNCMS::Menus;
 #
 
 use common::sense;
-use base 'Mojolicious::Controller';
-
 use FindBin;
 use lib "$FindBin::Bin/../";
+
+use base 'Mojolicious::Controller';
 
 use MjNCMS::Config qw/:vars /;
 use MjNCMS::Service qw/:subs /;

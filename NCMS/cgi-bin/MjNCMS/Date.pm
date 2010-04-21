@@ -272,14 +272,24 @@ sub date_sql ($;$) {
     return " DATE('" . time2str('%Y-%m-%d', $date) . "') ";
 } #-- date_sql
 
-
 sub datetime_sql () {
     my ($self, $date) = @_;
     
     $date = $self->epoch() unless $date;
+    
     #for sql caching && get_inserted items by lock && insert date - no NOW()
     return q~ TIMESTAMP('~ . time2str('%Y-%m-%d %H:%M:%S', $date) . q~') ~;
 } #-- datetime_sql
+
+sub get_by_fmt () {
+    my ($self, $fmt, $date) = @_;
+    
+    $date = $self->epoch() unless $date;
+    
+    return undef unless $fmt;
+    
+    return time2str($fmt, $date);
+}
 
 sub strptime_and_sql () {
     #reformat date between sql, strptime anf JS, not finished

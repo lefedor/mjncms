@@ -25,6 +25,7 @@ use MjNCMS::Config qw/:vars /;
 #use MjNCMS::Service qw/:subs /;
 
 use MIME::Lite;
+use MIME::Types;
 use MIME::Base64 qw/encode_base64 /;
 
 sub new () {
@@ -35,6 +36,7 @@ sub new () {
 
     #allow new()->new(), allow send logs youself, etc
     #return undef unless $$cfg{'to'};
+    
     $$cfg{'to'} = $SESSION{'SITE_CONTACTEMAIL'} 
         unless $$cfg{'to'};    
     $$cfg{'to'} = 
@@ -100,7 +102,13 @@ sub new () {
         Cc         => $$cfg{'cc_enc'} || $$cfg{'cc'},
         Subject    => $$cfg{'subject_enc'} || $$cfg{'subject_enc'},
         Type       => $$cfg{'type'} || 'multipart/alternative', #'multipart/mixed', one of html|txt || both
-        'X-Mailer' => 'MjNCMS Mailer',
+    );
+    
+    #Delete first X-Mailer entry [MIME::Lite vXXX]
+    $self->{'MESSAGE'}->delete('X-Mailer');
+    $self->{'MESSAGE'}->add(
+        'X-Mailer',
+            $SESSION{'MAILER_ID'} || 'MjNCMS Mailer' 
     );
     
     $self->{'MIMETYPES'} = MIME::Types->new();
@@ -112,7 +120,8 @@ sub new () {
     }
     if ($$cfg{'html'}){
         $self->attach_html($$cfg{'html'});
-    }   
+    }
+    
     return $self
 } #-- new
 
@@ -122,13 +131,18 @@ sub rest ($$) {
     my $cfg = shift;
     $cfg = {} unless ($cfg && ref $cfg && ref $cfg eq 'HASH');
     
+    my $xmailer = $self->{'MESSAGE'}->get('X-Mailer');
+    
     $self->{'MESSAGE'} = MIME::Lite->new(
-        From    => $self->{'MESSAGE'}->get('From'),
-        To      => $self->{'MESSAGE'}->get('To'),
-        Cc      => $self->{'MESSAGE'}->get('Cc'),
-        Subject => $self->{'MESSAGE'}->get('Subject'),
-        Type    => 'multipart/mixed'
+        From       => $self->{'MESSAGE'}->get('From'),
+        To         => $self->{'MESSAGE'}->get('To'),
+        Cc         => $self->{'MESSAGE'}->get('Cc'),
+        Subject    => $self->{'MESSAGE'}->get('Subject'),
+        Type       => $self->{'MESSAGE'}->get('Type'),
     );
+    
+    $self->{'MESSAGE'}->delete('X-Mailer');
+    $self->{'MESSAGE'}->add('X-Mailer', $xmailer || 'MjNCMS');
     
     return $self;
 } #-- rest
@@ -292,6 +306,7 @@ sub as_string ($) {
     return $self->{'MESSAGE'}->as_string();
 } #-- as_string
 
+#Mojo::ByteSteream style alias
 sub to_string ($) {
     my $self = shift;
     
@@ -300,7 +315,10 @@ sub to_string ($) {
 
 sub sign ($$) {
     
-    #is it broken?
+    #
+    # Warning, not for type='multipart/alternative' emails!
+    # Include signature @ html/text definition stage.
+    #
     
     my ($self, $cfg) = @_;
     
@@ -319,10 +337,10 @@ sub sign ($$) {
     $$cfg{'data'} = &_field_to_base($$cfg{'data'})
         if $$cfg{'data'};
     
-    $self->{'MESSAGE'}->sign({
+    $self->{'MESSAGE'}->sign(
         Data => $$cfg{'data'}, 
         Path => $$cfg{'path'}
-    });
+    );
     
     return $self;
 } #-- sign

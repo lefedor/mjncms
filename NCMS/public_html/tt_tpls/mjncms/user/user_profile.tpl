@@ -4,6 +4,8 @@
     <a href="[% SESSION.USR_URL %]/login">[% loc('Login') | html %]</a> 
     [% loc('or') | html %]
     <a href="[% SESSION.USR_URL %]/register">[% loc('Register') | html %]</a> 
+    [% loc('or') | html %]
+    <a href="[% SESSION.USR_URL %]/reconfirm_email">[% loc('Send confirmation email again') | html %]</a> 
 [% ELSE %]
     <h2>[% loc('Your profile') | html -%]</h2>
     <form onSubmit="javascript:return confirm('[% loc('Update') | html %]?');" name="upduser_frm" id="upduser_frm" action="[% bytestream(SESSION.USR_URL, 'url_escape', 'A-Za-z0-9\/\-\.\_\~') %]/profile" method="post" accept-charset="[% TT_VARS.html_charset %]">
