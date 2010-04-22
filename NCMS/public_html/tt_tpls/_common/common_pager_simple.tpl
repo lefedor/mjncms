@@ -18,6 +18,6 @@
     [% p=p+1 -%]
 [% END -%]
 [% IF pages.count>pages.stop -%]
-    <a href="[% pages.url | html %]&amp;page=[% p %]">&gt;</a>
+    <a href="[% pages.url | html %]&amp;page=[% pages.stop + 1 %]">&gt;</a>
     <a href="[% pages.url | html %]&amp;page=[% pages.count %]">[% loc('Last') %] &raquo;</a>
 [% END -%]

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 22, 2010 at 12:25 AM
+-- Generation Time: Apr 22, 2010 at 08:18 PM
 -- Server version: 5.0.51
 -- PHP Version: 5.3.1-5
 
@@ -99,7 +99,7 @@ INSERT INTO `mjsmf_members` (`ID_MEMBER`, `memberName`, `dateRegistered`, `posts
 (20, 'Morbo', 1271615794, 0, 0, '', 0, 'Morbo', 0, 0, '', '', '', 'ecafe79de815678b999f15a90b4e1cc32a35c09f', 'morbo@powers.app', '', 0, '0001-01-01', '', '', '', '', '', '', '', 1, 1, '', '', 0, '', 0, 0, 0, '', 1, 1, 0, 2, '', '', '', '', 0, 0, '395bd7cd21', 0, '', '', 0, 0, '5a71'),
 (21, 'pepyaka', 1271627335, 0, 0, '', 0, 'pepyaka', 0, 0, '', '', '', '39c17d4c979a0312c04c074e4cde55ad96601d2f', 'pepyaka21@powers.apw', '', 0, '0001-01-01', '', '', '', '', '', '', '', 1, 1, '', '', 0, '', 0, 0, 0, '', 1, 1, 0, 2, '', '', '', '', 0, 1, '', 0, '', '', 0, 0, 'b7f7'),
 (22, 'chupakabra', 1271687788, 0, 0, '', 0, 'chupakabra', 0, 0, '', '', '', '8976fe787e7a12ef44d2237c94abee426125aa3c', 'chupakabra@powers.app', '', 0, '0001-01-01', '', '', '', '', '', '', '', 1, 1, '', '', 0, '', 0, 0, 0, '', 1, 1, 0, 2, '', '', '', '', 0, 1, '', 0, '', '', 0, 0, 'e2af'),
-(37, 'Fry', 1271880017, 0, 0, '', 0, 'Fry', 0, 0, '', '', '', 'ccd720c03d4e26501f09c8c9a573fbc86898c74e', 'ffl-public@yandex.ru', '', 0, '0001-01-01', '', '', '', '', '', '', '', 1, 1, '', '', 0, '', 0, 0, 0, '', 1, 1, 0, 2, '', '', '', '', 0, 0, 'e6a22296d4', 0, '', '', 0, 0, '494d');
+(37, 'Fry', 1271880017, 0, 0, '', 0, 'Fry', 0, 0, '', '', '', 'ccd720c03d4e26501f09c8c9a573fbc86898c74e', 'ffl-public@yandex.ru', '', 0, '0001-01-01', '', '', '', '', '', '', '', 1, 1, '', '', 0, '', 0, 0, 0, '', 1, 1, 0, 2, '', '', '', '', 0, 1, '', 0, '', '', 0, 0, '494d');
 
 -- --------------------------------------------------------
 
@@ -135,7 +135,8 @@ INSERT INTO `mjsmf_sessions` (`session_id`, `last_update`, `data`) VALUES
 ('020c416d56fc9facbce6bc3ec05ff8fb', 1271687691, 'rand_code|s:32:"0af7678245fd9e847b7fd40d241de6da";USER_AGENT|s:103:"Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.8) Gecko/20100308 Iceweasel/3.5.8 (like Firefox/3.5.8)";'),
 ('bb7b92305f6279d6b9aebae1bedc4392', 1271709968, 'rand_code|s:32:"f718429cbc6ded2b57212cbcbe1eba38";USER_AGENT|s:107:"Mozilla/5.0 (X11; U; Linux i686; en-US) AppleWebKit/533.4 (KHTML, like Gecko) Chrome/5.0.366.2 Safari/533.4";'),
 ('be667308e54455a1eb7326dcfa6e807b', 1271710216, 'rand_code|s:32:"b3b3c921c82bc2b949f6518d1d75af2a";USER_AGENT|s:71:"Mozilla/5.0 (compatible; Konqueror/4.3; Linux) KHTML/4.3.4 (like Gecko)";'),
-('dd89f87ffc64922daa25a81a7277bea7', 1271710353, 'rand_code|s:32:"32a34f42ab302248da5179ef944a24d2";USER_AGENT|s:63:"Opera/9.80 (X11; Linux i686; U; ru) Presto/2.2.15 Version/10.10";');
+('dd89f87ffc64922daa25a81a7277bea7', 1271710353, 'rand_code|s:32:"32a34f42ab302248da5179ef944a24d2";USER_AGENT|s:63:"Opera/9.80 (X11; Linux i686; U; ru) Presto/2.2.15 Version/10.10";'),
+('91aa52eb82d00d045dd7d54e3992b32f', 1271915303, 'rand_code|s:32:"fc5726eb24fa6c0b17b07aa1161af28f";USER_AGENT|s:103:"Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.8) Gecko/20100308 Iceweasel/3.5.8 (like Firefox/3.5.8)";');
 
 -- --------------------------------------------------------
 
@@ -460,17 +461,29 @@ CREATE TABLE IF NOT EXISTS `mj_pages` (
   PRIMARY KEY  (`page_id`),
   UNIQUE KEY `slug_uniq_idx` (`slug`),
   KEY `use_access_roles_idx` (`use_access_roles`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Active posts table' AUTO_INCREMENT=5 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Active posts table' AUTO_INCREMENT=17 ;
 
 --
 -- Dumping data for table `mj_pages`
 --
 
 INSERT INTO `mj_pages` (`page_id`, `is_published`, `cat_id`, `lang`, `slug`, `intro`, `body`, `header`, `descr`, `keywords`, `showintro`, `use_customtitle`, `custom_title`, `allow_comments`, `comments_mode`, `use_password`, `password`, `use_access_roles`, `comments_count`, `author_id`, `member_id`, `whoedit`, `ins`, `upd`, `dt_created`, `dt_publishstart`, `dt_publishend`) VALUES
-(1, 1, 0, 'en', 'justpage', '<p>\n	<img alt="" ilo-full-src="http://mojotest:82/userfiles/mjncms/1/avopingvo.jpg" src="/userfiles/mjncms/1/avopingvo.jpg" style="width: 96px; height: 96px;" /></p>\n<p>\n	This is justpage intro. hi! cool!</p>\n<p>\n	&nbsp;</p>\n<p>\n', '<p>\n	This is justpagebody</p>\n', 'just single page', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 1, '2010-04-12 14:14:38', '2010-04-14 22:38:35', '2010-04-12 02:13:00', '2010-04-12 02:13:00', NULL),
+(1, 1, 0, 'en', 'justpage', '<p>\n	<img alt="My avatar alt" ilo-full-src="http://mojotest:82/userfiles/mjncms/1/avopingvo.jpg" some="else" src="/userfiles/mjncms/1/avopingvo.jpg" style="width: 96px; height: 96px;" title="AvoTitle" /></p>\n<p>\n	This is justpage intro. hi! cool!</p>\n', '<p>\n	This is just page 1 body</p>\n<p>\n	&nbsp;</p>\n<div style="page-break-after: always;">\n	<span style="display: none;">&nbsp;</span></div>\n<p>\n	&nbsp;</p>\n<p>\n	This is just page 2 body</p>\n<p>\n	&nbsp;</p>\n<div style="page-break-after: always;">\n	<span style="display: none;">&nbsp;</span></div>\n<p>\n	&nbsp;</p>\n<p>\n	This is just page 3 body</p>\n', 'just single page', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 1, '2010-04-12 14:14:38', '2010-04-22 13:06:41', '2010-04-12 05:13:00', '2010-04-12 05:13:00', NULL),
 (2, 1, 8, 'en', 'd1cp1', '<p>\n	iintro</p>\n', '<p>\n	bbody</p>\n', 'demo1 cat page 1', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 0, '2010-04-12 14:15:14', '2010-04-12 14:15:14', '2010-04-12 03:14:00', '2010-04-12 03:14:00', NULL),
 (3, 1, 8, 'en', 'd1cp2', '<p>\n	introoo</p>\n', '<p>\n	bodyyy</p>\n', 'demo1 cat page 2', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 1, '2010-04-12 14:15:44', '2010-04-12 14:18:35', '2010-04-12 04:15:00', '2010-04-12 04:15:00', NULL),
-(4, 1, 0, 'en', 'index', '<p>\n	Index page</p>\n', '<p some="thing">\n	bla</p>\n<p>\n	bla</p>\n<p>\n	&nbsp;</p>\n<p>\n	be careful this demo runs on lowerclocked NAS :)</p>\n<p>\n	&nbsp;</p>\n<p>\n	bla</p>\n<p>\n	Index so index....</p>\n<p>\n	&nbsp;</p>\n<p>\n	btw, <a href="/mjadmin">admin side</a></p>\n', 'Main index page', 'MjNCMS project - PERL Mojolicious CMS demo site index page', 'MjNCMS, Mojolicious, Mojo, CMS', 1, 1, 'MjNCMS project demo site index page', 1, 'comment', 0, '', 0, 0, 1, 1, 1, '2010-04-15 19:45:55', '2010-04-19 22:33:50', '2010-04-15 12:45:00', '2010-04-15 12:45:00', NULL);
+(4, 1, 0, 'en', 'index', '<p>\n	Index page</p>\n', '<p some="thing">\n	bla</p>\n<p>\n	bla</p>\n<p>\n	&nbsp;</p>\n<p>\n	be careful this demo runs on lowerclocked NAS :)</p>\n<p>\n	&nbsp;</p>\n<p>\n	bla</p>\n<p>\n	Index so index....</p>\n<p>\n	&nbsp;</p>\n<p>\n	btw, <a href="/mjadmin">admin side</a></p>\n', 'Main index page', 'MjNCMS project - PERL Mojolicious CMS demo site index page', 'MjNCMS, Mojolicious, Mojo, CMS', 1, 1, 'MjNCMS project demo site index page', 1, 'comment', 0, '', 0, 0, 1, 1, 1, '2010-04-15 19:45:55', '2010-04-22 13:05:03', '2010-04-15 02:45:00', '2010-04-15 02:45:00', NULL),
+(5, 1, 8, 'en', 'p1', '<p>\n	i1</p>\n', '<p>\n	b1</p>\n', 'p1', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 1, '2010-04-22 19:27:00', '2010-04-22 19:27:36', '2010-04-22 09:26:00', '2010-04-22 09:26:00', NULL),
+(6, 1, 8, 'en', 'p2', '<p>\n	i2</p>\n', '<p>\n	b2</p>\n', 'p2', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 0, '2010-04-22 19:27:24', '2010-04-22 19:27:24', '2010-04-22 08:27:00', '2010-04-22 08:27:00', NULL),
+(7, 1, 8, 'en', 'p3', '<p>\n	i3</p>\n', '<p>\n	b3</p>\n', 'p3', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 1, '2010-04-22 19:27:52', '2010-04-22 19:29:41', '2010-04-22 09:27:00', '2010-04-22 09:27:00', NULL),
+(8, 1, 8, 'en', 'p4', '<p>\n	i4</p>\n', '<p>\n	b4</p>\n', 'p4', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 1, '2010-04-22 19:28:13', '2010-04-22 19:29:32', '2010-04-22 09:27:00', '2010-04-22 09:27:00', NULL),
+(9, 1, 8, 'en', 'p5', '<p>\n	i5</p>\n', '<p>\n	b5</p>\n', 'p5', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 1, '2010-04-22 19:28:28', '2010-04-22 19:29:22', '2010-04-22 09:28:00', '2010-04-22 09:28:00', NULL),
+(10, 1, 8, 'en', 'p6', '<p>\n	i6</p>\n', '<p>\n	b6</p>\n', 'p6', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 1, '2010-04-22 19:28:44', '2010-04-22 19:29:14', '2010-04-22 09:28:00', '2010-04-22 09:28:00', NULL),
+(11, 1, 8, 'en', 'p7', '<p>\n	i7</p>\n', '<p>\n	b7</p>\n', 'p7', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 0, '2010-04-22 19:29:04', '2010-04-22 19:29:04', '2010-04-22 08:28:00', '2010-04-22 08:28:00', NULL),
+(12, 1, 8, 'en', 'p8', '<p>\n	i8</p>\n', '<p>\n	b8</p>\n', 'p8', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 0, '2010-04-22 19:30:03', '2010-04-22 19:30:03', '2010-04-22 08:29:00', '2010-04-22 08:29:00', NULL),
+(13, 1, 8, 'en', 'p9', '<p>\n	i9</p>\n', '<p>\n	b9</p>\n', 'p9', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 0, '2010-04-22 19:30:22', '2010-04-22 19:30:22', '2010-04-22 08:30:00', '2010-04-22 08:30:00', NULL),
+(14, 1, 8, 'en', 'p10', '<p>\n	i10</p>\n', '<p>\n	b10</p>\n', 'p10', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 0, '2010-04-22 19:30:39', '2010-04-22 19:30:39', '2010-04-22 08:30:00', '2010-04-22 08:30:00', NULL),
+(15, 1, 8, 'en', 'p11', '<p>\n	i11</p>\n', '<p>\n	b11</p>\n', 'p11', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 0, '2010-04-22 19:31:05', '2010-04-22 19:31:05', '2010-04-22 08:30:00', '2010-04-22 08:30:00', NULL),
+(16, 1, 8, 'en', 'p12', '<p>\n	i12</p>\n', '<p>\n	b12</p>\n', 'p12', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 0, '2010-04-22 19:31:24', '2010-04-22 19:31:24', '2010-04-22 08:31:00', '2010-04-22 08:31:00', NULL);
 
 -- --------------------------------------------------------
 
@@ -528,7 +541,7 @@ CREATE TABLE IF NOT EXISTS `mj_pages_archive` (
   `dt_publishstart` datetime NOT NULL,
   `dt_publishend` datetime NOT NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Archive posts table' AUTO_INCREMENT=21 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Archive posts table' AUTO_INCREMENT=31 ;
 
 --
 -- Dumping data for table `mj_pages_archive`
@@ -554,7 +567,17 @@ INSERT INTO `mj_pages_archive` (`id`, `page_id`, `is_published`, `cat_id`, `lang
 (17, 4, 1, 0, 'en', 'index', '<p>\n	Index page</p>\n', '<p>\n	bla</p>\n<p>\n	bla</p>\n<p>\n	bla</p>\n<p>\n	Index so index....</p>\n', 'Main index page', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 1, '2010-04-15 19:45:55', '2010-04-15 20:40:43', '2010-04-15 08:45:00', '2010-04-15 08:45:00', '0000-00-00 00:00:00'),
 (18, 4, 1, 0, 'en', 'index', '<p>\n	Index page</p>\n', '<p>\n	bla</p>\n<p>\n	bla</p>\n<p>\n	bla</p>\n<p>\n	Index so index....</p>\n', 'Main index page', 'MjNCMS project demo site index page', 'MjNCMS, Mojolicious, Mojo', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 1, '2010-04-15 19:45:55', '2010-04-18 01:16:18', '2010-04-15 09:45:00', '2010-04-15 09:45:00', '0000-00-00 00:00:00'),
 (19, 4, 1, 0, 'en', 'index', '<p>\n	Index page</p>\n', '<p>\n	bla</p>\n<p>\n	bla</p>\n<p>\n	&nbsp;</p>\n<p>\n	be careful this demo runs on lowerclocked NAS :)</p>\n<p>\n	&nbsp;</p>\n<p>\n	bla</p>\n<p>\n	Index so index....</p>\n<p>\n	&nbsp;</p>\n<p>\n	btw, <a href="/mjadmin">admin side</a></p>\n<p>\n	&nbsp;</p>', 'Main index page', 'MjNCMS project demo site index page', 'MjNCMS, Mojolicious, Mojo', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 1, '2010-04-15 19:45:55', '2010-04-18 10:36:08', '2010-04-15 10:45:00', '2010-04-15 10:45:00', '0000-00-00 00:00:00'),
-(20, 4, 1, 0, 'en', 'index', '<p>\n	Index page</p>\n', '<p>\n	bla</p>\n<p>\n	bla</p>\n<p>\n	&nbsp;</p>\n<p>\n	be careful this demo runs on lowerclocked NAS :)</p>\n<p>\n	&nbsp;</p>\n<p>\n	bla</p>\n<p>\n	Index so index....</p>\n<p>\n	&nbsp;</p>\n<p>\n	btw, <a href="/mjadmin">admin side</a></p>', 'Main index page', 'MjNCMS project - PERL Mojolicious CMS demo site index page', 'MjNCMS, Mojolicious, Mojo, CMS', 1, 1, 'MjNCMS project demo site index page', 1, 'comment', 0, '', 0, 0, 1, 1, 1, '2010-04-15 19:45:55', '2010-04-19 22:33:50', '2010-04-15 11:45:00', '2010-04-15 11:45:00', '0000-00-00 00:00:00');
+(20, 4, 1, 0, 'en', 'index', '<p>\n	Index page</p>\n', '<p>\n	bla</p>\n<p>\n	bla</p>\n<p>\n	&nbsp;</p>\n<p>\n	be careful this demo runs on lowerclocked NAS :)</p>\n<p>\n	&nbsp;</p>\n<p>\n	bla</p>\n<p>\n	Index so index....</p>\n<p>\n	&nbsp;</p>\n<p>\n	btw, <a href="/mjadmin">admin side</a></p>', 'Main index page', 'MjNCMS project - PERL Mojolicious CMS demo site index page', 'MjNCMS, Mojolicious, Mojo, CMS', 1, 1, 'MjNCMS project demo site index page', 1, 'comment', 0, '', 0, 0, 1, 1, 1, '2010-04-15 19:45:55', '2010-04-19 22:33:50', '2010-04-15 11:45:00', '2010-04-15 11:45:00', '0000-00-00 00:00:00'),
+(21, 4, 1, 0, 'en', 'index', '<p>\n	Index page</p>\n', '<p some="thing">\n	bla</p>\n<p>\n	bla</p>\n<p>\n	&nbsp;</p>\n<p>\n	be careful this demo runs on lowerclocked NAS :)</p>\n<p>\n	&nbsp;</p>\n<p>\n	bla</p>\n<p>\n	Index so index....</p>\n<p>\n	&nbsp;</p>\n<p>\n	btw, <a href="/mjadmin">admin side</a></p>\n', 'Main index page', 'MjNCMS project - PERL Mojolicious CMS demo site index page', 'MjNCMS, Mojolicious, Mojo, CMS', 1, 1, 'MjNCMS project demo site index page', 1, 'comment', 0, '', 0, 0, 1, 1, 1, '2010-04-15 19:45:55', '2010-04-22 10:00:19', '2010-04-15 12:45:00', '2010-04-15 12:45:00', '0000-00-00 00:00:00'),
+(22, 1, 1, 0, 'en', 'justpage', '<p>\n	<img alt="" ilo-full-src="http://mojotest:82/userfiles/mjncms/1/avopingvo.jpg" src="/userfiles/mjncms/1/avopingvo.jpg" style="width: 96px; height: 96px;" /></p>\n<p>\n	This is justpage intro. hi! cool!</p>\n<p>\n	&nbsp;</p>\n<p>\n', '<p>\n	This is justpagebody</p>\n', 'just single page', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 1, '2010-04-12 14:14:38', '2010-04-22 10:04:37', '2010-04-12 02:13:00', '2010-04-12 02:13:00', '0000-00-00 00:00:00'),
+(23, 1, 1, 0, 'en', 'justpage', '<p>\n	<img alt="My avatar alt" ilo-full-src="http://mojotest:82/userfiles/mjncms/1/avopingvo.jpg" src="/userfiles/mjncms/1/avopingvo.jpg" style="width: 96px; height: 96px;" title="AvoTitle"/></p>\n<p>\n	This is justpage intro. hi! cool!</p>\n<p>\n	&nbsp;</p>', '<p>\n	This is justpagebody</p>\n', 'just single page', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 1, '2010-04-12 14:14:38', '2010-04-22 10:16:04', '2010-04-12 03:13:00', '2010-04-12 03:13:00', '0000-00-00 00:00:00'),
+(24, 4, 1, 0, 'en', 'index', '<p>\n	Index page</p>', '<p some="thing">\n	bla</p>\n<p>\n	bla</p>\n<p>\n	&nbsp;</p>\n<div style="page-break-after: always;">\n	<span style="display: none;">&nbsp;</span></div>\n<p>\n	be careful this demo runs on lowerclocked NAS :)</p>\n<p>\n	&nbsp;</p>\n<div style="page-break-after: always;">\n	<span style="display: none;">&nbsp;</span></div>\n<p>\n	bla</p>\n<p>\n	Index so index....</p>\n<p>\n	&nbsp;</p>\n<p>\n	btw, <a href="/mjadmin">admin side</a></p>\n', 'Main index page', 'MjNCMS project - PERL Mojolicious CMS demo site index page', 'MjNCMS, Mojolicious, Mojo, CMS', 1, 1, 'MjNCMS project demo site index page', 1, 'comment', 0, '', 0, 0, 1, 1, 1, '2010-04-15 19:45:55', '2010-04-22 13:05:03', '2010-04-15 01:45:00', '2010-04-15 01:45:00', '0000-00-00 00:00:00'),
+(25, 1, 1, 0, 'en', 'justpage', '<p>\n	<img alt="My avatar alt" ilo-full-src="http://mojotest:82/userfiles/mjncms/1/avopingvo.jpg" src="/userfiles/mjncms/1/avopingvo.jpg" style="width: 96px; height: 96px;" title="AvoTitle" some="else"/></p>\n<p>\n	This is justpage intro. hi! cool!</p>', '<p>\n	This is justpagebody</p>\n', 'just single page', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 1, '2010-04-12 14:14:38', '2010-04-22 13:06:41', '2010-04-12 04:13:00', '2010-04-12 04:13:00', '0000-00-00 00:00:00'),
+(26, 5, 1, 8, 'en', 'h1', '<p>\n	i1</p>\n', '<p>\n	b1</p>\n', 'h1', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 1, '2010-04-22 19:27:00', '2010-04-22 19:27:36', '2010-04-22 08:26:00', '2010-04-22 08:26:00', '0000-00-00 00:00:00'),
+(27, 10, 1, 0, 'en', 'p6', '<p>\n	i6</p>\n', '<p>\n	b6</p>\n', 'p6', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 1, '2010-04-22 19:28:44', '2010-04-22 19:29:14', '2010-04-22 08:28:00', '2010-04-22 08:28:00', '0000-00-00 00:00:00'),
+(28, 9, 1, 0, 'en', 'p5', '<p>\n	i5</p>\n', '<p>\n	b5</p>\n', 'p5', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 1, '2010-04-22 19:28:28', '2010-04-22 19:29:22', '2010-04-22 08:28:00', '2010-04-22 08:28:00', '0000-00-00 00:00:00'),
+(29, 8, 1, 0, 'en', 'p4', '<p>\n	i4</p>\n', '<p>\n	b4</p>\n', 'p4', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 1, '2010-04-22 19:28:13', '2010-04-22 19:29:32', '2010-04-22 08:27:00', '2010-04-22 08:27:00', '0000-00-00 00:00:00'),
+(30, 7, 1, 0, 'en', 'p3', '<p>\n	i3</p>\n', '<p>\n	b3</p>\n', 'p3', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 1, '2010-04-22 19:27:52', '2010-04-22 19:29:41', '2010-04-22 08:27:00', '2010-04-22 08:27:00', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -842,7 +865,7 @@ INSERT INTO `mj_users` (`member_id`, `replace_member_id`, `is_cms_active`, `role
 (20, NULL, 1, 5, 'Morbo', 'en', '', '0000-00-00 00:00:00', '2010-04-18 22:36:34', 1, '/'),
 (21, NULL, 1, 2, 'pepyaka222', 'en', '', '0000-00-00 00:00:00', '2010-04-19 15:59:47', 0, '/'),
 (22, NULL, 1, 2, 'chupakabra', 'ru', '', '0000-00-00 00:00:00', '2010-04-19 18:37:20', 0, '/'),
-(37, NULL, 0, 2, 'Fry', 'ru', 'aed9e1cf5984603e', '0000-00-00 00:00:00', '2010-04-22 00:00:17', 0, '/');
+(37, NULL, 1, 2, 'Fry', 'ru', 'aed9e1cf5984603e', '0000-00-00 00:00:00', '2010-04-22 01:04:44', 0, '/');
 
 -- --------------------------------------------------------
 

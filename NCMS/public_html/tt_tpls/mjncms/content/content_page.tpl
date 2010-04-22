@@ -25,11 +25,19 @@
 
 [% IF page.page_pages_size > 1 -%]
     [% loc('Pages') | html %]:[% INCLUDE common_pager_seo.tpl 
-        base = page.slug, 
-        pagearg=SESSION.PAGER_SLUG_ENTRY, 
-        pageext=SESSION.EXTENSIONS_PAGE, 
-        count=page.page_pages_size, 
-        page_num=page.page_page_num
+        pages={
+            #
+            #Or! spend queryes on build full path (get parent cats tree, join cnames)
+            #and feed pager with path
+            #seo pager is smart :), it parse curent requested URI and uses it's data
+            #Сцуко, умный короче
+            #base = page.slug, 
+            #pagearg=SESSION.PAGER_SLUG_ENTRY, 
+            #pageext=SESSION.EXTENSIONS_PAGE, 
+            #
+            count=>page.page_pages_size, 
+            #current=page.page_page_num
+        }
     -%]
 [% END -%]
 

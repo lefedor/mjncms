@@ -26,7 +26,8 @@
 [%
     pages_res = TT_CALLS.content_get_pagerecord({
         cat_id => cat.cat_id,
-        
+        items_pp => 10,
+        page => TT_VARS.category_page_num,
     })
 %]
 <h2>[% cat.name | html %]</h2>
@@ -41,5 +42,14 @@
         <i>[% page.dt_publishstart_fmt | html %], [% page.author | html %]</i>
         <hr class="w80" />
     [% END #FOREACH page=pages_res.pages_res -%]
+        [% IF pages_res.pages.count > 1 -%]
+        [% pages_res.pages.url='' -%]
+        [% pages_res.pages.pagearg='' -%]
+        [% pages_res.pages.pagearg='' -%]
+        [% pages_res.pages.current='' -%]
+            [% loc('Pages') | html %]:[% INCLUDE common_pager_seo.tpl 
+                pages=pages_res.pages
+            -%]
+        [% END %]
 [% END #UNLESS pages_res.pages_res.size -%]
 

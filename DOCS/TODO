@@ -2,8 +2,6 @@
 
   HOT:
   MEMD use @ pages, @categories, @blocks
-  Paging @ category list - adv ..slug/[index|page_(2..n)].htm
-  Paging @ pages display - adv ..[slug|slug_page_(2..n)].html
   Language switch block @ content-side, 
     parse {@before_dispatch} url, if some like /en/path:
     s /^\/en//, 
@@ -22,7 +20,7 @@
     [like shop cart - previous temporary order should not be lost]
     all sessions stored @ db like forever
   Update templates use css styles from smth popular like wordpress/joomla 
-   
+  CHECK FOR [% some = 'else' UNLESS/IF cond -%] - seems need [% z=(some = 'else') ... %] @ Templates
   
       
   OTHER STUFF:
