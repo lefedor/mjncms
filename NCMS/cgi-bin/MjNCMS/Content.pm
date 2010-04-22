@@ -45,9 +45,12 @@ sub content_rt_page_get () {
     $TT_CFG{'tt_action'} = 
         $TT_VARS{'tt_action'} = 
             'page';
+    
     $TT_VARS{'page_id'} = $self->param('page_id');
     $TT_VARS{'page_slug'} = $self->param('page_slug');
     $TT_VARS{'page_slug'} = pop @{[split '/', $TT_VARS{'page_slug'}]}; 
+    $TT_VARS{'page_num'} = $self->param('page_num');
+    
     $TT_CALLS{'content_get_pagerecord'} = 
         \&MjNCMS::Content::content_get_pagerecord;
     $TT_CALLS{'content_get_catrecord_tree'} = 
@@ -81,6 +84,7 @@ sub content_rt_category_get () {
     $TT_VARS{'category_id'} = $self->param('category_id');
     $TT_VARS{'category_slug'} = $self->param('category_slug');
     $TT_VARS{'category_slug'} = pop @{[split '/', $TT_VARS{'category_slug'}]}; 
+    $TT_VARS{'category_page_num'} = $self->param('page_num');
     $TT_CALLS{'content_get_pagerecord'} = 
         \&MjNCMS::Content::content_get_pagerecord;
     $TT_CALLS{'content_get_catrecord_tree'} = 
@@ -4058,7 +4062,16 @@ sub content_get_pagerecord ($) {
         %to_trans, $transes, $trans_lang, 
         $page_res_tmp, 
         
+        @page_pieces, @page_pieces_tmp, 
+        
     ) = ($SESSION{'DBH'}, );
+    
+    $$cfg{'page_page_num'} = 1 
+        unless (
+            $$cfg{'page_page_num'} && 
+            $$cfg{'page_page_num'} =~ /^\d+$/
+        );
+    $$cfg{'page_page_num'} = $$cfg{'page_page_num'} - 1;
     
     $where_rule = '';
     if ( 
@@ -4269,7 +4282,35 @@ sub content_get_pagerecord ($) {
                     $to_trans{$res->{'page_id'}} = scalar @pages_res;
                 }
             }
-              
+            
+            if (
+                !$$cfg{'skip_pagination'} && 
+                $SESSION{'PAGE_PAGER_SPLITTER'} && 
+                ref $SESSION{'PAGE_PAGER_SPLITTER'} eq 'ARRAY' && 
+                scalar @{$SESSION{'PAGE_PAGER_SPLITTER'}}
+            ) {
+                @page_pieces = ($res -> {'body'}, );
+                foreach my $splitter (@{$SESSION{'PAGE_PAGER_SPLITTER'}}) {
+                    @page_pieces_tmp = ();
+                    foreach my $piece (@page_pieces) {
+                         push @page_pieces_tmp, split $splitter, $piece;
+                    }
+                    @page_pieces = @page_pieces_tmp;
+                }
+                $res -> {'page_pages_size'} = scalar @page_pieces;
+                
+                #If page not exist - show first one
+                $$cfg{'page_page_num'} = 0 
+                    if $$cfg{'page_page_num'} >= $res -> {'page_pages_size'};
+                
+                $res -> {'body'} = $page_pieces[$$cfg{'page_page_num'}];
+                
+                $res -> {'page_page_num'} = $$cfg{'page_page_num'} + 1;
+                
+                @page_pieces_tmp = ();
+                @page_pieces = ();
+            }
+            
             $res->{'is_writable'} = 1 if (
                 $SESSION{'USR'}->chk_access('pages', 'manage_any', 'r') || 
                 $SESSION{'USR'}->is_user_writable( $res -> {'member_id'} ) || 
@@ -4297,7 +4338,35 @@ sub content_get_pagerecord ($) {
                     $to_trans{$res->{'page_id'}} = 1;
                 }
             }
-              
+            
+            if (
+                !$$cfg{'skip_pagination'} && 
+                $SESSION{'PAGE_PAGER_SPLITTER'} && 
+                ref $SESSION{'PAGE_PAGER_SPLITTER'} eq 'ARRAY' && 
+                scalar @{$SESSION{'PAGE_PAGER_SPLITTER'}}
+            ) {
+                @page_pieces = ($res -> {'body'}, );
+                foreach my $splitter (@{$SESSION{'PAGE_PAGER_SPLITTER'}}) {
+                    @page_pieces_tmp = ();
+                    foreach my $piece (@page_pieces) {
+                         push @page_pieces_tmp, split $splitter, $piece;
+                    }
+                    @page_pieces = @page_pieces_tmp;
+                }
+                $res -> {'page_pages_size'} = scalar @page_pieces;
+                
+                #If page not exist - show first one
+                $$cfg{'page_page_num'} = 0
+                    if $$cfg{'page_page_num'} >= $res -> {'page_pages_size'};
+                
+                $res -> {'body'} = $page_pieces[$$cfg{'page_page_num'}];
+                
+                $res -> {'page_page_num'} = $$cfg{'page_page_num'} + 1;
+                
+                @page_pieces_tmp = ();
+                @page_pieces = ();
+            }
+            
             $res->{'is_writable'} = 1 if (
                 $SESSION{'USR'}->chk_access('pages', 'manage_any', 'r') || 
                 $SESSION{'USR'}->is_user_writable( $res -> {'member_id'} ) || 

@@ -453,9 +453,18 @@ sub register {
                 }
             }
             
-            $SESSION{'PAGER_ITEMSPERPAGE'} = $$cfg{'pager_itemsperpage'} || 25, 
-            $SESSION{'PAGER_MAXCOLS'} = $$cfg{'pager_maxcols'} || 10, 
-            $SESSION{'PAGER_PAGEARG'} = $$cfg{'pager_pagearg'} || 'page', 
+            $SESSION{'PAGER_ITEMSPERPAGE'} = $$cfg{'pager_itemsperpage'} || 25;
+            $SESSION{'PAGER_MAXCOLS'} = $$cfg{'pager_maxcols'} || 10;
+            #For simple admin pager
+            $SESSION{'PAGER_PAGEARG'} = $$cfg{'pager_pagearg'} || 'page';
+            
+            #For cute urls pager
+            $SESSION{'PAGER_SLUG_ENTRY'} = $$cfg{'pager_slug_entry'} || '.p';# || 'p_' || '/page_' || etc
+            
+            #How-to split pages
+            $SESSION{'PAGE_PAGER_SPLITTER'} = $$cfg{'page_pager_splitter'} || q~<div style="page-break-after: always;">~;
+            $SESSION{'PAGE_PAGER_SPLITTER'} = [$SESSION{'PAGE_PAGER_SPLITTER'}, ]
+                unless ref $SESSION{'PAGE_PAGER_SPLITTER'};
             
             $SESSION{'PREFIX'} = $$cfg{'dbh_prefix'} || '';
             $SESSION{'FORUM_PREFIX'} = $$cfg{'dbh_forum_prefix'} || '';
@@ -581,6 +590,7 @@ sub register {
             $SESSION{'MAILER_ID'} = $$cfg{'email_signature'} || 'MjNCMS Mailer';
             
             $SESSION{'MAILER'} = MjNCMS::Mail->new({});
+            $SESSION{'MAILER_SND_SETTINGS'} = $$cfg{'mailer_snd_settings'} if $$cfg{'mailer_snd_settings'};
             
             $SESSION{'EMAIL_SIGNATURE'} = $$cfg{'email_signature'} || 
 #=>=>=>=>=>=>

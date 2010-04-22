@@ -9,6 +9,7 @@
         'get_transes' => 1, 
         'skip_access_roles_rule' => 1,
         'disable_autotranslate' => 1, 
+        'skip_pagination' => 1,
     }) -%]
     [%# pages_res.q -%]
     [% IF pages.message -%]

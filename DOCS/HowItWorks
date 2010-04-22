@@ -137,7 +137,9 @@ This is temporary descr just u should know if u've started MjNCMS
     it's "wrapper_index.tpl" from your TT path(s) (oftenly theme path) at CFG, check it.
 
 
-6. Localization based on Mojolicious I18n plugin and avaliabale trough %SESSION{'LOC'}->loc('some'/['some', 'else'], 'lang [optional]');
+6. Localization based on Mojolicious I18n plugin and avaliabale trough 
+    %SESSION{'LOC'}->loc('some'/['some', 'else'], 'lang [optional]');
+    from anywhere u have %SESSION (where use `MjNCMS::Config qw/:vars /;` line exists)
     lang u can sw on fly with %SESSION{'LOC'}->set_lang('ru')
     More info MjNCMS::MjI18N (Since I18N namespace taken by plugin).
     translations are I18n plugin translations and they are in MjNCMS::I18N::*=(en|anythingelse)
@@ -151,7 +153,7 @@ This is temporary descr just u should know if u've started MjNCMS
    Just use Config, Service, enable plugins i18n, MjncmsInit, and you have user/etc model inbox.
 
 8. Emails easyly could be send over $SESSION{'MAILER'}->new({to=>'me@me.me', text=>'hello'})->send()
-    Also attchmens are possible, etc, see MjCMS::Mail
+    Also attchmens are possible, etc, see MjNCMS::Mail
 
     
 ..not finished yet...

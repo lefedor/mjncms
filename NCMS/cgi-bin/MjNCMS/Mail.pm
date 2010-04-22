@@ -294,9 +294,16 @@ sub attach_file ($$) {
 
 sub send ($;$) {
     my $self = shift;
+    my @args = @_;
     
-    return $self->{'MESSAGE'}->send(@_);
+    @args = @{$SESSION{'MAILER_SND_SETTINGS'}} 
+        if (
+            !(scalar @args) && 
+            $SESSION{'MAILER_SND_SETTINGS'} && 
+            ref $SESSION{'MAILER_SND_SETTINGS'} eq 'ARRAY'
+        );
     
+    return $self->{'MESSAGE'}->send(@args);
     #return $self;
 } #-- send
 
@@ -357,11 +364,11 @@ my $m = $SESSION{'MAILER'}->new({
 or 
 
 $m = $SESSION{'MAILER'}->new({
-    to => 'Федя <ffl.public@gmail.com>, ФедьКа <root@f8mobile.f8>', 
-    subject => 'Здрасти',
+    to => 'Федя <ffl.public@gmail.com>, Fedor <root@f8mobile.f8>', 
+    subject => 'Hello',
 });
-$m->attach_text();#inline 
-$m->attach_html();#inline 
+$m->attach_text('HELLo');#inline 
+$m->attach_html('<b>HELLo</b>');#inline 
 $m->attach_file({
     path => '..'
     ||
@@ -369,7 +376,6 @@ $m->attach_file({
     name => 'asasa.gif',
     
     deposition => 'inline or attachment', attachmet default
-    
     
 });
 $m->send();

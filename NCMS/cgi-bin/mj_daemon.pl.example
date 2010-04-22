@@ -61,7 +61,7 @@ package MjNCMS;
     use FindBin;
     
     use MjNCMS::Config qw/:vars /;
-    use MjNCMS::Service qw/:subs /;
+    #use MjNCMS::Service qw/:subs /;
 
     #start once at script init
     sub startup {
@@ -105,6 +105,8 @@ package MjNCMS;
          
         my $pages_extemsion = $SESSION{'EXTENSIONS_PAGE'} || '.html'; #--//--
         my $categoryes_extemsion = $SESSION{'EXTENSIONS_CATEGORY'} || '.htm'; #--//--
+        
+        my $pager_slug_entry = $SESSION{'PAGER_SLUG_ENTRY'} || '.p'; #--//--
         
         ################################################################
         #                           ADMIN SIDE
@@ -394,6 +396,18 @@ package MjNCMS;
 
         #Public content routes browse cats, view pages
         #Everything left we blame as content category/page
+        $r->route(
+            '/(*page_slug)' . 
+            $pager_slug_entry . 
+            '(:page_num)' . 
+            $pages_extemsion, {page_num => qr/\d+/})->via('get')->
+            to(controller => 'content', action => 'content_rt_page_get');
+        $r->route(
+            '/(*category_slug)' . 
+            $pager_slug_entry . 
+            '(:page_num)' . 
+            $categoryes_extemsion, {page_num => qr/\d+/})->via('get')->
+            to(controller => 'content', action => 'content_rt_category_get');
         $r->route('/(*page_slug)' . $pages_extemsion)->via('get')->
             to(controller => 'content', action => 'content_rt_page_get');
         $r->route('/(*category_slug)' . $categoryes_extemsion)->via('get')->

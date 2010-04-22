@@ -321,6 +321,13 @@ my %CFG_COMMON = (
     pager_itemsperpage => 25, 
     pager_maxcols => 10, 
     pager_pagearg => 'page', 
+    pager_slug_entry => '.p', 
+    
+    #split pages on subpages:
+    #example <div style="page-break-after: always;">..</div>
+    page_pager_splitter => [
+        qr~<div style="page-break-after: always;">.+?</div>~s, 
+    ],
     
     robots_noindex => undef, #use noindex by default @tpl
     robots_nofollow => undef,  #use nofollow by default @tpl

@@ -5,10 +5,10 @@
     http://github.com/lefedor/mojo/commit/2a0d5fa8d75467a489d5d66426b9e8e974fa14d5
 3. Rename mj_daemon.pl.example to mj_daemon.pl
 4. Rename MjNCMS::Config.pm.example to MjNCMS::Config.pm
-5. Rename MjNCMS::Plugin::MjncmsInit.pm.example to MjNCMS::MjncmsInit.pm
+5. Rename MjNCMS::Plugin::MjncmsInit.pm.example to MjNCMS::Plugin::MjncmsInit.pm
 6. Setup data @ config, basically just DB settings, random strings for crypt/md5 checks, recaptcha private/public keys 
    (there are filled keys for host 'mojotest', so u can start up host with same name for *just testing* reasons)
-7. Start MjNCMS daemon: by typing `perl mjn_daemon.pl` 
+7. Start MjNCMS daemon: by typing `perl mj_daemon.pl` 
    (FCGI start, default options at mj_daemon.pl, near "Mojolicious->start" [fcgi_prefork --listen mojotest:3042 by default])
    I've tested MjNCMS with nginx, nginx config example is nginx.conf just here, @ DOCS.
 8. OR! Start MjNCMS with your command line params, like `perl mjn_daemon.pl daemon` (localhost:3000 demo server)
