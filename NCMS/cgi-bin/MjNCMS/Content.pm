@@ -1748,6 +1748,7 @@ sub content_rt_blocks_delete_get () {
 #}; #-- _clear_html
 
 sub _surl_next_url_alias ($) {
+    
     my $alias = shift;
 
     #up to 8**35 = 2.251.875.390.625 combo. seems enough.
@@ -1877,7 +1878,313 @@ sub _surl_next_url_alias ($) {
     return undef if (length $next_alias) > $max_sql_field_size;
     
     return $next_alias;
+    
 } #-- _surl_next_url_alias
+
+sub _rest_memd_cats ($) {
+    
+    return undef unless (
+        $SESSION{'MEMD'} && 
+        $SESSION{'MEMD_CACHE_OPTS'}->{'categories'} && 
+        $SESSION{'MEMD_CACHE_OPTS'}->{'categories'}->{'prefix'}
+    );
+    
+    my $cfg = shift;
+    
+    $cfg = {
+        cat_id => $cfg, 
+        
+    } unless (
+            $cfg && 
+            ref $cfg && 
+            ref $cfg eq 'HASH' 
+        );
+    
+    my (
+        $dbh, 
+        $q, $res, $sth, 
+        $where_rule, $catNS, 
+        @cats, 
+        %cat_cnames, %cat_ids, 
+        
+    ) = ($SESSION{'DBH'}, );
+    
+    $where_rule = '';
+    
+    if ( 
+        ${$cfg}{'cat_id'} && 
+        !(ref ${$cfg}{'cat_id'}) && 
+        ${$cfg}{'cat_id'} =~ /^\d+$/ 
+    ) {
+        $where_rule .= ' OR cat_id = ' . ($dbh->quote(${$cfg}{'cat_id'})) . ' ';
+    }
+    
+    if ( 
+        ${$cfg}{'cat_ids'} && 
+        ref ${$cfg}{'cat_ids'} && 
+        scalar @{${$cfg}{'cat_ids'}} && 
+        !(scalar (grep(/\D/, @{${$cfg}{'cat_ids'}}))) 
+    ) {
+        $where_rule .= ' OR cat_id IN ( ' . ($dbh->quote((join ', ', @{${$cfg}{'cat_ids'}}))) . ') ';
+    }
+    
+    if (${$cfg}{'cname'} && length ${$cfg}{'cname'}) {
+        ${$cfg}{'cname'} = $dbh->quote(${$cfg}{'cname'});
+        $where_rule .= ' OR cname = ' . ${$cfg}{'cname'} . ' ';
+    }
+    
+    if ( 
+        ${$cfg}{'cname'} && 
+        ref ${$cfg}{'cnames'} && 
+        scalar @{${$cfg}{'cnames'}} 
+    ) {
+        $where_rule .= ' OR cname IN ( ' . (join ', ', (map( $dbh->quote($_), @{${$cfg}{'cnames'}}))) . ') ';
+    }
+    
+    $where_rule =~ s/OR/WHERE/;
+    
+    $q = qq~
+        SELECT 
+            cat_id 
+        FROM ${SESSION{PREFIX}}cats_data 
+        $where_rule ; 
+    ~;
+    eval {
+        $sth = $dbh -> prepare($q); $sth -> execute();
+        while ($res = $sth->fetchrow_hashref()) {
+            push @cats, $res->{'cat_id'};
+        }
+    };
+    
+    return undef unless scalar @cats;
+    
+    $catNS = new MjNCMS::NS {
+        table => $SESSION{'PREFIX'}.'cats_tree', 
+        id => 'id', 
+        type => 'N', 
+        DBI => $SESSION{'DBH'}, 
+    };
+
+    foreach my $cid (@cats){
+        next if $cat_ids{$cid};
+        foreach my $cpid (@{&content_get_catparent_tree($cid)}){
+            $cat_ids{$cpid} = 1 if $cpid && $cpid =~ /^\d+$/;#no 'root'
+        }
+        $cat_ids{$cid} = 1;
+    }
+    
+    return undef unless scalar keys %cat_ids;
+    
+    $q = qq~
+        SELECT 
+            cd.cat_id, cd.cname, COUNT(*) AS pages_cnt 
+        FROM ${SESSION{PREFIX}}cats_data cd 
+            LEFT JOIN ${SESSION{PREFIX}}pages p 
+                ON p.cat_id=cd.cat_id 
+        WHERE cd.cat_id IN (~ . (join ', ', (keys %cat_ids)) . q~) 
+        GROUP BY cd.cat_id ; 
+    ~;
+    eval {
+        $sth = $dbh -> prepare($q); $sth -> execute();
+        while ($res = $sth->fetchrow_hashref()) {
+            $cat_ids{$res->{'cat_id'}} = $res->{'pages_cnt'};
+            $cat_cnames{$res->{'cname'}} = $res->{'pages_cnt'} if $res->{'cname'};
+        }
+    };
+    
+    foreach my $cname (keys %cat_cnames){
+        $SESSION{'MEMD'}->delete(
+            ($SESSION{'MEMD_CACHE_OPTS'}->{'categories'}->{'prefix'}) . 
+            'ccname_' . $cname 
+        );
+        for (my $i=1;$i<=$cat_cnames{$cname};$i++){
+            $SESSION{'MEMD'}->delete(
+                ($SESSION{'MEMD_CACHE_OPTS'}->{'categories'}->{'prefix'}) . 
+                'cp_' . $i . '_' . 
+                'ccname_' . $cname 
+            );
+        }
+    }
+    
+    foreach my $cat_id (keys %cat_ids){
+        $SESSION{'MEMD'}->delete(
+            ($SESSION{'MEMD_CACHE_OPTS'}->{'categories'}->{'prefix'}) . 
+            'cid_' . $cat_id 
+        );
+        for (my $i=1;$i<=$cat_ids{$cat_id};$i++){
+            $SESSION{'MEMD'}->delete(
+                ($SESSION{'MEMD_CACHE_OPTS'}->{'categories'}->{'prefix'}) . 
+                'cp_' . $i . '_' . 
+                'cid_' . $cat_id 
+            );
+        }
+    }
+    
+    unless (${$cfg}{'skip_pages'}){
+        &_rest_memd_cats({
+            cat_ids => [keys %cat_ids], 
+            skip_cats => 1, 
+        });
+    }
+    
+    return undef;
+} #-- _rest_memd_cats
+
+sub _rest_memd_pages ($) {
+    
+    return undef unless (
+        $SESSION{'MEMD'} && 
+        $SESSION{'MEMD_CACHE_OPTS'}->{'pages'} && 
+        $SESSION{'MEMD_CACHE_OPTS'}->{'pages'}->{'prefix'}
+    );
+    
+    my $cfg = shift;
+    
+    $cfg = {
+        page_id => $cfg, 
+        
+    } unless (
+            ref $cfg && 
+            ref $cfg eq 'HASH' 
+        );
+    
+    my (
+        $dbh, 
+        $q, $res, $sth, 
+        $where_rule, 
+        %cats, %page_ids, %page_slugs,
+        @page_pieces, @page_pieces_tmp, 
+        
+    ) = ($SESSION{'DBH'}, );
+    
+    $where_rule = '';
+    
+    if ( 
+        ${$cfg}{'page_id'} && 
+        !(ref ${$cfg}{'page_id'}) && 
+        ${$cfg}{'page_id'} =~ /^\d+$/ 
+    ) {
+        $where_rule .= ' OR page_id = ' . ($dbh->quote(${$cfg}{'page_id'})) . ' ';
+    }
+    
+    if ( 
+        ${$cfg}{'page_ids'} && 
+        ref ${$cfg}{'page_ids'} && 
+        scalar @{${$cfg}{'page_ids'}} && 
+        !(scalar (grep(/\D/, @{${$cfg}{'page_ids'}}))) 
+    ) {
+        $where_rule .= ' OR page_id IN ( ' . ($dbh->quote((join ', ', @{${$cfg}{'page_ids'}}))) . ') ';
+    }
+    
+    if (${$cfg}{'slug'} && length ${$cfg}{'slug'}) {
+        ${$cfg}{'slug'} = $dbh->quote(${$cfg}{'slug'});
+        $where_rule .= ' OR slug = ' . ${$cfg}{'slug'} . ' ';
+    }
+    
+    if ( 
+        ${$cfg}{'slugs'} && 
+        ref ${$cfg}{'slugs'} && 
+        scalar @{${$cfg}{'slugs'}} 
+    ) {
+        $where_rule .= ' OR slug IN ( ' . (join ', ', (map( $dbh->quote($_), @{${$cfg}{'slugs'}}))) . ') ';
+    }
+    
+    if ( 
+        ${$cfg}{'cat_id'} && 
+        !(ref ${$cfg}{'cat_id'}) && 
+        ${$cfg}{'cat_id'} =~ /^\d+$/ 
+    ) {
+        $where_rule .= ' OR cat_id = ' . ($dbh->quote(${$cfg}{'cat_id'})) . ' ';
+    }
+    
+    if ( 
+        ${$cfg}{'cat_ids'} && 
+        ref ${$cfg}{'cat_ids'} && 
+        scalar @{${$cfg}{'cat_ids'}} && 
+        !(scalar (grep(/\D/, @{${$cfg}{'cat_ids'}}))) 
+    ) {
+        $where_rule .= ' OR cat_id IN ( ' . ($dbh->quote((join ', ', @{${$cfg}{'cat_ids'}}))) . ') ';
+    }
+    
+    $where_rule =~ s/OR/WHERE/;
+    
+    $q = qq~
+        SELECT 
+        page_id, cat_id, slug ~;
+        if (
+            $SESSION{'PAGE_PAGER_SPLITTER'} && 
+            ref $SESSION{'PAGE_PAGER_SPLITTER'} eq 'ARRAY' && 
+            scalar @{$SESSION{'PAGE_PAGER_SPLITTER'}} 
+        ){
+            $q .= q~ , body ~;
+        }
+    $q .= qq~ 
+        FROM ${SESSION{PREFIX}}pages 
+        $where_rule ; 
+    ~;
+    eval {
+        $sth = $dbh -> prepare($q); $sth -> execute();
+        while ($res = $sth->fetchrow_hashref()) {
+            $cats{$res->{'cat_id'}} = 1;
+            
+            if (
+                $res -> {'body'}
+            ){
+                @page_pieces = ($res -> {'body'}, );
+                foreach my $splitter (@{$SESSION{'PAGE_PAGER_SPLITTER'}}) {
+                    @page_pieces_tmp = ();
+                    foreach my $piece (@page_pieces) {
+                         push @page_pieces_tmp, split $splitter, $piece;
+                    }
+                    @page_pieces = @page_pieces_tmp;
+                }
+            }
+            else {
+                @page_pieces = (1, )
+            }
+                
+            $page_ids{$res->{'page_id'}} = scalar @page_pieces;
+            $page_slugs{$res->{'slug'}} = $page_ids{$res->{'page_id'}} if $res->{'slug'};
+        }
+    };
+    
+    foreach my $slug (keys %page_slugs){
+        $SESSION{'MEMD'}->delete(
+            ($SESSION{'MEMD_CACHE_OPTS'}->{'pages'}->{'prefix'}) . 
+            'pslug_' . $slug 
+        );
+        for (my $i=1;$i<=$page_slugs{$slug};$i++){
+            $SESSION{'MEMD'}->delete(
+                ($SESSION{'MEMD_CACHE_OPTS'}->{'pages'}->{'prefix'}) . 
+                'p_' . $i . '_' . 
+                'pslug_' . $slug 
+            );
+        }
+    }
+    
+    foreach my $page_id (keys %page_ids){
+        $SESSION{'MEMD'}->delete(
+            ($SESSION{'MEMD_CACHE_OPTS'}->{'pages'}->{'prefix'}) . 
+            'pid_' . $page_id 
+        );
+        for (my $i=1;$i<=$page_ids{$page_id};$i++){
+            $SESSION{'MEMD'}->delete(
+                ($SESSION{'MEMD_CACHE_OPTS'}->{'pages'}->{'prefix'}) . 
+                'p_' . $i . '_' . 
+                'pid_' . $page_id 
+            );
+        }
+    }
+    
+    unless (${$cfg}{'skip_cats'}){
+        &_rest_memd_cats({
+            cat_ids => [keys %cats], 
+            skip_pages => 1, 
+        });
+    }
+    
+    return undef;
+} #-- _rest_memd_pages
 
 sub content_get_catrecord ($) {
     
@@ -2340,7 +2647,9 @@ sub cats_mk_node ($) {
     }
 
     @parent_cat_slaves = @{$catNS -> get_child_id(unit => ${$cfg}{'parent'})};
-
+    
+    &_rest_memd_cats(${$cfg}{'parent'});
+    
     return {
         status => 'ok', 
         seq_order => (scalar @parent_cat_slaves), 
@@ -2465,6 +2774,8 @@ sub cats_edit_node ($) {
         }
     }
     
+    &_rest_memd_cats(${$cfg}{'cat_id'});
+    
     return {
         status => 'ok', 
         cat_id => ${$cfg}{'cat_id'}, 
@@ -2542,6 +2853,7 @@ sub cats_rm_node ($) {
     };
 
     foreach my $cat_id (@cats) {
+    &_rest_memd_cats($cat_id);
         @cat_slaves = @{$catNS -> get_child_id(unit => $cat_id, branch => 'all')};
         if ( $catNS -> delete_unit($cat_id) ) {
             push @cat_slaves, $cat_id;
@@ -2816,7 +3128,9 @@ sub cats_mk_trans_record ($) {
         status => 'fail', 
         message => 'sql ins cats_trans entry fail', 
     } unless scalar $inscnt;
-
+    
+    &_rest_memd_cats(${$cfg}{'cat_id'});
+    
     return {
         status => 'ok', 
         cat_id => ${$cfg}{'cat_id'}, 
@@ -2942,6 +3256,8 @@ sub cats_edit_trans_record ($) {
         message => 'sql upd cats_trans entry fail', 
     } unless scalar $updcnt;
 
+    &_rest_memd_cats(${$cfg}{'cat_id'});
+
     return {
         status => 'ok', 
         cat_id => ${$cfg}{'cat_id'}, 
@@ -3022,6 +3338,8 @@ sub cats_rm_trans_record ($) {
         status => 'fail', 
         message => 'sql del cats_trans entry fail', 
     } unless scalar $delcnt;
+
+    &_rest_memd_cats(${$cfg}{'cat_id'});
 
     return {
         status => 'ok', 
@@ -3363,6 +3681,8 @@ sub pages_add_page ($) {
             
         }
     }
+    
+    &_rest_memd_cats(${$cfg}{'cat_id'});
     
     return {
         status => 'ok', 
@@ -3766,7 +4086,9 @@ sub pages_edit_page ($) {
             
         }
     }
-
+    
+    &_rest_memd_pages(${$cfg}{'page_id'});
+    
     return {
         status => 'ok', 
         page_id =>  ${$cfg}{'page_id'}, 
@@ -3790,14 +4112,12 @@ sub pages_delete_page ($) {
     
     my (
         $dbh, $sth, $res, $q, 
-        $delcnt, 
+        $delcnt, $cat_id, 
         
     ) = ($SESSION{'DBH'}, );
     
-
-
     $q = qq~
-        SELECT 
+        SELECT p.cat_id, 
             p.page_id, p.author_id, p.member_id, 
             a_usr.role_id AS author_role_id, 
             m_usr.role_id AS member_role_id 
@@ -3835,6 +4155,8 @@ sub pages_delete_page ($) {
         )
     );
     
+    $cat_id = $res -> {'cat_id'};
+    
     $q = qq~
         DELETE FROM 
         ${SESSION{PREFIX}}pages_access_roles 
@@ -3866,6 +4188,8 @@ sub pages_delete_page ($) {
     eval{
         $dbh -> do($q);
     };
+    
+    &_rest_memd_cats($cat_id);
     
     return {
         status => 'ok', 
@@ -4646,6 +4970,8 @@ sub page_translation_save ($) {
         }
     }
     
+    &_rest_memd_pages(${$cfg}{'page_id'});
+    
     return {
         page_id => ${$cfg}{'page_id'}, 
         lang => ${$cfg}{'lang'}, 
@@ -4802,6 +5128,8 @@ sub page_translation_update ($) {
         }
     }
     
+    &_rest_memd_pages(${$cfg}{'page_id'});
+    
     return {
         page_id => ${$cfg}{'page_id'}, 
         lang => ${$cfg}{'lang'}, 
@@ -4900,6 +5228,8 @@ sub page_translation_delete ($) {
             message => 'sql del into pages_translations entry fail', 
         }
     }
+    
+    &_rest_memd_pages(${$cfg}{'page_id'});
     
     return {
         page_id => ${$cfg}{'page_id'}, 

@@ -7,7 +7,8 @@ Captcha::reCAPTCHA
 common::sense #use strict, etc
 Crypt::Tea 
 Data::Serializer
-Date::Calc
+Date::Calc #Get rid of it!
+Digest::SHA1
 Filesys:Tree #Filemanager
 HTML::StripScripts::Parser #safe_page_html TT filter
 #Locale::Maketext::Lexicon #Wiped
@@ -16,3 +17,5 @@ MIME::Lite #Email messaging
 MIME::Types #Email messaging
 PHP::Serialization #SMF Auth
 Template #TT2
+Time::Local
+Time::Piece

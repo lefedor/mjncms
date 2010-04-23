@@ -150,6 +150,22 @@ my %CFG_COMMON = (
         }, 
         #more memd server groups
     },
+    #You can set expire times up to 30 days in the future. 
+    #  After that memcached interprets it as a date, 
+    #  and will expire the item after said date.
+    memd_cache_opts => {
+        #I've checked MEMD @ TT with it, 
+        #about 6% speed win on page dispaly, but less also memory usage
+        pages => {#no key/undef to disable
+            expire => 3600, #in seconds, 0 to disable
+            prefix => 'pg_', 
+        }, 
+        #about 14% speed win on cat listing dispaly, but also less memory usage
+        categories => {
+            expire => 3600, #in seconds, 0 to disable
+            prefix => 'ct_', 
+        }
+    },
     
     auth_engine => 'smf', 
     auth_cookie => 'MjCoockSMF', #if auth over SMF - same as SMF coockie 

@@ -180,6 +180,13 @@ sub register {
                 sort_jscss => \&sv_sort_jscss, 
                 inarray => \&inarray, 
                 register_tt_call => \&sv_register_tt_call, 
+                #Visible checker is memd working or not: :)
+                #tt_sleep  => sub {
+                #    my $time = shift;
+                #    $time = 5 unless $time;
+                #    sleep $time;
+                #    return;
+                #}, 
                 
             );
 
@@ -452,6 +459,8 @@ sub register {
 
                 }
             }
+            
+            $SESSION{'MEMD_CACHE_OPTS'} = $$cfg{'memd_cache_opts'} || {};
             
             $SESSION{'PAGER_ITEMSPERPAGE'} = $$cfg{'pager_itemsperpage'} || 25;
             $SESSION{'PAGER_MAXCOLS'} = $$cfg{'pager_maxcols'} || 10;

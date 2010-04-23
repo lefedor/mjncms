@@ -7,7 +7,7 @@
     [% pages.url=SESSION.CURRENT_PAGE.clone().to_string() -%]
     [% IF (matches = pages.url.match('\.[A-Za-z]+$', 1)) -%]
         [% pages.url = pages.url | remove('\.[A-Za-z]+$') -%]
-        [% pages.pageext = matches.0 UNLESS pages.pageext -%]
+        [% z=(pages.pageext = matches.0) UNLESS pages.pageext -%]
     [% END -%][%  %]
     [% IF pages.pagearg && (matches = pages.url.match(pages.pagearg _ '\d+$', 1)) -%]
         [% UNLESS pages.current -%]

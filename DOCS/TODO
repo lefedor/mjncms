@@ -1,7 +1,7 @@
 #Things in mind, volunteers/suggestions are welcome:
 
   HOT:
-  MEMD use @ pages, @categories, @blocks
+  MEMD use @blocks
   Language switch block @ content-side, 
     parse {@before_dispatch} url, if some like /en/path:
     s /^\/en//, 
