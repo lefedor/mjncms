@@ -7,7 +7,7 @@ Captcha::reCAPTCHA
 common::sense #use strict, etc
 Crypt::Tea 
 Data::Serializer
-Date::Calc #Get rid of it!
+#Date::Calc #Get rid of | Currently not used anywhere
 Digest::SHA1
 Filesys:Tree #Filemanager
 HTML::StripScripts::Parser #safe_page_html TT filter

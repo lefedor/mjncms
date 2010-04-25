@@ -46,8 +46,8 @@ package MjNCMS;
 
     $ENV{'MOJO_APP'} ||= 'MjNCMS';
     $ENV{'MOJO_HOME'} ||= File::Spec->catdir(split '/', $FindBin::Bin);
-    $ENV{'MOJO_SERVER_DEBUG'} = 1;
-    $ENV{'MOJO_RELOAD'} = 1;
+    #$ENV{'MOJO_SERVER_DEBUG'} = 1;
+    #$ENV{'MOJO_RELOAD'} = 1;
     
     my %daemon_cfgs = (
         secret => 'oyaebu', 
@@ -79,8 +79,14 @@ package MjNCMS;
             #use Mojo::ByteStream 'b';
             #print b('abc_def')->camelize; #output: 'AbcDef'
         #BTW, sequence is important
+        
         $mojo->plugin('i18n');
         $mojo->plugin('mjncms_init');
+        
+        #Slow down about couple % for me (78-82 req/second with vs 82-85 without) 
+        #on test machine, use if only nessesary so :)
+        $mojo->plugin('mjncms_lang_prefixed_urls');
+        
         $mojo->plugin('mjncms_routes_extra');
         $mojo->plugin('mjncms_tt_renderer');
         
@@ -325,74 +331,137 @@ package MjNCMS;
             to(controller => 'usercontroller', action => 'usercontroller_rt_users_edit_post');
         $adm_r->route('/users/delete/(:member_id)', {member_id => qr/\d+/})->via('get')->
             to(controller => 'usercontroller', action => 'usercontroller_rt_users_delete_get');
-    
+        
+        $r->route($admin_root.'/(*:unknown_route)')->via('get')->
+            to(controller => 'Main', action => 'seems_like_u_have_no_access_to_be_here');
+        
         ################################################################
         #                           CONTENT SIDE
         ################################################################
         #Index sealing, 
         #page with slug 'index' would be dispayed by default ( if exists :) )
         $r->route('/')->via('get')->
-            to(controller => 'content', action => 'content_rt_page_get');
+            to(controller => 'content_pages_site_read', action => 'content_rt_page_get');
 
         #Public file management
         $r->route('/content/filemanager_connector')->
-            to(controller => 'content', action => 'content_rt_filemanager_connector_get');
+            to(
+                controller => 'content_filemanager_site_write', 
+                action => 'content_rt_filemanager_connector_any'
+            );
         
         #Public user routes - login/logout/edit/reg/reg_confirm
         my $usr_r = $r->route($user_root);
         $usr_r->route('/')->via('get')->
-            to(controller => 'usercontroller', action => 'usercontroller_rt_user_profile_get');
+            to(
+                controller => 'usercontroller_site_read', 
+                action => 'usercontroller_rt_user_profile_get'
+            );
         $usr_r->route('/login')->via('get')->
-            to(controller => 'usercontroller', action => 'usercontroller_rt_user_login_get');
+            to(
+                controller => 'usercontroller_site_read', 
+                action => 'usercontroller_rt_user_login_get'
+            );
         $usr_r->route('/login')->via('post')->
-            to(controller => 'usercontroller', action => 'usercontroller_rt_user_login_post');
+            to(
+                controller => 'usercontroller_site_write', 
+                action => 'usercontroller_rt_user_login_post'
+            );
         $usr_r->route('/logout')->
-            to(controller => 'usercontroller', action => 'usercontroller_rt_user_logout_any');
+            to(
+                controller => 'usercontroller_site_read', 
+                action => 'usercontroller_rt_user_logout_any'
+            );
         $usr_r->route('/role_sw')->via('post')->
-            to(controller => 'usercontroller', action => 'usercontroller_rt_user_rolesw_post');
+            to(
+                controller => 'usercontroller_site_write', 
+                action => 'usercontroller_rt_user_rolesw_post'
+            );
         $usr_r->route('/user_sw')->via('post')->
-            to(controller => 'usercontroller', action => 'usercontroller_rt_user_usersw_post');
+            to(
+                controller => 'usercontroller_site_write', 
+                action => 'usercontroller_rt_user_usersw_post'
+            );
         $usr_r->route('/register')->via('get')->
-            to(controller => 'usercontroller', action => 'usercontroller_rt_user_register_get');
+            to(
+                controller => 'usercontroller_site_read', 
+                action => 'usercontroller_rt_user_register_get'
+            );
         $usr_r->route('/register')->via('post')->
-            to(controller => 'usercontroller', action => 'usercontroller_rt_user_register_post');
+            to(
+                controller => 'usercontroller_site_write', 
+                action => 'usercontroller_rt_user_register_post'
+            );
         $usr_r->route('/confirm/(:confirmation_code)')->via('get')->
-            to(controller => 'usercontroller', action => 'usercontroller_rt_user_confirm_get');
+            to(
+                controller => 'usercontroller_site_read', 
+                action => 'usercontroller_rt_user_confirm_get'
+            );
         $usr_r->route('/confirm')->via('post')->
-            to(controller => 'usercontroller', action => 'usercontroller_rt_user_confirm_post');
+            to(
+                controller => 'usercontroller_site_write', 
+                action => 'usercontroller_rt_user_confirm_post'
+            );
         $usr_r->route('/reconfirm_email')->via('get')->
-            to(controller => 'usercontroller', action => 'usercontroller_rt_user_reconfirm_email_get');
+            to(
+                controller => 'usercontroller_site_read', 
+                action => 'usercontroller_rt_user_reconfirm_email_get'
+            );
         $usr_r->route('/reconfirm_email')->via('post')->
-            to(controller => 'usercontroller', action => 'usercontroller_rt_user_reconfirm_email_post');
+            to(
+                controller => 'usercontroller_site_write', 
+                action => 'usercontroller_rt_user_reconfirm_email_post'
+            );
         $usr_r->route('/profile')->via('get')->
-            to(controller => 'usercontroller', action => 'usercontroller_rt_user_profile_get');
+            to(
+                controller => 'usercontroller_site_read', 
+                action => 'usercontroller_rt_user_profile_get'
+            );
         $usr_r->route('/profile')->via('post')->
-            to(controller => 'usercontroller', action => 'usercontroller_rt_user_profile_post');
+            to(
+                controller => 'usercontroller_site_write', 
+                action => 'usercontroller_rt_user_profile_post'
+            );
         $usr_r->route('/forgot_password')->via('get')->
-            to(controller => 'usercontroller', action => 'usercontroller_rt_user_forgot_password_get');
+            to(
+                controller => 'usercontroller_site_read', 
+                action => 'usercontroller_rt_user_forgot_password_get'
+            );
         $usr_r->route('/forgot_password')->via('post')->
-            to(controller => 'usercontroller', action => 'usercontroller_rt_user_forgot_password_post');
+            to(
+                controller => 'usercontroller_site_write', 
+                action => 'usercontroller_rt_user_forgot_password_post'
+            );
         $usr_r->route('/rest_pass/(:login)/(:crc)')->via('get')->
-            to(controller => 'usercontroller', action => 'usercontroller_rt_user_rest_pass_get');
+            to(
+                controller => 'usercontroller_site_write', 
+                action => 'usercontroller_rt_user_rest_pass_get'
+            );
 
         #Shortlinks thing
         my $sl_r = $r->route($shortlinks_root);
         $sl_r->route('/add')->via('get')->
-            to(controller => 'content', action => 'content_rt_shortlink_add_get');
+            to(
+                controller => 'content_shortlinks_site_read', 
+                action => 'content_rt_shortlink_add_get'
+            );
         $sl_r->route('/add')->via('post')->
             to(
-                controller => 'content', 
-                action => 'content_rt_shortlink_add_post', 
-                #{
-                    #sugrp_id => 'no', #==sugrp_id = undef => NULL, it's for 'get'
-                #}
+                controller => 'content_shortlinks_site_write', 
+                action => 'content_rt_shortlink_add_post'
             );
         
         my $slr_r = $r->route($shortlinks_redir_root);
         $slr_r->route('/(:alias)')->via('get')->
-            to(controller => 'content', action => 'content_rt_shortlink_redirect_get');
+            to(
+                controller => 'content_shortlinks_site_read', 
+                action => 'content_rt_shortlink_redirect_get'
+            );
         $slr_r->route('/(:sugrp_id)/(:alias)')->via('get')->
-            to(controller => 'content', action => 'content_rt_shortlink_redirect_get');
+            to(
+                controller => 'content_shortlinks_site_read', 
+                action => 'content_rt_shortlink_redirect_get'
+            );
 
         #Public content routes browse cats, view pages
         #Everything left we blame as content category/page
@@ -401,17 +470,26 @@ package MjNCMS;
             $pager_slug_entry . 
             '(:page_num)' . 
             $pages_extemsion, {page_num => qr/\d+/})->via('get')->
-            to(controller => 'content', action => 'content_rt_page_get');
+            to(controller => 'content_pages_site_read', action => 'content_rt_page_get');
         $r->route(
             '/(*category_slug)' . 
             $pager_slug_entry . 
             '(:page_num)' . 
             $categoryes_extemsion, {page_num => qr/\d+/})->via('get')->
-            to(controller => 'content', action => 'content_rt_category_get');
+            to(
+                controller => 'content_categories_site_read', 
+                action => 'content_rt_category_get'
+            );
         $r->route('/(*page_slug)' . $pages_extemsion)->via('get')->
-            to(controller => 'content', action => 'content_rt_page_get');
+            to(
+                controller => 'content_pages_site_read', 
+                action => 'content_rt_page_get'
+            );
         $r->route('/(*category_slug)' . $categoryes_extemsion)->via('get')->
-            to(controller => 'content', action => 'content_rt_category_get');
+            to(
+                controller => 'content_categories_site_read', 
+                action => 'content_rt_category_get'
+            );
         
     }
 
@@ -462,6 +540,11 @@ package MjNCMS::Main;
         
     };
     
+    sub seems_like_u_have_no_access_to_be_here {
+        my $self = shift;
+        $self->render(text => 'Seems like you have no access for this route');
+    }
+    
     #sub test_render_this_is_it{
     #    my $self = shift;
     #    $self->render(text => 'This is it');
@@ -473,4 +556,3 @@ package MjNCMS::Main;
     #}
 
 1;
-

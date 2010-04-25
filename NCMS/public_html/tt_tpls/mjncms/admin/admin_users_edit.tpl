@@ -21,8 +21,8 @@
         [% RETURN -%]
     [% END -%]
     [% usr=res.users.$member_id -%]
-    [% usr_er=res.users_extrareplaces.$member_id -%]
-    [% usr_ra=res.users_rolealternatives.$member_id -%]
+    [% usr_er=res.users_extrareplaces.${member_id} -%]
+    [% usr_ra=res.users_rolealternatives.${member_id} -%]
 [% ELSE #IF TT_VARS.member_id -%]
     [% loc('User id is not \d+') | html -%]
     [% RETURN -%]
@@ -61,7 +61,7 @@
                                     [% eusr.awp_name | html %]<b>/</b>[% eusr.role_name | html %]<br /><div class="lpad">
                                     [% prev_role=eusr.role_id -%]
                                 [% END -%]
-                                <input[% IF usr_er.$member_id %] checked="checked"[% END %] type="checkbox" name="repl_eusr_[% eusr.member_id %]" id="repl_eusr_[% eusr.member_id %]" class="vam eusr_a_[% eusr.awp_id %] eusr_r_[% eusr.role_id %]"/><label for="repl_eusr_[% eusr.member_id %]">[% IF eusr.name %][% eusr.name | html %][% ELSE %][% eusr.forum_name | html %][% END %]</label><br />
+                                <input[% IF TT_CALLS.inarray(usr_er, eusr.member_id) %] checked="checked"[% END %] type="checkbox" name="repl_eusr_[% eusr.member_id %]" id="repl_eusr_[% eusr.member_id %]" class="vam eusr_a_[% eusr.awp_id %] eusr_r_[% eusr.role_id %]"/><label for="repl_eusr_[% eusr.member_id %]">[% IF eusr.name %][% eusr.name | html %][% ELSE %][% eusr.forum_name | html %][% END %]</label><br />
                             [% END -%]
                             [% IF extra_users.size %]</div>[% END -%]
                         </td>

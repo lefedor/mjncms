@@ -15,8 +15,8 @@
 [% END #IF !tt_controller || !tt_action -%]
 [%# -%]
 [% UNLESS SESSION.REQ_ISAJAX -%]
-    [% TT_CALLS.register_tt_call('menus', 'menus_get_record') -%]
-    [% TT_CALLS.register_tt_call('menus', 'menus_get_record_tree') -%]
+    [% TT_CALLS.register_tt_call('menus_site_lib_read', 'menus_get_record') -%]
+    [% TT_CALLS.register_tt_call('menus_site_lib_read', 'menus_get_record_tree') -%]
     <script type="text/javascript" language="javascript">
         if(!mj_sys_vals){
             var mj_sys_vals = new Hash();

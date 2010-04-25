@@ -144,10 +144,41 @@ This is temporary descr just u should know if u've started MjNCMS
     More info MjNCMS::MjI18N (Since I18N namespace taken by plugin).
     translations are I18n plugin translations and they are in MjNCMS::I18N::*=(en|anythingelse)
     There are filter for TT2 (MjNCMS::Template::Filter::loc): [% USE loc %][% loc('some') | hmtl %]
+    
+    !!!
     Also all functions should return alredy translatd data (like &get_page, etc) except if some flag
     like 'get_untranslated' is setted, it's easyer @ content side, so it's better )
-
-
+    !!!
+    
+    Mojolicious I18n tryes to detect user browser lang, we use this lang if
+        it's defined @ cfg
+        user have no lang defiined @profile [guset oftenly]
+        
+    Also we have plugin 'MjNCMS::Plugin::MjncmsLangPrefixedUrls' 
+        [$mojo->plugin('mjncms_lang_prefixed_urls'); @daemon]
+        It's parses requested url && if it's match /<LANG CODE @ CFG>/some/path
+        then 
+            1. '/<LANG CODE @ CFG>' is becomes removed from url, 
+            2. System{'i18n'}/user lang is == lang code #MjNCMS::MjI18N->set_lang()
+            3. $SESSION{'URL_LANG_PREFIX'} is defined as '/' . <LANG CODE>
+                It's == '' by default, so u can safely use it on TT/Template side
+                as prefix for url's, your url's will be localized then
+            4. Updated url becomes stored @app url as original request URL
+                so it will be used for finding route
+                
+        Since content side functions returns localized data by default, 
+        depends on current language setting, we have transparent localization by default.
+        
+        try visit /en/mjadmin && /ru/mjadmin @demo site :)
+        
+    So lang detect sequence:
+        1) browser settings
+        2) profile settings
+        3) '/<langcode>/path setting
+        
+        Last one mathced will be site lang
+    
+    
 7. Don't remember, U can defenatly use simplifyed Mojolicious::Lite/Even no TT2 for hi-load things, 
    just set up nginx right :)
    Just use Config, Service, enable plugins i18n, MjncmsInit, and you have user/etc model inbox.
@@ -155,5 +186,22 @@ This is temporary descr just u should know if u've started MjNCMS
 8. Emails easyly could be send over $SESSION{'MAILER'}->new({to=>'me@me.me', text=>'hello'})->send()
     Also attchmens are possible, etc, see MjNCMS::Mail
 
+
+9. Keep them separated thing:
+    I've done experement: split Content.pm (7000+ lines and growth) on smaller files:
+        1) Split by usage: @Admin or @Site (&& maybe @ Admin)
+        2) Split routes Part from actual functions, 
+            last one stored @ files with 'Lib' @ names and can be 'use' 'd from anywhere.
+        3) Split also files by usage goal: is it just data read functions set
+            or it's write data to database or smw.
+            Oftenly users read data most of their requests, so it's
+            logically positive to split data write functions from data read ones.
+            
+        So, results: speed increase from 14.5 to 91.8 request/second @content side
+            it's 6 times faster, so it worth it.
+            
+        Bad side - there a lot of files now, not one of 7k lines, 
+            but smaller 12, for example, it's harder to maintain :(.
+        
     
 ..not finished yet...

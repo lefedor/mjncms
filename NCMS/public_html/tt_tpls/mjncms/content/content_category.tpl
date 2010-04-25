@@ -8,12 +8,14 @@
 [% ct_memd_id='' -%]
 [% is_not_memcached='' -%]
 [% IF 
+    t_memcached!='off' && 
     SESSION.MEMD && 
     SESSION.MEMD_CACHE_OPTS.categories &&
     SESSION.MEMD_CACHE_OPTS.categories.expire &&
     SESSION.MEMD_CACHE_OPTS.categories.prefix 
 -%]
     [% ct_memd_id=SESSION.MEMD_CACHE_OPTS.categories.prefix -%]
+    [% z=(ct_memd_id=ct_memd_id _ 'cl_' _ SESSION.USR.member_sitelng _ '_')  -%]
     [% z=(ct_memd_id=ct_memd_id _ 'cp_' _ TT_VARS.category_page_num _ '_') IF TT_VARS.category_page_num -%]
     [% z=(ct_memd_id=ct_memd_id _ 'cid_' _ TT_VARS.category_id) IF TT_VARS.category_id -%]
     [% z=(ct_memd_id=ct_memd_id _ 'ccname_' _ TT_VARS.category_slug) IF TT_VARS.category_slug -%]
@@ -76,6 +78,6 @@
     IF is_not_memcached && #MAYBE IT FASTER NOT RESET EVERYTIME, BUT LONGER EXPIRE? CHECK
     ct_memd_id 
 -%]
-    [% z=SESSION.MEMD.set(ct_memd_id, catlist_block, SESSION.MEMD_CACHE_OPTS.categories.expire) -%]
+    [% z=SESSION.MEMD.add(ct_memd_id, catlist_block, SESSION.MEMD_CACHE_OPTS.categories.expire) -%]
 [% END -%]
 [% catlist_block -%]

@@ -4,6 +4,10 @@ package MjNCMS::Plugin::MjncmsInit;
 #
 
 #
+# Req Mojolicious i18n plugin loaded alredy
+#
+
+#
 # Bender: Behold... the Internet.
 #
 # (c) Futurama
@@ -61,7 +65,7 @@ sub register {
     #init MjNCMS env:
     $app->plugins->add_hook(
         before_dispatch => sub {
-            #it's now also @daemon mode works for static files - hk later how tp skip
+            #it's now also @daemon mode works for static files - chk later how to skip
             my ($self, $c) = @_;
             
             my (
@@ -117,7 +121,7 @@ sub register {
 
             #sub t_of(anything) 2file dumper MjNCMS::Service::t_of
             $SESSION{'ALLOW_T_OF'} = $$cfg{'allow_t_of'} if $$cfg{'allow_t_of'};
-
+            
             $$cfg{'log_level'} = defined($$cfg{'log_level'})? $$cfg{'log_level'}:'warn';
             $SESSION{'LOG'} = $c->app->log;
             if ($$cfg{'log_level'}) {
@@ -538,9 +542,16 @@ sub register {
             $SESSION{'SITE_LANG_DEFT'} = $$cfg{'site_lang_deft'}? $$cfg{'site_lang_deft'}:${[keys %{$SESSION{'SITE_LANGS'}}]}[0];
             $SESSION{'MEMC_UNTRANS_STRS'} = $$cfg{'memc_untrans_strs'}? $$cfg{'memc_untrans_strs'}:undef;
                 
+            #Will be hanged @MjncmsLangPrefixedUrls pligin 
+            #if enabled && nessesary
+            $SESSION{'URL_LANG_PREFIX'} = '';
+            
             $SESSION{'LOC'} = MjNCMS::MjI18N->new($c);
-            unless ($SESSION{'LOC'} -> init_langs($SESSION{'SITE_LANGS'})) {
-                $SESSION{'REDIR'} = '/_static/msg/no_lang.shtml';
+            unless (
+                $SESSION{'LOC'} && 
+                $SESSION{'LOC'} -> init_langs($SESSION{'SITE_LANGS'})
+            ) {
+                $SESSION{'REDIR'} = '/_static/msg/no_lang.shtml?reason=init_fail';
                 return 0;
             }
             
@@ -584,13 +595,17 @@ sub register {
                 return 0;
             }
             
-            if($SESSION{'USR'}->{'member_sitelng'} && 
+            if (
+                $SESSION{'USR'}->{'member_id'} && #Guests - autodetected|default
+                $SESSION{'USR'}->{'member_sitelng'} && 
                 $SESSION{'USR'}->{'member_sitelng'} ne $SESSION{'LOC'}->{'CURRLANG'} && 
-                &inarray([keys %{$SESSION{'SITE_LANGS'}}], $SESSION{'USR'}->{'member_sitelng'})){
+                &inarray([keys %{$SESSION{'SITE_LANGS'}}], $SESSION{'USR'}->{'member_sitelng'})
+            ) {
                     $SESSION{'LOC'}->set_lang($SESSION{'USR'}->{'member_sitelng'});
             }
-            else{
-                $SESSION{'USR'}->{'member_sitelng'} = $SESSION{'LOC'}->{'CURRLANG'}; #==$SESSION{'SITE_LANG_DEFT'};
+            else {
+                #== Autodetected lang || $SESSION{'SITE_LANG_DEFT'}
+                $SESSION{'USR'}->{'member_sitelng'} = $SESSION{'LOC'}->get_lang(); 
             }
             
             $SESSION{'DATE'} = MjNCMS::Date->new();

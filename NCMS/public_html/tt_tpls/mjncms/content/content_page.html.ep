@@ -1,0 +1,17 @@
+<!doctype html><html>
+<head><title>Simple</title></head>
+<body>Page: 
+% $a = &{$TT_CALLS{'content_get_pagerecord'}}({
+%                'page_id' => $TT_VARS{'page_id'}, 
+%                'slug' => $TT_VARS{'page_slug'}, 
+%                'page_page_num' => $TT_VARS{'page_num'}, 
+%            });
+% $a = @{${$a}{'pages_res'}}[0];
+<%= ${$a}{'intro'} %>
+<br /><br /><br />
+<%= '<hr />' %>
+<br /><br /><br />
+<%= ${$a}{'body'} %>
+
+</body>
+</html>

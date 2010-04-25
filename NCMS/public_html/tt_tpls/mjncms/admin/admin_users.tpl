@@ -3,8 +3,8 @@
 [% TT_VARS.JS.push(bytestream(SESSION.THEME_URLPATH, 'url_escape', 'A-Za-z0-9\/\-\.\_\~') _ '/admin/js/permissions.js') -%]
 [% colspan=7 -%]
 [% res=TT_CALLS.users_get({
-    'name' => SESSION.REQ.param('nm'),
-    'login' => SESSION.REQ.param('lgn'), 
+    'name_like' => SESSION.REQ.param('nm'),
+    'login_like' => SESSION.REQ.param('lgn'), 
     'incl_notincms' => SESSION.REQ.param('nic'), 
     'is_forum_active' => SESSION.REQ.param('isa'), 
     'is_cms_active' => SESSION.REQ.param('isac'), 

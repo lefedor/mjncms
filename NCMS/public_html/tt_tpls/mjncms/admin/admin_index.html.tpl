@@ -16,9 +16,8 @@
     [% tt_controller='admin' -%]
     [% tt_action='auth' -%]
 [% END #UNLESS SESSION.USR.member_id -%]
-[% TT_CALLS.register_tt_call('menus', 'menus_get_record') -%]
-[% TT_CALLS.register_tt_call('menus', 'menus_get_record_tree') -%]
-[% TT_CALLS.register_tt_call('menus', 'menus_get_parent_tree') -%]
+[% TT_CALLS.register_tt_call('menus_site_lib_read', 'menus_get_record') -%]
+[% TT_CALLS.register_tt_call('menus_site_lib_read', 'menus_get_record_tree') -%]
 [% UNLESS SESSION.REQ_ISAJAX -%]
     <script type="text/javascript" language="javascript">
         

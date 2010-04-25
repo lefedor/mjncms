@@ -1,13 +1,7 @@
 #Things in mind, volunteers/suggestions are welcome:
 
   HOT:
-  MEMD use @blocks
   Language switch block @ content-side, 
-    parse {@before_dispatch} url, if some like /en/path:
-    s /^\/en//, 
-    set lang=en, 
-    ==>transparent urls routes && transparent translation since 
-        we're get translated data from functions by default 
   Still no sessions. Rquirements: 
     format: $SESSION->{'USR'}->{'SESS'} = {keys=values},
     no ->get/set api, not useful and transparent at all, just hash 
@@ -71,6 +65,5 @@
   Update all JS dialogs and evrything as Mootools locales, not hash like now, 
     which was about temporary solution, before locales extension man was read )
   Update FileManager.js to use locales 
-  Add namespace not visible from TT to prevent call some functions from templates. Like some of {'USR'}->new_salt/change_email. (more secure then)
   
 ..not complete...

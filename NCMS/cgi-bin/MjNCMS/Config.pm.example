@@ -160,11 +160,16 @@ my %CFG_COMMON = (
             expire => 3600, #in seconds, 0 to disable
             prefix => 'pg_', 
         }, 
-        #about 14% speed win on cat listing dispaly, but also less memory usage
+        #about 12% speed win on cat listing dispaly, but also less memory usage
         categories => {
             expire => 3600, #in seconds, 0 to disable
             prefix => 'ct_', 
-        }
+        },
+        #about 3.5% speed win 
+        blocks => {
+            expire => 3600, #in seconds, 0 to disable
+            prefix => 'bk_', 
+        },
     },
     
     auth_engine => 'smf', 
@@ -177,7 +182,7 @@ my %CFG_COMMON = (
     guestuser_isactive => 1, #1:0. 0!!!, - defined() chk on it
     allow_sw_toslaveusers => 1, #1/0==undef #can sw to 'slave' user [* with same awp, but lower role seq]
     allow_sw_awproles => 1, #1/0==undef #can sw between awproles?
-    default_reg_role => '2 ', #0 == guest, 2==standart user
+    default_reg_role => 0, #0 == guest, 2==standart user
     
     #we can move permissions from db here (but it will be statically), 
     #so it will be 1 DB query less
@@ -185,7 +190,7 @@ my %CFG_COMMON = (
         #role_id => {controller => action => {r/w = 1}}
         #u can &t_of($self->{'premissions'}) @ MjNCMS::User to make as current @ DB
         #after '${$self->{'premissions'}}{$res->{'controller'}} = {}... set'
-        #
+        #It's really becomes a bit faster!
         #0 => { #guest
         #   
         #}
@@ -356,11 +361,11 @@ my %CFG_COMMON = (
     reg_tt_call_rules => {
         '*' => {
             '*' => {
-                'Menus' => {
+                'MenusSiteLibRead' => {
                     'menus_get_record_tree' => 1, 
                     'menus_get_record' => 1, 
                 },
-                'Content' => {
+                'ContentBlocksSiteLibRead' => {
                     'content_get_blocks' => 1, 
                 },
             },
@@ -368,8 +373,7 @@ my %CFG_COMMON = (
         admin => {
             '*' => {
                 'Menus' => {
-                    'menus_get_parent_tree' => 1,
-                    'menus_get_transes' => 1,
+                    #'menus_get_parent_tree' => 1,
                     
                 },
             },
@@ -428,6 +432,8 @@ sub get_config ($) {
         site_name => 'MjNCMS Demo site', #default title
         site_contactemail => 'ФедьКа <ffl.public@gmail.com>', 
         site_time_offset => 3, #default GMT time offset
+
+        default_reg_role => 2, #0 == guest, 2==standart user
         
         #Fast crypt and crc settings
         crypt_key => 'IfteISZ8d(%82cdn', 
