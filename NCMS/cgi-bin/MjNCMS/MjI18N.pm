@@ -107,9 +107,11 @@ sub set_lang ($$) {
     my $lang = shift;
     my $locale;
 
-    return undef unless ${$self->{'ACTIVE_LANGS'}}{$lang};#is @init?
+    return undef unless $lang && ${$self->{'ACTIVE_LANGS'}}{$lang};#is @init?
     
-    $self->{'MOJO_CONTROLLER'}->stash->{'i18n'}->languages($lang);
+    $self->{'MOJO_CONTROLLER'}->
+        stash->{'i18n'}->
+            languages($lang);
     
     $self->{'CURRLANG'} = 
         $SESSION{'USR'}->{'member_sitelng'} = 
@@ -150,9 +152,12 @@ sub init_langs ($$) {
     #Mojolicious i18n plugin tryes detect lang @init, return it if no arg
     $autolang = $self->{'MOJO_CONTROLLER'}->stash->{'i18n'}->languages();
     
-    unless ($autolang && &inarray([keys %{$lang_list}], $autolang)) {
-        return $self->set_lang($SESSION{'SITE_LANG_DEFT'});
-    }
+    return $self->set_lang(
+        ($autolang && &inarray([keys %{$lang_list}], $autolang))? 
+            $autolang : $SESSION{'SITE_LANG_DEFT'}
+    );
+    
+    return undef;
     
 } #-- init_langs
 
