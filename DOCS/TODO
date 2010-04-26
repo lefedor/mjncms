@@ -1,17 +1,7 @@
 #Things in mind, volunteers/suggestions are welcome:
 
   HOT:
-  Still no sessions. Rquirements: 
-    format: $SESSION->{'USR'}->{'SESS'} = {keys=values},
-    no ->get/set api, not useful and transparent at all, just hash 
-    by coockie
-    init @ user init, MEMD if avail ELSE read from DB
-    store @DB && @MEMD @after_dispatch
-    guest sould have session
-    on auth session assigned to member
-    member can select active session then 
-    [like shop cart - previous temporary order should not be lost]
-    all sessions stored @ db like forever
+    Update templates use css styles from smth popular like wordpress/joomla (!)
       
   OTHER STUFF:
   Code cleanup/optimizing (i was too paranoid ad checks maybe)/Mojolicious::Guides::CodingGuidelines 

@@ -5209,6 +5209,8 @@ sub blocks_edit_block ($) {
         }
     }
     
+    &_rest_memd_blocks(${$cfg}{'block_id'});
+    
     return {
         status => 'ok', 
         block_id =>  ${$cfg}{'block_id'}, 

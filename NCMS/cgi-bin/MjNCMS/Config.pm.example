@@ -170,6 +170,10 @@ my %CFG_COMMON = (
             expire => 3600, #in seconds, 0 to disable
             prefix => 'bk_', 
         },
+        sessions => {
+            expire => 3600, #in seconds, 0 to disable
+            prefix => 'ss_', 
+        },
     },
     
     auth_engine => 'smf', 

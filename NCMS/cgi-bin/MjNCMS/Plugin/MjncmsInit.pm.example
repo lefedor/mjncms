@@ -784,7 +784,6 @@ $SESSION{'SERVER_NAME'} ~;
                 return;
             }
             return unless my $started = $c->stash('started');
-            #session_store();
         }
     );
 

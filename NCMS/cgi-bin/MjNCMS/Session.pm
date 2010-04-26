@@ -13,71 +13,330 @@ use FindBin;
 use lib "$FindBin::Bin/../";
 
 use MjNCMS::Config qw/:vars /;
+use MjNCMS::Service qw/:subs /;
 
-BEGIN{
-    use Exporter ();
-    use vars qw( @ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
-    @ISA         = qw(Exporter);
-    @EXPORT      = qw();
-    @EXPORT_OK   = qw();
+use Digest::SHA1 qw/sha1_hex /;
+use Storable  qw/freeze thaw /;
+
+sub new {
+  my $self = {}; shift;
+  
+  $self->{'SESSID'} = undef;
+  $self->{'DATA'} = {};
+  
+  bless $self;
+  return $self
+  
+} #-- new
+
+sub _gen_sess_id ($) {
+    my $self = shift;
     
-    %EXPORT_TAGS = (
-      vars => [qw()],
-      subs => [qw(
-        session_get session_store session_store_todb
+    return sha1_hex((time()).(rand(time)).(rand()))
+} #-- _gen_sess_id
+
+sub get_sess_id ($) {
+    my $self = shift;
+    
+    return $self->{'SESSID'};
+} #-- get_sess_id
+
+sub set_sess_id ($$) {
+    my $self = shift;
+    my $sess_id = shift;
+    
+    return undef unless $sess_id;
+    
+    $self->{'SESSID'} = $sess_id;
+    
+    return $self;
+    
+} #-- set_sess_id
+
+sub load_data ($$) {
+    my $self = shift;
+    my $data = shift;
+    
+    return undef unless $data && (ref $data eq 'HASH');
+    
+    $self->{'DATA'} = {%{$data}};
+    
+    return $self;
+    
+} #-- load
+
+sub unload_data ($) {
+    my $self = shift;
+    
+    return {%{$self->{'DATA'}}};
+    
+} #-- unload
+
+sub init_session ($) {
+    my $self = shift;
+    
+    my (
+        $dbh, $steps, $cnt_chk, $q,
+        $mjncms_sess_cookie, 
+        $mjncms_session, $mjn_sess_id, 
+        $ips, $inscnt, 
+    ) = ($SESSION{'DBH'}, 100, 0, );
+    
+    $mjncms_sess_cookie = $SESSION{'COOKIES_REQ'}{$SESSION{'SESS_COOKIE'}};
+    
+    if (
+        $mjncms_sess_cookie && 
+        (
+            $mjn_sess_id = $mjncms_sess_cookie->value()
+        )
+    ) { 
+        if (
+            $SESSION{'MEMD'} && 
+            $SESSION{'MEMD_CACHE_OPTS'}->{'sessions'} && 
+            $SESSION{'MEMD_CACHE_OPTS'}->{'sessions'}->{'prefix'} 
+        ) {
+            $mjncms_session = $SESSION{'MEMD'}->get(
+                $SESSION{'MEMD_CACHE_OPTS'}->{'sessions'}->{'prefix'} . 
+                $mjn_sess_id
+            );
+            
+            unless (
+                $mjncms_session && 
+                (ref $mjncms_session eq 'HASH') #&& 
+                #${$mjncms_session}{'member_id'} == $SESSION{'USR'}->{'member_id'}
+            ) {
+                $mjncms_session = undef;
+            }
+        }
         
-    )],
-    );
-    Exporter::export_ok_tags('vars');
-    Exporter::export_ok_tags('subs');
-}
-
-sub session_get($){
-    #look @memd, than db, if no - create clean one
-    my $sess_id = $_[0];
-    
-    my ($dbh, $q, $cnt_chk, $inscnt) = ($SESSION{'DBH'}, undef, 1);
-    while(){
-        $sess_id = $SESSION{'BS'}(rand())->md5_sum()->to_string();
-        next if ($SESSION{'MEMD'} && $SESSION{'MEMD'}->get($sess_id));
-        $q = "SELECT COUNT(*) AS cnt FROM ${SESSION{PREFIX}}session WHERE session_id=" . $dbh->quote($sess_id) . '; ';
-        eval{
-            ($cnt_chk, ) = $dbh -> selectrow_array($q);
-        };
-        next if $cnt_chk;
-        $q = qq~
-            INSERT INTO ${SESSION{PREFIX}}sessions 
-                (session_id ,data) 
-            VALUES 
-                ($sess_id, '')
-            ;
-        ~;
-        eval{
-            $inscnt = $dbh -> do($q);
-        };
-        last if $inscnt;
+        unless ($mjncms_session) {
+            #AND member_id =~ . ($dbh->quote($SESSION{'USR'}->{'member_id'})) . 
+            $q = qq~
+                SELECT 
+                    data
+                FROM ${SESSION{PREFIX}}sessions 
+                WHERE 
+                    session_id =~ . $dbh->quote($mjn_sess_id) . '; ';
+            
+            eval {
+                ($mjncms_session, ) = $dbh -> selectrow_array($q);
+            };
+            
+            $mjncms_session = thaw($mjncms_session) if $mjncms_session;
+            
+            unless (
+                $mjncms_session && 
+                (ref $mjncms_session eq 'HASH') #&& 
+                #${$mjncms_session}{'member_id'} == $SESSION{'USR'}->{'member_id'}
+            ) {
+                $mjncms_session = undef;
+            }
+        }
     }
-    return {
-        sess_id => $sess_id,
-        
-    };
-}
-
-sub session_store(;$){
-    #store to memd
-    my $serobj = Data::Serializer->new(
-        serializer => 'Storable',
-        digester   => 'MD5',
-        cipher     => 'DES',
-        secret     => $SESSION{'CRYPT_KEY'},
-        compress   => 1,
-    );
-    my $dumped_data = $serobj->serialize($SESSION{'SESS'});
-}
-
-sub session_store_todb(;$){
-    #get from memd if !$SESSION{'SESS'}, store to db, rm from memd
     
-}
+    unless ($mjncms_session) {
+        $mjncms_sess_cookie = undef;
+    }
+    
+    unless (
+        $mjncms_sess_cookie 
+    ) { 
+        
+        if ($SESSION{'USR'}->{'member_id'}) {
+            $q = qq~
+                SELECT 
+                    session_id, data 
+                FROM ${SESSION{PREFIX}}sessions 
+                WHERE member_id =~ . 
+                    ($dbh->quote($SESSION{'USR'}->{'member_id'})) . qq~
+                ORDER BY upd DESC 
+                LIMIT 0, 1 ; ~;
+            ($mjn_sess_id, $mjncms_session) = $dbh -> selectrow_array($q);
+            
+            $mjncms_session = thaw($mjncms_session) if $mjncms_session;
+            
+        }
+        
+        unless (
+            $mjn_sess_id && 
+            $mjncms_session 
+        ) {
+            
+            $dbh -> do("LOCK TABLES ${SESSION{PREFIX}}sessions WRITE ; ");
+            
+            $ips = &sv_getips();
+            
+            while ($steps > 0) {
+                $mjn_sess_id = $self->_gen_sess_id();
+                
+                if (
+                    $SESSION{'MEMD'} && 
+                    $SESSION{'MEMD_CACHE_OPTS'}->{'sessions'} && 
+                    $SESSION{'MEMD_CACHE_OPTS'}->{'sessions'}->{'prefix'} && 
+                    $SESSION{'MEMD'}->get(
+                        $SESSION{'MEMD_CACHE_OPTS'}->{'sessions'}->{'prefix'} . 
+                        $mjn_sess_id
+                    )
+                ) {
+                    $steps--;
+                    next;
+                }
+                
+                $cnt_chk = 0;
+                $q = qq~
+                    SELECT COUNT(*) AS cnt 
+                    FROM ${SESSION{PREFIX}}sessions 
+                    WHERE session_id =~ . $dbh->quote($mjn_sess_id) . '; ';
+                eval {
+                    ($cnt_chk, ) = $dbh -> selectrow_array($q);
+                };
+                
+
+                if ($cnt_chk) {
+                    $steps--;
+                    next;
+                }
+                
+                last;
+            }
+            
+            return undef unless $steps;
+            
+            $mjncms_session = freeze {};
+            
+            $q = qq~
+                INSERT INTO 
+                ${SESSION{PREFIX}}sessions ( 
+                    session_id, member_id, 
+                    data, 
+                    start_remote, start_proxy, start_proxyclient 
+                ) VALUES (
+                    ~ . ($dbh->quote($mjn_sess_id)) . qq~, 
+                    ~ . ($dbh->quote($SESSION{'USR'}->{'member_id'})) . qq~, 
+                    ~ . ($dbh->quote($mjncms_session)) . qq~, 
+                    ~ . ($dbh->quote(${$ips}{'remote'})) . qq~, 
+                    ~ . ($dbh->quote(${$ips}{'proxy'})) . qq~, 
+                    ~ . ($dbh->quote(${$ips}{'proxyclient'})) . qq~ 
+                ) ; 
+            ~;
+            eval {
+                $inscnt = $dbh->do($q);
+            };
+            
+            $dbh -> do("UNLOCK TABLES ; ");
+            
+            $mjncms_session = {};
+        }
+        
+        $mjncms_sess_cookie = Mojo::Cookie::Response->new;
+        $mjncms_sess_cookie->name($SESSION{'SESS_COOKIE'});
+        $mjncms_sess_cookie->domain($SESSION{'SERVER_NAME'}) if $SESSION{'SERVER_NAME'} =~ /\w+\.\w+/;#2 segments min rfc
+        $mjncms_sess_cookie->path('/');
+        $mjncms_sess_cookie->httponly(1);# no js access on client-side
+        $mjncms_sess_cookie->expires($SESSION{'COOKIE_FOREVER_TIME'});
+        $mjncms_sess_cookie->comment($SESSION{'SERVER_NAME'}.':'.$SESSION{'SERVER_PORT'}.' SESSION cookie');
+        $mjncms_sess_cookie->value($mjn_sess_id);
+        $SESSION{'COOKIES_RES'}{$SESSION{'SESS_COOKIE'}} = $mjncms_sess_cookie;
+            
+    }
+
+    $self->{'SESSID'} = $mjn_sess_id;
+    $self->{'DATA'} = $mjncms_session;
+    
+    return $self;
+            
+} #-- init_session
+
+sub store_session ($) {
+    my $self = shift;
+    
+    my $mjn_sess_id = $self->{'SESSID'};
+        return undef unless $mjn_sess_id;
+    my $mjncms_session = $self->{'DATA'};
+        return undef 
+            unless $mjncms_session && 
+            ref $mjncms_session eq 'HASH';
+
+    my (
+        $dbh, $q, $ips, 
+        $updcnt, 
+        
+    ) = ($SESSION{'DBH'}, );
+    
+    $ips = &sv_getips();
+    
+    if (
+        $SESSION{'MEMD'} && 
+        $SESSION{'MEMD_CACHE_OPTS'}->{'sessions'} && 
+        $SESSION{'MEMD_CACHE_OPTS'}->{'sessions'}->{'prefix'} 
+    ) {
+        $SESSION{'MEMD'}->set(
+            $SESSION{'MEMD_CACHE_OPTS'}->{'sessions'}->{'prefix'} . 
+            $mjn_sess_id, 
+            $mjncms_session
+        );
+    }
+    
+    $mjncms_session = freeze $mjncms_session;
+    
+    $q = qq~
+        UPDATE 
+        ${SESSION{PREFIX}}sessions 
+        SET 
+            member_id = ~ . ($dbh->quote($SESSION{'USR'}->{'member_id'})) . qq~, 
+            data = ~ . ($dbh->quote($mjncms_session)) . qq~, 
+            last_remote = ~ . ($dbh->quote(${$ips}{'remote'})) . qq~, 
+            last_proxy = ~ . ($dbh->quote(${$ips}{'proxy'})) . qq~, 
+            last_proxyclient = ~ . ($dbh->quote(${$ips}{'proxyclient'})) . qq~ 
+        WHERE session_id = ~ . ($dbh->quote($mjn_sess_id)) . qq~ ; 
+    ~;
+    eval {
+        $updcnt = $dbh->do($q);
+    };
+    
+    return undef unless scalar $updcnt;
+    
+    return $self;
+    
+} #-- store_session
+
+sub close_session ($) {
+    my $self = shift;
+    
+    my $mjncms_sess_cookie = Mojo::Cookie::Response->new;
+    $mjncms_sess_cookie->name($SESSION{'SESS_COOKIE'});
+    $mjncms_sess_cookie->domain($SESSION{'SERVER_NAME'}) if $SESSION{'SERVER_NAME'} =~ /\w+\.\w+/;#2 segments min rfc
+    $mjncms_sess_cookie->path('/');
+    $mjncms_sess_cookie->httponly(1);# no js access on client-side
+    $mjncms_sess_cookie->expires($SESSION{'COOKIE_FOREVER_TIME'});
+    $mjncms_sess_cookie->comment($SESSION{'SERVER_NAME'}.':'.$SESSION{'SERVER_PORT'}.' SESSION cookie');
+    $mjncms_sess_cookie->value('');
+    $SESSION{'COOKIES_RES'}{$SESSION{'SESS_COOKIE'}} = $mjncms_sess_cookie;
+    
+    return $self;
+} #-- close_session
+
+sub get ($$) {
+    my $self = shift;
+    my $key = shift;
+    
+    return undef unless $key;
+    
+    return ${$self->{'DATA'}}{$key};
+} #-- get
+
+sub set ($$;$) {
+    my $self = shift;
+    my $key = shift;
+    my $value = shift;
+    
+    unless (defined $value) {
+        delete ${$self->{'DATA'}}{$key};
+        #return 1;
+        return undef;
+    }
+        
+    return ${$self->{'DATA'}}{$key} = $value;
+} #-- set
 
 1;

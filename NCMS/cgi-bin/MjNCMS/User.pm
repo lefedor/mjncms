@@ -45,6 +45,9 @@ sub new {
   
   $self->{'PHP_SESSID'} = '';
   
+  #$self->{'SESS'} = {};
+  $self->{'SESSID'} = {};
+  
   $self->{'last_state'} = undef;
   
   $self->{'awp_id'} = 0;

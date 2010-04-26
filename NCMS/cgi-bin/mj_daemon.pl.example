@@ -83,6 +83,8 @@ package MjNCMS;
         $mojo->plugin('i18n');
         $mojo->plugin('mjncms_init');
         
+        $mojo->plugin('mjncms_sessions');
+        
         #Slow down about couple % for me (78-82 req/second with vs 82-85 without) 
         #on test machine, use if only nessesary so :)
         $mojo->plugin('mjncms_lang_prefixed_urls');
