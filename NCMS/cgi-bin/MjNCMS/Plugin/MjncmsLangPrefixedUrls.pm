@@ -64,6 +64,12 @@ sub register {
                     #}
 
                     $c->tx->req->url(Mojo::URL->new($url));
+
+                    $SESSION{'CURRENT_PAGE'} = $c->tx->req->url->clone; #->to_rel 
+                    $SESSION{'CURRENT_PAGE'}->query->remove('rnd');
+                    $SESSION{'CURRENT_PAGE'}->query->remove('notifyid');
+                    $SESSION{'CURRENT_PAGE'}->query->remove('msg');
+                    $SESSION{'CURRENT_PAGE'}->query->remove('dbh');
                     
                 }
             }

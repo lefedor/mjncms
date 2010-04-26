@@ -1,5 +1,5 @@
 [% USE loc -%]
-<form action="[% bytestream(SESSION.USR_URL, 'url_escape', 'A-Za-z0-9\/\-\.\_\~') %]/reconfirm_email" method="post" accept-charset="[% TT_VARS.html_charset %]" style="margin: 3px 1ex 1px 0;">
+<form action="[% SESSION.URL_LANG_PREFIX %][% bytestream(SESSION.USR_URL, 'url_escape', 'A-Za-z0-9\/\-\.\_\~') %]/reconfirm_email" method="post" accept-charset="[% TT_VARS.html_charset %]" style="margin: 3px 1ex 1px 0;">
     <table style="width:340px;" class="transp_table">
         <tr>
             <td colspan="2">

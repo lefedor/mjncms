@@ -83,7 +83,7 @@
                     [% z=(bk_memd_al_key=bk_memd_al_key _ 'bal_' _ block.alias) -%]
                     [% z=SESSION.MEMD.add_multi(
                         [bk_memd_id_key, block_body, SESSION.MEMD_CACHE_OPTS.blocks.expire], 
-                        [bk_memd_al_key, block_body, SESSION.MEMD_CACHE_OPTS.blocks.expire]
+                        [bk_memd_al_key, block_body, SESSION.MEMD_CACHE_OPTS.blocks.expire] #alias could be empty btw !!!
                     ) -%]
                 [% END -%]
                 [% blocks_body = blocks_body _ block_body -%]

@@ -12,7 +12,7 @@
     [% END -%]
     [% UNLESS TT_VARS.status && TT_VARS.status=='fail' -%]
     
-        <form onSubmit="javascript:return confirm('[% loc('Confirm') | html %]?');" name="reguser_frm" id="reguser_frm" action="[% bytestream(SESSION.USR_URL, 'url_escape', 'A-Za-z0-9\/\-\.\_\~') %]/confirm" method="post" accept-charset="[% TT_VARS.html_charset %]">
+        <form onSubmit="javascript:return confirm('[% loc('Confirm') | html %]?');" name="reguser_frm" id="reguser_frm" action="[% SESSION.URL_LANG_PREFIX %][% bytestream(SESSION.USR_URL, 'url_escape', 'A-Za-z0-9\/\-\.\_\~') %]/confirm" method="post" accept-charset="[% TT_VARS.html_charset %]">
             <table class="transp_table">
                 <tr>
                     <td>
@@ -40,5 +40,5 @@
     [% END -%]
 [% ELSE %]
     <h2>[% loc('You\'re registred user alredy') | html -%]</h2>
-    <a href="[% SESSION.USR_URL %]/profile">[% loc('Your profile') | html %]</a> 
+    <a href="[% SESSION.URL_LANG_PREFIX %][% SESSION.USR_URL %]/profile">[% loc('Your profile') | html %]</a> 
 [% END %]

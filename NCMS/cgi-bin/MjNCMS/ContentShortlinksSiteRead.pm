@@ -14,6 +14,7 @@ use lib "$FindBin::Bin/../";
 use base 'Mojolicious::Controller';
 
 use MjNCMS::Config qw/:vars /;
+use MjNCMS::ContentShortlinksSiteLibRead;
 
 ########################################################################
 #                       ROUTE CONTENT-SIDE CALLS
@@ -50,7 +51,7 @@ sub content_rt_shortlink_redirect_get () {
     
     my $self = shift;
     
-    my $res = &MjNCMS::Content::content_get_short_urls({
+    my $res = &MjNCMS::ContentShortlinksSiteLibRead::content_get_short_urls({
         'alias' => scalar $self->param('alias'), 
         'sugrp_id' => scalar $self->param('sugrp_id'), 
     });

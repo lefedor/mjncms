@@ -21,6 +21,10 @@
         [% loc('Block not found or no access') | html -%]
         [% RETURN -%]
     [% END -%]
+    [% UNLESS res.blocks.${block_id}.lang -%]
+        [% loc('You\'re trying translate multi-lang block') | html -%]
+        [% RETURN -%]
+    [% END -%]
     [% block=res.blocks.$block_id -%]
     [% UNLESS block.use_access_roles  -%]
         [% ar={'any'=>1} -%]
@@ -31,21 +35,24 @@
     [% loc('Block id is not \d+') | html -%]
     [% RETURN -%]
 [% END #IF TT_VARS.block_id -%]
-<form onSubmit="javascript:[% IF SESSION.REQ_ISAJAX %]submit_edit_block_subm();return false;[% ELSE %]return confirm('[% loc('Edit block') | html %]?');[% END %]" name="save_edited_block_frm" id="save_edited_block_frm" action="[% bytestream(SESSION.ADM_URL, 'url_escape', 'A-Za-z0-9\/\-\.\_\~') %]/content/blocks/edit/[% block_id %]" method="post" accept-charset="[% TT_VARS.html_charset %]">
+<form onSubmit="javascript:[% IF SESSION.REQ_ISAJAX %]submit_add_block_trans_subm();return false;[% ELSE %]return confirm('[% loc('Add block translation') | html %]?');[% END %]" name="add_block_translation_frm" id="add_block_translation_frm" action="[% bytestream(SESSION.ADM_URL, 'url_escape', 'A-Za-z0-9\/\-\.\_\~') %]/content/blocks/transes/[% block_id %]/add" method="post" accept-charset="[% TT_VARS.html_charset %]">
     <table border="0" cellspacing="1" cellpadding="4" align="center" width="100%" class="bordercolor">
         <tr class="titlebg">
             <td align="center" [% IF colspan %] colspan="[% colspan %]"[% END %] class="largetext">
-                [% loc('Edit block') | html -%]
+                [% loc('Add block translation') | html -%]
             </td>
         </tr>
         <tr class="windowbg">
             <td class="windowbg lual" style="padding: 7px;">
                     <label for="block_alias" title="[% loc('Up to 32 chars, to call from template by alias, not by id') | html %]">[% loc('Block alias') | html %]: </label>
-                        <input type="text" name="block_alias" id="block_alias" size="14" maxlength="32" value="[% block.alias | html %]"/><br />
-                    <input type="checkbox" name="block_isactive" id="block_isactive" value="1" class="vam"[% IF block.is_active %] checked="checked"[% END %]/>
+                        <input disabled="disabled" readonly="readonly" type="text" name="block_alias" id="block_alias" size="14" maxlength="32" value="[% block.alias | html %]"/><br />
+                    <input disabled="disabled" readonly="readonly" type="checkbox" name="block_isactive" id="block_isactive" value="1" class="vam"[% IF block.is_active %] checked="checked"[% END %]/>
                         <label for="block_isactive">[% loc('Is active') | html %]</label><br />
-                    <label for="block_lang">[% loc('Block default lng') | html %]:</label> 
-                        [% z=(block.lang='any') UNLESS block.lang -%]
+                    
+                    <label for="block_lang">[% loc('Origial lng') | html %]:</label> 
+                    [% SESSION.LOC.get_langs_list().${block.lang}.name | html -%]
+                    <br />
+                    <label for="block_lang">[% loc('Translation lng') | html %]:</label> 
                         [% INCLUDE common_langlist_fmt.tpl 
                             t_name='block_lang', 
                             t_anylang=1,
@@ -54,12 +61,12 @@
                         <br /><br />
                     <label for="block_header" title="[% loc('Up to 64 chars') | html %]">[% loc('Block header') | html %]: </label>
                         <input type="text" name="block_header" id="block_header" size="14" maxlength="64" value="[% block.header | html %]" />
-                    <input type="checkbox" name="block_show_header" id="block_show_header" value="1" class="vam"[% IF block.show_header %] checked="checked"[% END %]/>
+                    <input disabled="disabled" readonly="readonly" type="checkbox" name="block_show_header" id="block_show_header" value="1" class="vam"[% IF block.show_header %] checked="checked"[% END %]/>
                         <label for="block_show_header" title="[% loc('Show header') | html %]">[% loc('Show') | html %]</label><br />
                         <label title="[% loc('Raw html') | html %]" for="block_body" class="vat">[% loc('Block body') | html %]:</label>
                             <textarea name="block_body" id="block_body" rows="8" cols="48">[% block.body | html %]</textarea><br />
                         <br />
-                    <input type="hidden" name="referer" value="[% bytestream(SESSION.ADM_URL, 'url_escape', 'A-Za-z0-9\/\-\.\_\~') %]/content/blocks?rnd=[% SESSION.RND %]" />
+                    <input type="hidden" name="referer" value="[% bytestream(SESSION.ADM_URL, 'url_escape', 'A-Za-z0-9\/\-\.\_\~') %]/content/blocks/transes/[% block_id %]?rnd=[% SESSION.RND %]" />
                     <input type="hidden" name="rnd" value="[% SESSION.RND %]" />
             </td>
             <td class="lual w50">
@@ -68,13 +75,14 @@
                     t_selmultible=6, 
                     t_anyrole=1,
                     t_name='block_access_roles', 
-                    t_selected=ar 
+                    t_selected=ar, 
+                    t_disabled=1
                 -%]
             </td>
         </tr>
         <tr class="windowbg">
             <td class="lmal" [% IF colspan %] colspan="[% colspan %]"[% END %]>
-                <input type="submit" value="[% loc('Edit block') | html %]" />
+                <input type="submit" value="[% loc('Add block translation') | html %]" />
             </td>
         </tr>
     </table>

@@ -82,13 +82,13 @@ sub blocks_get_transes ($) {
     
     if (
         ${$cfg}{'lang'} &&
+        !(ref ${$cfg}{'lang'}) &&
         ${$cfg}{'lang'} =~ /^\w{2,4}$/
     ) {
         $where_rule .= ' AND bt.lang = ' . ($dbh->quote(${$cfg}{'lang'})) . ' ';
     }
     elsif (
         ${$cfg}{'lang'} && 
-        ref ${$cfg}{'lang'} && 
         ref ${$cfg}{'lang'} eq 'ARRAY' 
     ) {
         $where_rule .= ' AND bt.lang IN (' . (join ', ', (map( $dbh->quote($_), @{${$cfg}{'lang'}}))) . ') ';
@@ -108,7 +108,7 @@ sub blocks_get_transes ($) {
             e_usr.name AS editor, 
             DATE_FORMAT(bt.ins, $date_format) AS bt_ins, 
             DATE_FORMAT(bt.upd, $date_format) AS bt_upd 
-        FROM ${SESSION{PREFIX}}block_transes bt 
+        FROM ${SESSION{PREFIX}}blocks_translations bt 
             LEFT JOIN ${SESSION{PREFIX}}users m_usr ON m_usr.member_id=bt.member_id 
             LEFT JOIN ${SESSION{PREFIX}}users e_usr ON e_usr.member_id=bt.whoedit 
         $where_rule

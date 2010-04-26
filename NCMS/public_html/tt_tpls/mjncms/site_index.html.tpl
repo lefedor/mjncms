@@ -43,8 +43,9 @@
 <table cellpadding="4" cellspacing="0" class="cellable_tbl w100">
     <tr>
         <td colspan="3">
-            <a href="/"><h1>&quot;Made in couple hours&quot; MjNCMS example</h1></a>
-        </td>
+            <a href="[% SESSION.URL_LANG_PREFIX %]/"><h1>&quot;Made in couple hours&quot; MjNCMS example</h1></a>
+            <div align="right">[% INCLUDE common_lang_sw.tpl %]</div>
+        </d>
     </tr>
     <tr>
         <td class="w15 lual nwp">
@@ -54,7 +55,7 @@
                 [% mids_data = TT_CALLS.menus_get_record(mids).records -%]
                 [% FOREACH mid=mids -%]
                     <li>
-                        <a[% IF mids_data.${mid}.link == SESSION.CURRENT_PAGE %] class="b"[% END %] href="[% bytestream(mids_data.${mid}.link, 'url_escape', 'A-Za-z0-9\/\-\.\_\~') %]">[% mids_data.${mid}.text %]</a>
+                        <a[% IF mids_data.${mid}.link == SESSION.CURRENT_PAGE %] class="b"[% END %] href="[% SESSION.URL_LANG_PREFIX %][% bytestream(mids_data.${mid}.link, 'url_escape', 'A-Za-z0-9\/\-\.\_\~') %]">[% mids_data.${mid}.text %]</a>
                     </li>
                 [% END #FOREACH -%]
                 </ul>

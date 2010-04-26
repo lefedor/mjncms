@@ -5,7 +5,7 @@
     <table style="width:340px;" class="transp_table">
         <tr>
             <td colspan="2">
-                <span class="nwp">[% loc('Please, fill this form') %] (<a href="[% SESSION.USR_URL %]/forgot_password">[% loc('forgot password') | html %]?</a> ):</span>
+                <span class="nwp">[% loc('Please, fill this form') %] (<a href="[% SESSION.URL_LANG_PREFIX %][% SESSION.USR_URL %]/forgot_password">[% loc('forgot password') | html %]?</a> ):</span>
             </td>
         </tr>
         <tr>

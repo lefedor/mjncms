@@ -1,7 +1,6 @@
 #Things in mind, volunteers/suggestions are welcome:
 
   HOT:
-  Language switch block @ content-side, 
   Still no sessions. Rquirements: 
     format: $SESSION->{'USR'}->{'SESS'} = {keys=values},
     no ->get/set api, not useful and transparent at all, just hash 
@@ -13,9 +12,6 @@
     member can select active session then 
     [like shop cart - previous temporary order should not be lost]
     all sessions stored @ db like forever
-  Update templates use css styles from smth popular like wordpress/joomla 
-  CHECK FOR [% some = 'else' UNLESS/IF cond -%] - seems need [% z=(some = 'else') ... %] @ Templates
-  
       
   OTHER STUFF:
   Code cleanup/optimizing (i was too paranoid ad checks maybe)/Mojolicious::Guides::CodingGuidelines 
@@ -25,6 +21,9 @@
   Think about more transparent route('/some/:c/:a/param)->to route decoration
   Make everythin as plugins, aso separate parts (at least routes) - adm/content side? [maaaaybe]
   global %MULTISESSION{'SITE'}{'SOMEKEYS'} feature - static ocnnections to DB/MEMD/etc
+
+  Update templates use css styles from smth popular like wordpress/joomla (!)
+
   breadcrumbs
   HTML Blocks feature - 
     just static pieces of html code can be placed on site and edited from admin side

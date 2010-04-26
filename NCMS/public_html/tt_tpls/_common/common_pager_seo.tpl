@@ -23,8 +23,8 @@
 [% END -%]
 [% z=(pages.start = 1) UNLESS pages.start #--//-- -%]
 [% IF pages.start>1 -%]
-    <a href="[% pages.url | html %][% pages.pageext | html %]">&laquo; [% loc('First') %]</a>
-    <a href="[% pages.url | html %][% p_arg | html %][% -1 + pages.start %][% pages.pageext | html %]">&lt;</a>
+    <a href="[% SESSION.URL_LANG_PREFIX %][% pages.url | html %][% pages.pageext | html %]">&laquo; [% loc('First') %]</a>
+    <a href="[% SESSION.URL_LANG_PREFIX %][% pages.url | html %][% p_arg | html %][% -1 + pages.start %][% pages.pageext | html %]">&lt;</a>
 [% END -%]
 [% z=(pages.stop = pages.count) UNLESS pages.stop #--//-- -%]
 [% FOREACH p=[pages.start .. pages.stop] -%]
@@ -38,10 +38,10 @@
                 [% p_arg=p_num='' -%]
             [% END -%]
         [% END -%]
-        <a href="[% pages.url | html %][% p_arg | html %][% p_num %][% pages.pageext | html %]">[[% p %]]</a>
+        <a href="[% SESSION.URL_LANG_PREFIX %][% pages.url | html %][% p_arg | html %][% p_num %][% pages.pageext | html %]">[[% p %]]</a>
     [% END -%]
 [% END -%]
 [% IF pages.count>pages.stop -%]
-    <a href="[% pages.url | html %][% p_arg | html %][% pages.stop + 1 %][% pages.pageext | html %]">&gt;</a>
-    <a href="[% pages.url | html %][% p_arg | html %][% pages.count %][% pages.pageext | html %]">[% loc('Last') %] &raquo;</a>
+    <a href="[% SESSION.URL_LANG_PREFIX %][% pages.url | html %][% p_arg | html %][% pages.stop + 1 %][% pages.pageext | html %]">&gt;</a>
+    <a href="[% SESSION.URL_LANG_PREFIX %][% pages.url | html %][% p_arg | html %][% pages.count %][% pages.pageext | html %]">[% loc('Last') %] &raquo;</a>
 [% END -%]

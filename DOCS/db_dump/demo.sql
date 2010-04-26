@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 22, 2010 at 08:18 PM
+-- Generation Time: Apr 26, 2010 at 06:58 PM
 -- Server version: 5.0.51
 -- PHP Version: 5.3.1-5
 
@@ -87,7 +87,7 @@ CREATE TABLE IF NOT EXISTS `mjsmf_members` (
   KEY `lastLogin` (`lastLogin`),
   KEY `lngfile` (`lngfile`(30)),
   KEY `ID_POST_GROUP` (`ID_POST_GROUP`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=38 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=41 ;
 
 --
 -- Dumping data for table `mjsmf_members`
@@ -99,7 +99,8 @@ INSERT INTO `mjsmf_members` (`ID_MEMBER`, `memberName`, `dateRegistered`, `posts
 (20, 'Morbo', 1271615794, 0, 0, '', 0, 'Morbo', 0, 0, '', '', '', 'ecafe79de815678b999f15a90b4e1cc32a35c09f', 'morbo@powers.app', '', 0, '0001-01-01', '', '', '', '', '', '', '', 1, 1, '', '', 0, '', 0, 0, 0, '', 1, 1, 0, 2, '', '', '', '', 0, 0, '395bd7cd21', 0, '', '', 0, 0, '5a71'),
 (21, 'pepyaka', 1271627335, 0, 0, '', 0, 'pepyaka', 0, 0, '', '', '', '39c17d4c979a0312c04c074e4cde55ad96601d2f', 'pepyaka21@powers.apw', '', 0, '0001-01-01', '', '', '', '', '', '', '', 1, 1, '', '', 0, '', 0, 0, 0, '', 1, 1, 0, 2, '', '', '', '', 0, 1, '', 0, '', '', 0, 0, 'b7f7'),
 (22, 'chupakabra', 1271687788, 0, 0, '', 0, 'chupakabra', 0, 0, '', '', '', '8976fe787e7a12ef44d2237c94abee426125aa3c', 'chupakabra@powers.app', '', 0, '0001-01-01', '', '', '', '', '', '', '', 1, 1, '', '', 0, '', 0, 0, 0, '', 1, 1, 0, 2, '', '', '', '', 0, 1, '', 0, '', '', 0, 0, 'e2af'),
-(37, 'Fry', 1271880017, 0, 0, '', 0, 'Fry', 0, 0, '', '', '', 'ccd720c03d4e26501f09c8c9a573fbc86898c74e', 'ffl-public@yandex.ru', '', 0, '0001-01-01', '', '', '', '', '', '', '', 1, 1, '', '', 0, '', 0, 0, 0, '', 1, 1, 0, 2, '', '', '', '', 0, 1, '', 0, '', '', 0, 0, '494d');
+(40, 'loogin', 1272230959, 0, 0, '', 0, 'loogin', 0, 0, '', '', '', 'e78100a5aee103e9436b113a30789730a83ab907', 'loogin@loogin.lg', '', 0, '0001-01-01', '', '', '', '', '', '', '', 1, 1, '', '', 0, '', 0, 0, 0, '', 1, 1, 0, 2, '', '', '', '', 0, 1, '', 0, '', '', 0, 0, '0cd8'),
+(38, 'Fry', 1272134715, 0, 0, '', 0, 'Fry', 0, 0, '', '', '', 'ccd720c03d4e26501f09c8c9a573fbc86898c74e', 'ffl-public@yandex.ru', '', 0, '0001-01-01', '', '', '', '', '', '', '', 1, 1, '', '', 0, '', 0, 0, 0, '', 1, 1, 0, 2, '', '', '', '', 0, 1, '', 0, '', '', 0, 0, '7016');
 
 -- --------------------------------------------------------
 
@@ -136,7 +137,15 @@ INSERT INTO `mjsmf_sessions` (`session_id`, `last_update`, `data`) VALUES
 ('bb7b92305f6279d6b9aebae1bedc4392', 1271709968, 'rand_code|s:32:"f718429cbc6ded2b57212cbcbe1eba38";USER_AGENT|s:107:"Mozilla/5.0 (X11; U; Linux i686; en-US) AppleWebKit/533.4 (KHTML, like Gecko) Chrome/5.0.366.2 Safari/533.4";'),
 ('be667308e54455a1eb7326dcfa6e807b', 1271710216, 'rand_code|s:32:"b3b3c921c82bc2b949f6518d1d75af2a";USER_AGENT|s:71:"Mozilla/5.0 (compatible; Konqueror/4.3; Linux) KHTML/4.3.4 (like Gecko)";'),
 ('dd89f87ffc64922daa25a81a7277bea7', 1271710353, 'rand_code|s:32:"32a34f42ab302248da5179ef944a24d2";USER_AGENT|s:63:"Opera/9.80 (X11; Linux i686; U; ru) Presto/2.2.15 Version/10.10";'),
-('91aa52eb82d00d045dd7d54e3992b32f', 1271915303, 'rand_code|s:32:"fc5726eb24fa6c0b17b07aa1161af28f";USER_AGENT|s:103:"Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.8) Gecko/20100308 Iceweasel/3.5.8 (like Firefox/3.5.8)";');
+('91aa52eb82d00d045dd7d54e3992b32f', 1271915303, 'rand_code|s:32:"fc5726eb24fa6c0b17b07aa1161af28f";USER_AGENT|s:103:"Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.8) Gecko/20100308 Iceweasel/3.5.8 (like Firefox/3.5.8)";'),
+('b3e5711dad48f3adccc79211e7b4ae19', 1272008008, 'rand_code|s:32:"94a61f2f67d61836fed26c475347f4dc";USER_AGENT|s:103:"Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.8) Gecko/20100308 Iceweasel/3.5.8 (like Firefox/3.5.8)";'),
+('b3a62e974c3aa3129c0189db2325a921', 1272193235, 'rand_code|s:32:"a13a3f3fe8a5f8ab61dd82103945fbd9";USER_AGENT|s:103:"Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.8) Gecko/20100308 Iceweasel/3.5.8 (like Firefox/3.5.8)";'),
+('e56ba0336438867ae0188c1cbede1899', 1272193255, 'rand_code|s:32:"b79a40507fb574c4be3dbe37b606edb4";USER_AGENT|s:103:"Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.8) Gecko/20100308 Iceweasel/3.5.8 (like Firefox/3.5.8)";'),
+('701e9f2745d8a37925c45062685fc815', 1272193268, 'rand_code|s:32:"72d365200c49a40203dfa01153796a59";USER_AGENT|s:103:"Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.8) Gecko/20100308 Iceweasel/3.5.8 (like Firefox/3.5.8)";'),
+('4c48184413e858ec88019925a06eff75', 1272193301, 'rand_code|s:32:"2e1402d20984e26527932987f52483cb";USER_AGENT|s:0:"";'),
+('9d132dfb8d5c92ba5be628adc44435dd', 1272228642, 'rand_code|s:32:"47049341ddb38eddd8e27ca2eab61cd1";USER_AGENT|s:79:"Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.8) Gecko/20100308 Iceape/2.0.3";'),
+('99caab28f03d83a3636f78a908460460', 1272232084, 'rand_code|s:32:"92a2633f9cdb962bfe1ea4ef653a4c70";USER_AGENT|s:103:"Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.8) Gecko/20100308 Iceweasel/3.5.8 (like Firefox/3.5.8)";'),
+('30d939a877e7d56a67a4105fe6e0e34c', 1272274206, 'rand_code|s:32:"08adead4c2759b795ec5e56f8e40a81c";USER_AGENT|s:103:"Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.8) Gecko/20100308 Iceweasel/3.5.8 (like Firefox/3.5.8)";');
 
 -- --------------------------------------------------------
 
@@ -153,7 +162,7 @@ CREATE TABLE IF NOT EXISTS `mj_awps` (
   `whoedit` mediumint(8) unsigned default NULL,
   `sequence` tinyint(3) unsigned NOT NULL default '1',
   PRIMARY KEY  (`awp_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='User''s Automated Work Places' AUTO_INCREMENT=6 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='User''s Automated Work Places' AUTO_INCREMENT=7 ;
 
 --
 -- Dumping data for table `mj_awps`
@@ -194,7 +203,7 @@ CREATE TABLE IF NOT EXISTS `mj_blocks` (
 --
 
 INSERT INTO `mj_blocks` (`block_id`, `lang`, `is_active`, `use_access_roles`, `show_header`, `alias`, `header`, `body`, `member_id`, `whoedit`, `ins`, `upd`) VALUES
-(2, NULL, 1, 0, 1, 'anybody_block', 'Block4Everybody', '<b>Hello everybody</b>\r\n<br /> And 1 more time', 1, 1, '2010-04-18 00:02:26', '2010-04-18 10:42:55');
+(2, 'en', 1, 0, 1, 'anybody_block', 'Block4Everybody', '<b>Hello everybody</b>\r\n<br /> \r\n<a href="/mjadmin">ADMIN PANEL</a>', 1, 1, '2010-04-18 00:02:26', '2010-04-26 13:48:36');
 
 -- --------------------------------------------------------
 
@@ -239,6 +248,8 @@ CREATE TABLE IF NOT EXISTS `mj_blocks_translations` (
 -- Dumping data for table `mj_blocks_translations`
 --
 
+INSERT INTO `mj_blocks_translations` (`block_id`, `lang`, `header`, `body`, `member_id`, `whoedit`, `ins`, `upd`) VALUES
+(2, 'ru', 'Блок для всех!', '<b>Превед</b>\r\n<br /> \r\n<a href="/mjadmin">Одминко</a>', 1, 0, '2010-04-26 18:09:42', '2010-04-26 18:09:42');
 
 -- --------------------------------------------------------
 
@@ -433,7 +444,7 @@ INSERT INTO `mj_menus_tree` (`id`, `level`, `left_key`, `right_key`, `group`, `i
 CREATE TABLE IF NOT EXISTS `mj_pages` (
   `page_id` bigint(20) unsigned NOT NULL auto_increment,
   `is_published` tinyint(1) unsigned NOT NULL default '1',
-  `cat_id` int(10) unsigned NOT NULL,
+  `cat_id` int(10) unsigned default '0',
   `lang` char(4) NOT NULL,
   `slug` char(128) default NULL,
   `intro` text NOT NULL,
@@ -468,22 +479,22 @@ CREATE TABLE IF NOT EXISTS `mj_pages` (
 --
 
 INSERT INTO `mj_pages` (`page_id`, `is_published`, `cat_id`, `lang`, `slug`, `intro`, `body`, `header`, `descr`, `keywords`, `showintro`, `use_customtitle`, `custom_title`, `allow_comments`, `comments_mode`, `use_password`, `password`, `use_access_roles`, `comments_count`, `author_id`, `member_id`, `whoedit`, `ins`, `upd`, `dt_created`, `dt_publishstart`, `dt_publishend`) VALUES
-(1, 1, 0, 'en', 'justpage', '<p>\n	<img alt="My avatar alt" ilo-full-src="http://mojotest:82/userfiles/mjncms/1/avopingvo.jpg" some="else" src="/userfiles/mjncms/1/avopingvo.jpg" style="width: 96px; height: 96px;" title="AvoTitle" /></p>\n<p>\n	This is justpage intro. hi! cool!</p>\n', '<p>\n	This is just page 1 body</p>\n<p>\n	&nbsp;</p>\n<div style="page-break-after: always;">\n	<span style="display: none;">&nbsp;</span></div>\n<p>\n	&nbsp;</p>\n<p>\n	This is just page 2 body</p>\n<p>\n	&nbsp;</p>\n<div style="page-break-after: always;">\n	<span style="display: none;">&nbsp;</span></div>\n<p>\n	&nbsp;</p>\n<p>\n	This is just page 3 body</p>\n', 'just single page', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 1, '2010-04-12 14:14:38', '2010-04-22 13:06:41', '2010-04-12 05:13:00', '2010-04-12 05:13:00', NULL),
+(1, 1, 0, 'en', 'justpage', '<p>\n	<img alt="My avatar alt" ilo-full-src="http://mojotest:82/userfiles/mjncms/1/avopingvo.jpg" some="else" src="/userfiles/mjncms/1/avopingvo.jpg" style="width: 96px; height: 96px;" title="AvoTitle" /></p>\n<p>\n	This is justpage intro. hi!</p>\n', '<p>\n	This is just page 1 body</p>\n<p>\n	&nbsp;</p>\n<div style="page-break-after: always;">\n	<span style="display: none;">&nbsp;</span></div>\n<p>\n	&nbsp;</p>\n<p>\n	This is just page 2 body</p>\n<p>\n	&nbsp;</p>\n<div style="page-break-after: always;">\n	<span style="display: none;">&nbsp;</span></div>\n<p>\n	&nbsp;</p>\n<p>\n	This is just page 3 body</p>\n', 'just single page', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 1, '2010-04-12 14:14:38', '2010-04-23 23:05:27', '2010-04-12 06:13:00', '2010-04-12 06:13:00', NULL),
 (2, 1, 8, 'en', 'd1cp1', '<p>\n	iintro</p>\n', '<p>\n	bbody</p>\n', 'demo1 cat page 1', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 0, '2010-04-12 14:15:14', '2010-04-12 14:15:14', '2010-04-12 03:14:00', '2010-04-12 03:14:00', NULL),
 (3, 1, 8, 'en', 'd1cp2', '<p>\n	introoo</p>\n', '<p>\n	bodyyy</p>\n', 'demo1 cat page 2', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 1, '2010-04-12 14:15:44', '2010-04-12 14:18:35', '2010-04-12 04:15:00', '2010-04-12 04:15:00', NULL),
 (4, 1, 0, 'en', 'index', '<p>\n	Index page</p>\n', '<p some="thing">\n	bla</p>\n<p>\n	bla</p>\n<p>\n	&nbsp;</p>\n<p>\n	be careful this demo runs on lowerclocked NAS :)</p>\n<p>\n	&nbsp;</p>\n<p>\n	bla</p>\n<p>\n	Index so index....</p>\n<p>\n	&nbsp;</p>\n<p>\n	btw, <a href="/mjadmin">admin side</a></p>\n', 'Main index page', 'MjNCMS project - PERL Mojolicious CMS demo site index page', 'MjNCMS, Mojolicious, Mojo, CMS', 1, 1, 'MjNCMS project demo site index page', 1, 'comment', 0, '', 0, 0, 1, 1, 1, '2010-04-15 19:45:55', '2010-04-22 13:05:03', '2010-04-15 02:45:00', '2010-04-15 02:45:00', NULL),
-(5, 1, 8, 'en', 'p1', '<p>\n	i1</p>\n', '<p>\n	b1</p>\n', 'p1', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 1, '2010-04-22 19:27:00', '2010-04-22 19:27:36', '2010-04-22 09:26:00', '2010-04-22 09:26:00', NULL),
-(6, 1, 8, 'en', 'p2', '<p>\n	i2</p>\n', '<p>\n	b2</p>\n', 'p2', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 0, '2010-04-22 19:27:24', '2010-04-22 19:27:24', '2010-04-22 08:27:00', '2010-04-22 08:27:00', NULL),
-(7, 1, 8, 'en', 'p3', '<p>\n	i3</p>\n', '<p>\n	b3</p>\n', 'p3', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 1, '2010-04-22 19:27:52', '2010-04-22 19:29:41', '2010-04-22 09:27:00', '2010-04-22 09:27:00', NULL),
-(8, 1, 8, 'en', 'p4', '<p>\n	i4</p>\n', '<p>\n	b4</p>\n', 'p4', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 1, '2010-04-22 19:28:13', '2010-04-22 19:29:32', '2010-04-22 09:27:00', '2010-04-22 09:27:00', NULL),
-(9, 1, 8, 'en', 'p5', '<p>\n	i5</p>\n', '<p>\n	b5</p>\n', 'p5', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 1, '2010-04-22 19:28:28', '2010-04-22 19:29:22', '2010-04-22 09:28:00', '2010-04-22 09:28:00', NULL),
-(10, 1, 8, 'en', 'p6', '<p>\n	i6</p>\n', '<p>\n	b6</p>\n', 'p6', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 1, '2010-04-22 19:28:44', '2010-04-22 19:29:14', '2010-04-22 09:28:00', '2010-04-22 09:28:00', NULL),
-(11, 1, 8, 'en', 'p7', '<p>\n	i7</p>\n', '<p>\n	b7</p>\n', 'p7', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 0, '2010-04-22 19:29:04', '2010-04-22 19:29:04', '2010-04-22 08:28:00', '2010-04-22 08:28:00', NULL),
-(12, 1, 8, 'en', 'p8', '<p>\n	i8</p>\n', '<p>\n	b8</p>\n', 'p8', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 0, '2010-04-22 19:30:03', '2010-04-22 19:30:03', '2010-04-22 08:29:00', '2010-04-22 08:29:00', NULL),
-(13, 1, 8, 'en', 'p9', '<p>\n	i9</p>\n', '<p>\n	b9</p>\n', 'p9', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 0, '2010-04-22 19:30:22', '2010-04-22 19:30:22', '2010-04-22 08:30:00', '2010-04-22 08:30:00', NULL),
-(14, 1, 8, 'en', 'p10', '<p>\n	i10</p>\n', '<p>\n	b10</p>\n', 'p10', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 0, '2010-04-22 19:30:39', '2010-04-22 19:30:39', '2010-04-22 08:30:00', '2010-04-22 08:30:00', NULL),
-(15, 1, 8, 'en', 'p11', '<p>\n	i11</p>\n', '<p>\n	b11</p>\n', 'p11', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 0, '2010-04-22 19:31:05', '2010-04-22 19:31:05', '2010-04-22 08:30:00', '2010-04-22 08:30:00', NULL),
-(16, 1, 8, 'en', 'p12', '<p>\n	i12</p>\n', '<p>\n	b12</p>\n', 'p12', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 0, '2010-04-22 19:31:24', '2010-04-22 19:31:24', '2010-04-22 08:31:00', '2010-04-22 08:31:00', NULL);
+(5, 1, 8, 'en', 'page_page1', '<p>\n	i1</p>\n', '<p>\n	b1</p>\n', 'p1', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 1, '2010-04-22 19:27:00', '2010-04-22 20:46:38', '2010-04-22 09:26:00', '2010-04-22 09:26:00', NULL),
+(6, 1, 8, 'en', 'page_page2', '<p>\n	i2 v3</p>\n', '<p>\n	b2</p>\n', 'p2', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 1, '2010-04-22 19:27:24', '2010-04-23 23:31:03', '2010-04-22 02:27:00', '2010-04-22 02:27:00', NULL),
+(7, 1, 8, 'en', 'page_page3', '<p>\n	i3</p>\n', '<p>\n	b3</p>\n', 'p3', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 1, '2010-04-22 19:27:52', '2010-04-22 20:46:38', '2010-04-22 09:27:00', '2010-04-22 09:27:00', NULL),
+(8, 1, 8, 'en', 'page_page4', '<p>\n	i4</p>\n', '<p>\n	b4</p>\n', 'p4', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 1, '2010-04-22 19:28:13', '2010-04-22 20:46:38', '2010-04-22 09:27:00', '2010-04-22 09:27:00', NULL),
+(9, 1, 8, 'en', 'page_page5', '<p>\n	i5</p>\n', '<p>\n	b5</p>\n', 'p5', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 1, '2010-04-22 19:28:28', '2010-04-22 20:46:38', '2010-04-22 09:28:00', '2010-04-22 09:28:00', NULL),
+(10, 1, 8, 'en', 'page_page6', '<p>\n	i6</p>\n', '<p>\n	b6</p>\n', 'p6', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 1, '2010-04-22 19:28:44', '2010-04-22 20:46:38', '2010-04-22 09:28:00', '2010-04-22 09:28:00', NULL),
+(11, 1, 8, 'en', 'page_page7', '<p>\n	i7</p>\n', '<p>\n	b7</p>\n', 'p7', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 0, '2010-04-22 19:29:04', '2010-04-22 20:46:38', '2010-04-22 08:28:00', '2010-04-22 08:28:00', NULL),
+(12, 1, 8, 'en', 'page_page8', '<p>\n	i8</p>\n', '<p>\n	b8</p>\n', 'p8', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 0, '2010-04-22 19:30:03', '2010-04-22 20:46:38', '2010-04-22 08:29:00', '2010-04-22 08:29:00', NULL),
+(13, 1, 8, 'en', 'page_page9', '<p>\n	i9</p>\n', '<p>\n	b9</p>\n', 'p9', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 0, '2010-04-22 19:30:22', '2010-04-22 20:46:38', '2010-04-22 08:30:00', '2010-04-22 08:30:00', NULL),
+(14, 1, 8, 'en', 'page_page10', '<p>\n	i10</p>\n', '<p>\n	b10</p>\n', 'p10', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 0, '2010-04-22 19:30:39', '2010-04-22 20:46:38', '2010-04-22 08:30:00', '2010-04-22 08:30:00', NULL),
+(15, 1, 8, 'en', 'page_page11', '<p>\n	i11</p>\n', '<p>\n	b11</p>\n', 'p11', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 0, '2010-04-22 19:31:05', '2010-04-22 20:46:38', '2010-04-22 08:30:00', '2010-04-22 08:30:00', NULL),
+(16, 1, 8, 'en', 'page_page12', '<p>\n	i12</p>\n', '<p>\n	b12</p>\n', 'p12', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 0, '2010-04-22 19:31:24', '2010-04-22 20:46:38', '2010-04-22 08:31:00', '2010-04-22 08:31:00', NULL);
 
 -- --------------------------------------------------------
 
@@ -541,7 +552,7 @@ CREATE TABLE IF NOT EXISTS `mj_pages_archive` (
   `dt_publishstart` datetime NOT NULL,
   `dt_publishend` datetime NOT NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Archive posts table' AUTO_INCREMENT=31 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Archive posts table' AUTO_INCREMENT=38 ;
 
 --
 -- Dumping data for table `mj_pages_archive`
@@ -577,7 +588,14 @@ INSERT INTO `mj_pages_archive` (`id`, `page_id`, `is_published`, `cat_id`, `lang
 (27, 10, 1, 0, 'en', 'p6', '<p>\n	i6</p>\n', '<p>\n	b6</p>\n', 'p6', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 1, '2010-04-22 19:28:44', '2010-04-22 19:29:14', '2010-04-22 08:28:00', '2010-04-22 08:28:00', '0000-00-00 00:00:00'),
 (28, 9, 1, 0, 'en', 'p5', '<p>\n	i5</p>\n', '<p>\n	b5</p>\n', 'p5', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 1, '2010-04-22 19:28:28', '2010-04-22 19:29:22', '2010-04-22 08:28:00', '2010-04-22 08:28:00', '0000-00-00 00:00:00'),
 (29, 8, 1, 0, 'en', 'p4', '<p>\n	i4</p>\n', '<p>\n	b4</p>\n', 'p4', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 1, '2010-04-22 19:28:13', '2010-04-22 19:29:32', '2010-04-22 08:27:00', '2010-04-22 08:27:00', '0000-00-00 00:00:00'),
-(30, 7, 1, 0, 'en', 'p3', '<p>\n	i3</p>\n', '<p>\n	b3</p>\n', 'p3', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 1, '2010-04-22 19:27:52', '2010-04-22 19:29:41', '2010-04-22 08:27:00', '2010-04-22 08:27:00', '0000-00-00 00:00:00');
+(30, 7, 1, 0, 'en', 'p3', '<p>\n	i3</p>\n', '<p>\n	b3</p>\n', 'p3', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 1, '2010-04-22 19:27:52', '2010-04-22 19:29:41', '2010-04-22 08:27:00', '2010-04-22 08:27:00', '0000-00-00 00:00:00'),
+(31, 1, 1, 0, 'en', 'justpage', '<p>\n	<img alt="My avatar alt" ilo-full-src="http://mojotest:82/userfiles/mjncms/1/avopingvo.jpg" some="else" src="/userfiles/mjncms/1/avopingvo.jpg" style="width: 96px; height: 96px;" title="AvoTitle" /></p>\n<p>\n	This is justpage intro. hi! cool!</p>\n', '<p>\n	This is just page 1 body</p>\n<p>\n	&nbsp;</p>\n<div style="page-break-after: always;">\n	<span style="display: none;">&nbsp;</span></div>\n<p>\n	&nbsp;</p>\n<p>\n	This is just page 2 body</p>\n<p>\n	&nbsp;</p>\n<div style="page-break-after: always;">\n	<span style="display: none;">&nbsp;</span></div>\n<p>\n	&nbsp;</p>\n<p>\n	This is just page 3 body</p>\n', 'just single page', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 1, '2010-04-12 14:14:38', '2010-04-23 23:05:27', '2010-04-12 05:13:00', '2010-04-12 05:13:00', '0000-00-00 00:00:00'),
+(32, 6, 1, 8, 'en', 'page_page2', '<p>\n	i2</p>\n', '<p>\n	b2</p>\n', 'p2', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 1, '2010-04-22 19:27:24', '2010-04-23 23:24:18', '2010-04-22 08:27:00', '2010-04-22 08:27:00', '0000-00-00 00:00:00'),
+(33, 6, 1, 8, 'en', 'page_page2', '<p>\n	i2 v2</p>\n', '<p>\n	b2</p>\n', 'p2', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 1, '2010-04-22 19:27:24', '2010-04-23 23:25:27', '2010-04-22 09:27:00', '2010-04-22 09:27:00', '0000-00-00 00:00:00'),
+(34, 6, 1, 8, 'en', 'page_page2', '<p>\n	i2 v2</p>\n', '<p>\n	b2</p>\n', 'p2', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 1, '2010-04-22 19:27:24', '2010-04-23 23:26:47', '2010-04-22 10:27:00', '2010-04-22 10:27:00', '0000-00-00 00:00:00'),
+(35, 6, 1, 8, 'en', 'page_page2', '<p>\n	i2 v2</p>\n', '<p>\n	b2</p>\n', 'p2', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 1, '2010-04-22 19:27:24', '2010-04-23 23:28:06', '2010-04-22 11:27:00', '2010-04-22 11:27:00', '0000-00-00 00:00:00'),
+(36, 6, 1, 8, 'en', 'page_page2', '<p>\n	i2 v2</p>\n', '<p>\n	b2</p>\n', 'p2', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 1, '2010-04-22 19:27:24', '2010-04-23 23:28:49', '2010-04-22 12:27:00', '2010-04-22 12:27:00', '0000-00-00 00:00:00'),
+(37, 6, 1, 8, 'en', 'page_page2', '<p>\n	i2 v2</p>\n', '<p>\n	b2</p>\n', 'p2', '', '', 1, 0, '', 1, 'comment', 0, '', 0, 0, 1, 1, 1, '2010-04-22 19:27:24', '2010-04-23 23:31:03', '2010-04-22 01:27:00', '2010-04-22 01:27:00', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -655,7 +673,9 @@ INSERT INTO `mj_permissions` (`permission_id`, `awp_id`, `role_id`, `r`, `w`, `m
 (20, 0, NULL, 1, 1, 1, NULL, '2010-04-16 13:40:04', '2010-04-16 13:40:04'),
 (20, 2, NULL, 1, 1, 1, NULL, '2010-04-16 13:40:17', '2010-04-16 13:40:17'),
 (21, 1, NULL, 1, 1, 1, NULL, '2010-04-18 16:54:54', '2010-04-18 16:54:54'),
-(11, 1, NULL, 1, 1, 1, NULL, '2010-04-18 16:54:54', '2010-04-18 16:54:54');
+(11, 1, NULL, 1, 1, 1, NULL, '2010-04-18 16:54:54', '2010-04-18 16:54:54'),
+(23, 6, NULL, 1, 1, 1, NULL, '2010-04-26 00:36:36', '2010-04-26 00:36:36'),
+(2, NULL, 6, 1, 1, 1, NULL, '2010-04-26 00:36:51', '2010-04-26 00:36:51');
 
 -- --------------------------------------------------------
 
@@ -674,7 +694,7 @@ CREATE TABLE IF NOT EXISTS `mj_permission_types` (
   `upd` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
   PRIMARY KEY  (`permission_id`),
   UNIQUE KEY `c_a_uniq_idx` (`controller`,`action`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Permission types library' AUTO_INCREMENT=25 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Permission types library' AUTO_INCREMENT=26 ;
 
 --
 -- Dumping data for table `mj_permission_types`
@@ -722,7 +742,7 @@ CREATE TABLE IF NOT EXISTS `mj_roles` (
   PRIMARY KEY  (`role_id`),
   KEY `awp_id_idx` (`awp_id`),
   KEY `alternatives_idx` (`role_id`,`awp_id`,`sequence`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='User''s roles @ workplaces [text_content/moderator, etc]' AUTO_INCREMENT=6 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='User''s roles @ workplaces [text_content/moderator, etc]' AUTO_INCREMENT=7 ;
 
 --
 -- Dumping data for table `mj_roles`
@@ -753,7 +773,9 @@ CREATE TABLE IF NOT EXISTS `mj_role_alternatives` (
 
 INSERT INTO `mj_role_alternatives` (`member_id`, `role_id`, `upd`, `whoedit`) VALUES
 (1, 2, '2010-04-18 22:36:45', 1),
-(1, 1, '2010-04-18 22:36:45', 1);
+(40, 2, '2010-04-26 01:29:19', 1),
+(40, 5, '2010-04-26 01:29:19', 1),
+(1, 1, '2010-04-26 01:16:23', 1);
 
 -- --------------------------------------------------------
 
@@ -798,7 +820,7 @@ CREATE TABLE IF NOT EXISTS `mj_short_urls` (
   KEY `srch_idx` (`sugrp_id`,`alias`,`sha1_sum`),
   KEY `sugrp_id_idx` (`sugrp_id`),
   KEY `sugrp_id_is_custom_idx` (`sugrp_id`,`is_custom`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Short urls links' AUTO_INCREMENT=5 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Short urls links' AUTO_INCREMENT=6 ;
 
 --
 -- Dumping data for table `mj_short_urls`
@@ -807,7 +829,8 @@ CREATE TABLE IF NOT EXISTS `mj_short_urls` (
 INSERT INTO `mj_short_urls` (`alias_id`, `sugrp_id`, `is_custom`, `alias`, `sha1_sum`, `orig_url`, `ins`, `upd`, `member_id`, `whoedit`) VALUES
 (2, NULL, 1, 'mojo', '6338066e0e94370f64269743aa880b1aa7aaa956', 'http://search.cpan.org/~kraih/', '2010-03-24 17:29:02', '2010-03-24 17:29:02', 1, 0),
 (3, NULL, 0, '1', '252682bb9a8891c2ddd45d62eb597093def84b72', 'http://leprosorium.ru/', '2010-04-16 13:47:27', '2010-04-16 13:47:27', 1, 0),
-(4, NULL, 1, 'wowowowo', '37f07ecc66f7c5334e1b95ff0e7a0afefadc23b6', 'http://groups.google.com/group/mojolicious/', '2010-04-16 14:11:54', '2010-04-16 14:11:54', 1, 0);
+(4, NULL, 1, 'wowowowo', '37f07ecc66f7c5334e1b95ff0e7a0afefadc23b6', 'http://groups.google.com/group/mojolicious/', '2010-04-16 14:11:54', '2010-04-16 14:11:54', 1, 0),
+(5, NULL, 0, '2', 'c37e3c09c2989d523e188e20156b870cce3281ac', 'http://ya.ru/', '2010-04-26 18:40:11', '2010-04-26 18:40:11', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -861,11 +884,12 @@ CREATE TABLE IF NOT EXISTS `mj_users` (
 
 INSERT INTO `mj_users` (`member_id`, `replace_member_id`, `is_cms_active`, `role_id`, `name`, `site_lng`, `salt`, `ins`, `upd`, `whoedit`, `startpage`) VALUES
 (0, NULL, 1, 0, 'Guest', NULL, '', '2010-02-09 00:00:00', '2010-03-22 21:07:38', NULL, '/'),
-(1, 1, 1, 1, 'Austin Powers', 'en', '', '2010-02-09 00:00:00', '2010-04-19 00:14:28', 1, '/mjadmin/pages'),
+(1, 1, 1, 1, 'Austin Powerss', 'en', '', '2010-02-09 00:00:00', '2010-04-24 22:08:18', 1, '/mjadmin/pages'),
 (20, NULL, 1, 5, 'Morbo', 'en', '', '0000-00-00 00:00:00', '2010-04-18 22:36:34', 1, '/'),
 (21, NULL, 1, 2, 'pepyaka222', 'en', '', '0000-00-00 00:00:00', '2010-04-19 15:59:47', 0, '/'),
 (22, NULL, 1, 2, 'chupakabra', 'ru', '', '0000-00-00 00:00:00', '2010-04-19 18:37:20', 0, '/'),
-(37, NULL, 1, 2, 'Fry', 'ru', 'aed9e1cf5984603e', '0000-00-00 00:00:00', '2010-04-22 01:04:44', 0, '/');
+(38, NULL, 1, 2, 'Fry', 'en', '984b86443bb52b9d', '0000-00-00 00:00:00', '2010-04-24 23:42:17', 0, '/'),
+(40, NULL, 1, 2, 'loogin', NULL, '552e9573fa9989d6', '0000-00-00 00:00:00', '2010-04-26 02:16:12', 1, '/loogin');
 
 -- --------------------------------------------------------
 
@@ -887,4 +911,7 @@ CREATE TABLE IF NOT EXISTS `mj_users_extrareplaces` (
 --
 
 INSERT INTO `mj_users_extrareplaces` (`member_id`, `slave_id`, `upd`, `whoedit`) VALUES
-(1, 1, '2010-04-18 22:36:45', 1);
+(1, 1, '2010-04-18 22:36:45', 1),
+(40, 21, '2010-04-26 01:29:19', 1),
+(40, 38, '2010-04-26 01:29:19', 1),
+(40, 22, '2010-04-26 01:29:19', 1);

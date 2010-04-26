@@ -769,7 +769,7 @@ sub content_rt_page_managetrans_get () {
     }
     $self->render('admin/admin_index');
 
-}
+} #-- content_rt_page_managetrans_get
 
 sub content_rt_page_managetrans_add_get () {
     my $self = shift;
@@ -847,7 +847,7 @@ sub content_rt_page_managetrans_save_post () {
             status => $res->{'status'}, 
             message => $SESSION{'LOC'}->loc($res->{'message'}), 
             page_id => scalar $self->param('page_id'), 
-            lang => scalar $SESSION{'REQ'}->param('lang'), 
+            lang => scalar $SESSION{'REQ'}->param('page_lang'), 
         });
     }
     
@@ -940,6 +940,7 @@ sub content_rt_page_managetrans_update_post () {
 } #-- content_rt_page_managetrans_update_post
 
 sub content_rt_page_managetrans_delete_get () {
+    
     my $self = shift;
     
     unless ($SESSION{'USR'}->chk_access('pages', 'manage', 'w')) {
@@ -977,8 +978,8 @@ sub content_rt_page_managetrans_delete_get () {
         $self->render_json({
             status => $res->{'status'}, 
             message => $SESSION{'LOC'}->loc($res->{'message'}), 
-            page_id => scalar $SESSION{'REQ'}->param('page_id'), 
-            lang => scalar $SESSION{'REQ'}->param('lang'), 
+            page_id => scalar $self->param('page_id'), 
+            lang => scalar $self->param('lang'), 
         });
     }
 
@@ -1311,7 +1312,6 @@ sub content_filemanager_get () {
 } #-- content_filemanager_get
 
 sub content_rt_blocks_get () {
-    
     my $self = shift;
     
     $SESSION{'PAGE_CACHABLE'} = 1;
@@ -1338,7 +1338,6 @@ sub content_rt_blocks_get () {
 } #-- content_rt_blocks_get
 
 sub content_rt_blocks_add_get () {
-    
     my $self = shift;
 
     $SESSION{'PAGE_CACHABLE'} = 1;
@@ -1418,7 +1417,6 @@ sub content_rt_blocks_add_psot () {
 } #-- content_rt_blocks_add_psot
 
 sub content_rt_blocks_edit_get () {
-    
     my $self = shift;
 
     $SESSION{'PAGE_CACHABLE'} = 1;
@@ -1545,6 +1543,230 @@ sub content_rt_blocks_delete_get () {
     }
 } #-- content_rt_blocks_delete_get
 
+sub content_rt_blocks_managetrans_get () {
+    my $self = shift;
+
+    $SESSION{'PAGE_CACHABLE'} = 1;
+    unless ($SESSION{'USR'}->chk_access('blocks', 'manage')) {
+        $TT_CFG{'tt_controller'} = 
+            $TT_VARS{'tt_controller'} = 
+                'admin';
+        $TT_CFG{'tt_action'} = 
+            $TT_VARS{'tt_action'} = 
+                'no_access_perm';
+    }
+    else {
+        $TT_CFG{'tt_controller'} = 
+            $TT_VARS{'tt_controller'} = 
+                'admin';
+        $TT_CFG{'tt_action'} = 
+            $TT_VARS{'tt_action'} = 
+                'content_blocks_managetrans';
+        $TT_VARS{'block_id'} = $self -> param('block_id');
+        $TT_CALLS{'blocks_get_transes'} = \&MjNCMS::ContentBlocksSiteLibRead::blocks_get_transes;
+    }
+    $self->render('admin/admin_index');
+
+} #-- content_rt_blocks_managetrans_get
+
+sub content_rt_blocks_managetrans_add_get () {
+    my $self = shift;
+
+    $SESSION{'PAGE_CACHABLE'} = 1;
+    unless ($SESSION{'USR'}->chk_access('blocks', 'manage')) {
+        $TT_CFG{'tt_controller'} = 
+            $TT_VARS{'tt_controller'} = 
+                'admin';
+        $TT_CFG{'tt_action'} = 
+            $TT_VARS{'tt_action'} = 
+                'no_access_perm';
+    }
+    else {
+        $TT_CFG{'tt_controller'} = 
+            $TT_VARS{'tt_controller'} = 
+                'admin';
+        $TT_CFG{'tt_action'} = 
+            $TT_VARS{'tt_action'} = 
+                'content_blocks_managetrans_add';
+        $TT_VARS{'block_id'} = $self -> param('block_id');
+        $TT_CALLS{'content_get_blocks'} = \&MjNCMS::ContentBlocksSiteLibRead::content_get_blocks;
+    }
+    $self->render('admin/admin_index');
+    
+} #-- content_rt_blocks_managetrans_add_get
+
+sub content_rt_blocks_managetrans_add_post () {
+    my $self = shift;
+    
+    unless ($SESSION{'USR'}->chk_access('pages', 'manage', 'w')) {
+        $TT_CFG{'tt_controller'} = 
+            $TT_VARS{'tt_controller'} = 
+                'admin';
+        $TT_CFG{'tt_action'} = 
+            $TT_VARS{'tt_action'} = 
+                'no_access_perm';
+        $self->render('admin/admin_index');
+        return;
+    }
+    
+    my $res = &MjNCMS::Content::blocks_translation_save ({
+        block_id => scalar $self->param('block_id'), 
+        
+        lang => scalar $SESSION{'REQ'}->param('block_lang'),
+        
+        header => scalar $SESSION{'REQ'}->param('block_header'), 
+        body => scalar $SESSION{'REQ'}->param('block_body'), 
+    });
+    
+    my $url;
+    unless ($SESSION{'REQ_ISAJAX'}) {
+        if ($SESSION{'REFERER'}) {
+            $url = $SESSION{'REFERER'};
+        }
+        elsif ($SESSION{'HTTP_REFERER'}) {
+            $url = $SESSION{'HTTP_REFERER'};
+        }
+        $url = $SESSION{'ADM_URL'}.'/content/block/tanses/' . (scalar $self->param('block_id')) unless $url;
+        $SESSION{'REDIR'} = {
+            url => $url, 
+            msg => $res->{'message'}, 
+        };
+        return;
+    }
+    else {
+        $self->render_json({
+            status => $res->{'status'}, 
+            message => $SESSION{'LOC'}->loc($res->{'message'}), 
+            block_id => scalar $self->param('block_id'), 
+            lang => scalar $SESSION{'REQ'}->param('block_lang'), 
+        });
+    }
+    
+} #-- content_rt_blocks_managetrans_add_post
+
+sub content_rt_blocks_managetrans_edit_get () {
+    my $self = shift;
+
+    $SESSION{'PAGE_CACHABLE'} = 1;
+    unless ($SESSION{'USR'}->chk_access('blocks', 'manage')) {
+        $TT_CFG{'tt_controller'} = 
+            $TT_VARS{'tt_controller'} = 
+                'admin';
+        $TT_CFG{'tt_action'} = 
+            $TT_VARS{'tt_action'} = 
+                'no_access_perm';
+    }
+    else {
+        $TT_CFG{'tt_controller'} = 
+            $TT_VARS{'tt_controller'} = 
+                'admin';
+        $TT_CFG{'tt_action'} = 
+            $TT_VARS{'tt_action'} = 
+                'content_blocks_managetrans_edit';
+        $TT_VARS{'block_id'} = $self -> param('block_id');
+        $TT_VARS{'lang'} = $self -> param('lang');
+        $TT_CALLS{'content_get_blocks'} = \&MjNCMS::ContentBlocksSiteLibRead::content_get_blocks;
+    }
+    $self->render('admin/admin_index');
+    
+} #-- content_rt_blocks_managetrans_edit_get
+
+sub content_rt_blocks_managetrans_edit_post () {
+    my $self = shift;
+    
+    unless ($SESSION{'USR'}->chk_access('blocks', 'manage', 'w')) {
+        $TT_CFG{'tt_controller'} = 
+            $TT_VARS{'tt_controller'} = 
+                'admin';
+        $TT_CFG{'tt_action'} = 
+            $TT_VARS{'tt_action'} = 
+                'no_access_perm';
+        $self->render('admin/admin_index');
+        return;
+    }
+    
+    my $res = &MjNCMS::Content::blocks_translation_edit ({
+        block_id => scalar $self->param('block_id'), 
+        old_lang => scalar $self->param('old_lang'),
+        
+        lang => scalar $SESSION{'REQ'}->param('block_lang'),
+        
+        header => scalar $SESSION{'REQ'}->param('block_header'), 
+        body => scalar $SESSION{'REQ'}->param('block_body'), 
+        
+    });
+    
+    my $url;
+    unless ($SESSION{'REQ_ISAJAX'}) {
+        if ($SESSION{'REFERER'}) {
+            $url = $SESSION{'REFERER'};
+        }
+        elsif ($SESSION{'HTTP_REFERER'}) {
+            $url = $SESSION{'HTTP_REFERER'};
+        }
+        $url = $SESSION{'ADM_URL'}.'/content/blocks/transes/' . (scalar $self->param('block_id')) unless $url;
+        $SESSION{'REDIR'} = {
+            url => $url, 
+            msg => $res->{'message'}, 
+        };
+        return;
+    }
+    else {
+        $self->render_json({
+            status => $res->{'status'}, 
+            message => $SESSION{'LOC'}->loc($res->{'message'}), 
+            block_id => scalar $self->param('block_id'), 
+            lang => scalar $self->param('lang'), 
+            
+        });
+    }
+} #-- content_rt_blocks_managetrans_edit_post
+
+sub content_rt_blocks_managetrans_delete_get () {
+    my $self = shift;
+    
+    unless ($SESSION{'USR'}->chk_access('blocks', 'manage', 'w')) {
+        $TT_CFG{'tt_controller'} = 
+            $TT_VARS{'tt_controller'} = 
+                'admin';
+        $TT_CFG{'tt_action'} = 
+            $TT_VARS{'tt_action'} = 
+                'no_access_perm';
+        $self->render('admin/admin_index');
+        return;
+    }
+    
+    my $res = &MjNCMS::Content::blocks_translation_delete({
+        block_id => scalar $self->param('block_id'), 
+        lang => scalar $self->param('lang'), 
+    });
+    
+    my $url;
+    unless ($SESSION{'REQ_ISAJAX'}) {
+        if ($SESSION{'REFERER'}) {
+            $url = $SESSION{'REFERER'};
+        }
+        elsif ($SESSION{'HTTP_REFERER'}) {
+            $url = $SESSION{'HTTP_REFERER'};
+        }
+        $url = $SESSION{'ADM_URL'}.'/content/blocks/transes/' . (scalar $self->param('block_id')) unless $url;
+        $SESSION{'REDIR'} = {
+            url => $url, 
+            msg => $res->{'message'}, 
+        };
+        return;
+    }
+    else {
+        $self->render_json({
+            status => $res->{'status'}, 
+            message => $SESSION{'LOC'}->loc($res->{'message'}), 
+            block_id => scalar $self->param('block_id'), 
+            lang => scalar $self->param('lang'), 
+        });
+    }
+
+} #-- content_rt_blocks_managetrans_delete_get
+
 ########################################################################
 #                           INTERNAL SUBS
 ########################################################################
@@ -1606,7 +1828,7 @@ sub _rest_memd_cats ($) {
     }
     
     if ( 
-        ${$cfg}{'cname'} && 
+        ${$cfg}{'cnames'} && 
         ref ${$cfg}{'cnames'} && 
         scalar @{${$cfg}{'cnames'}} 
     ) {
@@ -1881,6 +2103,104 @@ sub _rest_memd_pages ($) {
     
     return undef;
 } #-- _rest_memd_pages
+
+sub _rest_memd_blocks () {
+    
+    return undef unless (
+        $SESSION{'MEMD'} && 
+        $SESSION{'MEMD_CACHE_OPTS'}->{'blocks'} && 
+        $SESSION{'MEMD_CACHE_OPTS'}->{'blocks'}->{'prefix'}
+    );
+    
+    my $cfg = shift;
+    
+    $cfg = {
+        block_id => $cfg, 
+        
+    } unless (
+            $cfg && 
+            ref $cfg && 
+            ref $cfg eq 'HASH' 
+        );
+    
+    my (
+        $dbh, 
+        $q, $res, $sth, 
+        $where_rule, 
+        %block_ids, %block_aliases, 
+        
+    ) = ($SESSION{'DBH'}, );
+    
+    $where_rule = '';
+    
+    if ( 
+        ${$cfg}{'block_id'} && 
+        !(ref ${$cfg}{'block_id'}) && 
+        ${$cfg}{'block_id'} =~ /^\d+$/ 
+    ) {
+        $where_rule .= ' OR block_id = ' . ($dbh->quote(${$cfg}{'block_id'})) . ' ';
+    }
+    
+    if ( 
+        ${$cfg}{'block_ids'} && 
+        (ref ${$cfg}{'block_ids'} eq 'ARRAY') && 
+        scalar @{${$cfg}{'block_ids'}} && 
+        !(scalar (grep(/\D/, @{${$cfg}{'block_ids'}}))) 
+    ) {
+        $where_rule .= ' OR block_id IN ( ' . ($dbh->quote((join ', ', @{${$cfg}{'block_ids'}}))) . ') ';
+    }
+    
+    if (${$cfg}{'alias'} && length ${$cfg}{'alias'}) {
+        ${$cfg}{'alias'} = $dbh->quote(${$cfg}{'alias'});
+        $where_rule .= ' OR alias = ' . ${$cfg}{'alias'} . ' ';
+    }
+    
+    if ( 
+        ${$cfg}{'aliases'} && 
+        ref ${$cfg}{'aliases'} && 
+        scalar @{${$cfg}{'aliases'}} 
+    ) {
+        $where_rule .= ' OR alias IN ( ' . (join ', ', (map( $dbh->quote($_), @{${$cfg}{'aliases'}}))) . ') ';
+    }
+    
+    $where_rule =~ s/OR/WHERE/;
+    
+    $q = qq~
+        SELECT 
+            b.block_id, b.alias 
+        FROM ${SESSION{PREFIX}}blocks b 
+        $where_rule ; 
+    ~;
+    eval {
+        $sth = $dbh -> prepare($q); $sth -> execute();
+        while ($res = $sth->fetchrow_hashref()) {
+            $block_ids{$res->{'block_id'}} = 1;
+            $block_aliases{$res->{'alias'}} = 1 if $res->{'alias'};
+        }
+    };
+    
+    foreach my $alias (keys %block_aliases){
+        foreach my $lang (keys %{$SESSION{'SITE_LANGS'}}) {
+            $SESSION{'MEMD'}->delete(
+                ($SESSION{'MEMD_CACHE_OPTS'}->{'categories'}->{'prefix'}) . 
+                'bl_' . $lang . '_' . 
+                'bal_' . $alias 
+            );
+        }
+    }
+    
+    foreach my $block_id (keys %block_ids){
+        foreach my $lang (keys %{$SESSION{'SITE_LANGS'}}) {
+            $SESSION{'MEMD'}->delete(
+                ($SESSION{'MEMD_CACHE_OPTS'}->{'categories'}->{'prefix'}) . 
+                'bl_' . $lang . '_' . 
+                'bid_' . $block_id 
+            );
+        }
+    }
+    
+    return undef;
+} #-- _rest_memd_blocks
 
 sub content_get_catrecord_tree ($) {
     
@@ -3483,13 +3803,15 @@ sub pages_edit_page ($) {
         }
     }
     
+    #Make check @ transes first
+    #lang = ~ . ($dbh->quote(${$cfg}{'lang'})) . qq~, 
+    
     $q = qq~
         UPDATE 
         ${SESSION{PREFIX}}pages 
         SET 
             is_published = ~ . ($dbh->quote(${$cfg}{'is_published'})) . qq~, 
             cat_id = ~ . ($dbh->quote(${$cfg}{'cat_id'})) . qq~, 
-            lang = ~ . ($dbh->quote(${$cfg}{'lang'})) . qq~, 
             slug = ~ . ($dbh->quote(${$cfg}{'slug'})) . qq~, 
             intro = ~ . ($dbh->quote(${$cfg}{'intro'})) . qq~, 
             body = ~ . ($dbh->quote(${$cfg}{'body'})) . qq~, 
@@ -3825,6 +4147,7 @@ sub page_translation_save ($) {
         status => 'ok', 
         message => 'All OK', 
     };
+    
 } #-- page_translation_save
 
 sub page_translation_update ($) {
@@ -3983,7 +4306,8 @@ sub page_translation_update ($) {
         status => 'ok', 
         message => 'All OK', 
     };
-}
+    
+} #-- page_translation_update
 
 sub page_translation_delete ($) {
     
@@ -4084,6 +4408,7 @@ sub page_translation_delete ($) {
         status => 'ok', 
         message => 'All OK', 
     };
+    
 } #-- page_translation_delete
 
 sub content_get_short_url_groups (;$) {
@@ -4822,12 +5147,14 @@ sub blocks_edit_block ($) {
         } if scalar $res -> {'block_id'};
     }
     else { ${$cfg}{'alias'} = undef; }
+
+    #Make check @ transes first
+    #lang = ~ . ($dbh->quote(${$cfg}{'lang'})) . qq~, 
     
     $q = qq~
         UPDATE 
         ${SESSION{PREFIX}}blocks 
         SET
-            lang = ~ . ($dbh->quote(${$cfg}{'lang'})) . qq~, 
             is_active = ~ . ($dbh->quote(${$cfg}{'is_active'})) . qq~, 
             use_access_roles = ~ . ($dbh->quote(${$cfg}{'use_access_roles'})) . qq~, 
             show_header = ~ . ($dbh->quote(${$cfg}{'show_header'})) . qq~, 
@@ -4944,7 +5271,7 @@ sub blocks_delete_block ($) {
         DELETE FROM 
         ${SESSION{PREFIX}}blocks_access_roles 
         WHERE block_id = ~ . ($dbh->quote(${$cfg}{'block_id'})) . ' ; ';
-    eval{
+    eval {
         $dbh -> do($q);
     };
     
@@ -4952,7 +5279,7 @@ sub blocks_delete_block ($) {
         DELETE FROM 
         ${SESSION{PREFIX}}blocks_translations
         WHERE block_id = ~ . ($dbh->quote(${$cfg}{'block_id'})) . ' ; ';
-    eval{
+    eval {
         $dbh -> do($q);
     };
     
@@ -4960,7 +5287,7 @@ sub blocks_delete_block ($) {
         DELETE FROM 
         ${SESSION{PREFIX}}blocks 
         WHERE block_id = ~ . ($dbh->quote(${$cfg}{'block_id'})) . ' ; ';
-    eval{
+    eval {
         $dbh -> do($q);
     };
     
@@ -4971,5 +5298,369 @@ sub blocks_delete_block ($) {
     };
 
 } #-- blocks_delete_block
+
+sub blocks_translation_save () {
+    
+    my $cfg = shift;
+    
+    return {
+            status => 'fail', 
+            message => 'no input data', 
+    } unless ($cfg && ref $cfg && ref $cfg eq 'HASH');
+    
+    return {
+        status => 'fail', 
+        message => 'block_id incorrect', 
+    } unless ${$cfg}{'block_id'} =~ /^\d+$/;
+
+    return {
+        status => 'fail', 
+        message => 'lang unknown', 
+    } if (
+        !&inarray([keys %{$SESSION{'SITE_LANGS'}}], ${$cfg}{'lang'})
+    ); 
+
+    return {
+        status => 'fail', 
+        message => 'header len fail',
+    } if (
+        !${$cfg}{'header'} ||
+        ${$cfg}{'header'} !~ /^.{1,64}$/
+    ); 
+
+    return {
+        status => 'fail', 
+        message => 'body len fail',
+    } unless ${$cfg}{'body'}; 
+    
+    my (
+        $dbh, $sth, $res, $q, 
+        $inscnt, 
+        $sql_now, 
+        
+    ) = ($SESSION{'DBH'}, );
+    
+    $sql_now = &sv_datetime_sql();
+    
+    $q = qq~
+        SELECT 
+            b.block_id, b.member_id, 
+            b.lang, 
+            m_usr.role_id AS member_role_id 
+        FROM ${SESSION{PREFIX}}blocks b 
+            LEFT JOIN ${SESSION{PREFIX}}users m_usr ON m_usr.member_id=b.member_id 
+        WHERE b.block_id = ? ; 
+    ~;
+    eval {
+        $sth = $dbh -> prepare($q); $sth -> execute(${$cfg}{'block_id'});
+        $res = $sth->fetchrow_hashref();
+        $sth -> finish();
+    };
+    return {
+        status => 'fail', 
+        message => 'block not exist', 
+    } unless scalar $res -> {'block_id'};
+    
+    return {
+        status => 'fail', 
+        message => 'block trans lang match block real lang', 
+    } if $res -> {'lang'} eq ${$cfg}{'lang'};
+    
+    return {
+        status => 'fail', 
+        message => 'block out of permissions', 
+    } unless (
+        $SESSION{'USR'}->chk_access('blocks', 'manage_any', 'w') || 
+        $SESSION{'USR'}->is_user_writable( $res -> {'member_id'} ) || 
+        (
+            $SESSION{'USR'}->chk_access('blocks', 'manage_others', 'w') && 
+            $res -> {'member_role_id'} == $SESSION{'USR'}->{'role_id'} 
+        )
+    );
+    
+    $q = qq~
+        SELECT 
+            #bt.block_id, bt.lang,  
+            COUNT(*) AS cnt 
+        FROM ${SESSION{PREFIX}}blocks_translations bt 
+        WHERE bt.block_id = ? AND bt.lang = ? ; 
+    ~;
+    eval {
+        $sth = $dbh -> prepare($q); $sth -> execute(${$cfg}{'block_id'}, ${$cfg}{'lang'});
+        $res = $sth->fetchrow_hashref();
+        $sth -> finish();
+    };
+    return {
+        status => 'fail', 
+        message => 'trans for that lang exists', 
+    } if scalar $res -> {'cnt'};
+    
+    $q = qq~
+        INSERT INTO 
+        ${SESSION{PREFIX}}blocks_translations (
+            block_id, lang, 
+            header, body, 
+            member_id, 
+            ins
+        ) VALUES (
+            ~ . ($dbh->quote(${$cfg}{'block_id'})) . qq~, 
+            ~ . ($dbh->quote(${$cfg}{'lang'})) . qq~, 
+            
+            ~ . ($dbh->quote(${$cfg}{'header'})) . qq~,             
+            ~ . ($dbh->quote(${$cfg}{'body'})) . qq~, 
+            
+            ~ . ($dbh->quote($SESSION{'USR'}->{'member_id'})) . qq~, 
+            
+            ~ . ($sql_now) . qq~
+            
+        ) ; 
+    ~;
+    eval {
+        $inscnt = $dbh->do($q);
+    };
+
+    unless (scalar $inscnt) {
+        return {
+            status => 'fail', 
+            message => 'sql ins into blocks_translations entry fail', 
+        }
+    }
+    
+    &_rest_memd_blocks(${$cfg}{'block_id'});
+    
+    return {
+        block_id => ${$cfg}{'block_id'}, 
+        lang => ${$cfg}{'lang'}, 
+        status => 'ok', 
+        message => 'All OK', 
+    };
+    
+} #-- blocks_translation_save
+
+sub blocks_translation_edit () {
+    
+    my $cfg = shift;
+    
+    return {
+            status => 'fail', 
+            message => 'no input data', 
+    } unless ($cfg && ref $cfg && ref $cfg eq 'HASH');
+    
+    return {
+        status => 'fail', 
+        message => 'block_id incorrect', 
+    } unless ${$cfg}{'block_id'} =~ /^\d+$/;
+
+    return {
+        status => 'fail', 
+        message => 'lang unknown', 
+    } if (
+        !&inarray([keys %{$SESSION{'SITE_LANGS'}}], ${$cfg}{'lang'})
+    ); 
+    
+    return {
+        status => 'fail', 
+        message => 'old lang unknown', 
+    } if (
+        !&inarray([keys %{$SESSION{'SITE_LANGS'}}], ${$cfg}{'old_lang'})
+    ); 
+
+    return {
+        status => 'fail', 
+        message => 'header len fail',
+    } if (
+        !${$cfg}{'header'} ||
+        ${$cfg}{'header'} !~ /^.{1,64}$/
+    ); 
+
+    return {
+        status => 'fail', 
+        message => 'body len fail',
+    } unless ${$cfg}{'body'}; 
+    
+    my (
+        $dbh, $sth, $res, $q, 
+        $updcnt, 
+        $sql_now, 
+        
+    ) = ($SESSION{'DBH'}, );
+    
+    $sql_now = &sv_datetime_sql();
+    
+    $q = qq~
+        SELECT 
+            b.block_id, b.member_id, 
+            b.lang, 
+            m_usr.role_id AS member_role_id 
+        FROM ${SESSION{PREFIX}}blocks b 
+            LEFT JOIN ${SESSION{PREFIX}}users m_usr ON m_usr.member_id=b.member_id 
+        WHERE b.block_id = ? ; 
+    ~;
+    eval {
+        $sth = $dbh -> prepare($q); $sth -> execute(${$cfg}{'block_id'});
+        $res = $sth->fetchrow_hashref();
+        $sth -> finish();
+    };
+    return {
+        status => 'fail', 
+        message => 'block not exist', 
+    } unless scalar $res -> {'block_id'};
+    
+    return {
+        status => 'fail', 
+        message => 'block trans lang match block real lang', 
+    } if $res -> {'lang'} eq ${$cfg}{'lang'};
+    
+    return {
+        status => 'fail', 
+        message => 'block out of permissions', 
+    } unless (
+        $SESSION{'USR'}->chk_access('blocks', 'manage_any', 'w') || 
+        $SESSION{'USR'}->is_user_writable( $res -> {'member_id'} ) || 
+        (
+            $SESSION{'USR'}->chk_access('blocks', 'manage_others', 'w') && 
+            $res -> {'member_role_id'} == $SESSION{'USR'}->{'role_id'} 
+        )
+    );
+    
+    $q = qq~
+        SELECT 
+            #bt.block_id, bt.lang,  
+            COUNT(*) AS cnt 
+        FROM ${SESSION{PREFIX}}blocks_translations bt 
+        WHERE 
+            bt.block_id = ? 
+                AND bt.lang = ? 
+                    AND bt.lang != ? ; 
+    ~;
+    eval {
+        $sth = $dbh -> prepare($q); $sth -> execute(${$cfg}{'block_id'}, ${$cfg}{'lang'}, ${$cfg}{'old_lang'});
+        $res = $sth->fetchrow_hashref();
+        $sth -> finish();
+    };
+    return {
+        status => 'fail', 
+        message => 'trans for that lang exists', 
+    } if scalar $res -> {'cnt'};
+    
+    $q = qq~
+        UPDATE 
+        ${SESSION{PREFIX}}blocks_translations 
+        SET 
+            lang = ~ . ($dbh->quote(${$cfg}{'lang'})) . qq~, 
+            
+            header = ~ . ($dbh->quote(${$cfg}{'header'})) . qq~, 
+            body = ~ . ($dbh->quote(${$cfg}{'body'})) . qq~, 
+            
+            whoedit = ~ . ($dbh->quote($SESSION{'USR'}->{'member_id_real'})) . qq~
+        WHERE 
+            block_id = ~ . ($dbh->quote(${$cfg}{'block_id'})) . qq~ 
+                AND lang = ~ . ($dbh->quote(${$cfg}{'old_lang'})) . qq~ 
+        ; 
+    ~;
+    eval {
+        $updcnt = $dbh->do($q);
+    };
+
+    unless (scalar $updcnt) {
+        return {
+            status => 'fail', 
+            message => 'sql upd into blocks_translations entry fail', 
+        }
+    }
+    
+    &_rest_memd_blocks(${$cfg}{'block_id'});
+    
+    return {
+        page_id => ${$cfg}{'page_id'}, 
+        lang => ${$cfg}{'lang'}, 
+        status => 'ok', 
+        message => 'All OK', 
+    };
+    
+} #-- blocks_translation_edit
+
+sub blocks_translation_delete {
+    
+    my $cfg = shift;
+    
+    return {
+            status => 'fail', 
+            message => 'no input data', 
+    } unless ($cfg && ref $cfg && ref $cfg eq 'HASH');
+    
+    return {
+        status => 'fail', 
+        message => 'block_id incorrect', 
+    } unless ${$cfg}{'block_id'} =~ /^\d+$/;
+    
+    my (
+        $dbh, $sth, $res, $q, 
+        $delcnt, 
+        $sql_now, 
+        
+    ) = ($SESSION{'DBH'}, );
+    
+    $sql_now = &sv_datetime_sql();
+    
+    $q = qq~
+        SELECT 
+            b.block_id, b.member_id, 
+            m_usr.role_id AS member_role_id 
+        FROM ${SESSION{PREFIX}}blocks b 
+            LEFT JOIN ${SESSION{PREFIX}}users m_usr ON m_usr.member_id=b.member_id 
+        WHERE b.block_id = ? ; 
+    ~;
+    eval {
+        $sth = $dbh -> prepare($q); $sth -> execute(${$cfg}{'block_id'});
+        $res = $sth->fetchrow_hashref();
+        $sth -> finish();
+    };
+    return {
+        status => 'fail', 
+        message => 'block not exist', 
+    } unless scalar $res -> {'block_id'};
+    
+    return {
+        status => 'fail', 
+        message => 'block out of permissions', 
+    } unless (
+        $SESSION{'USR'}->chk_access('blocks', 'manage_any', 'w') || 
+        $SESSION{'USR'}->is_user_writable( $res -> {'member_id'} ) || 
+        (
+            $SESSION{'USR'}->chk_access('blocks', 'manage_others', 'w') && 
+            $res -> {'member_role_id'} == $SESSION{'USR'}->{'role_id'} 
+        )
+    );
+    
+    $q = qq~ 
+        DELETE 
+        FROM ${SESSION{PREFIX}}blocks_translations 
+        WHERE 
+            block_id = ~ . ($dbh->quote(${$cfg}{'block_id'})) . qq~ 
+                AND lang = ~ . ($dbh->quote(${$cfg}{'lang'})) . qq~ 
+        ; 
+    ~;
+    eval {
+        $delcnt = $dbh->do($q);
+    };
+
+    unless (scalar $delcnt) {
+        return {
+            status => 'fail', 
+            message => 'sql del into blocks_translations entry fail', 
+        }
+    }
+    
+    &_rest_memd_blocks(${$cfg}{'block_id'});
+    
+    return {
+        block_id => ${$cfg}{'block_id'}, 
+        lang => ${$cfg}{'lang'}, 
+        status => 'ok', 
+        message => 'All OK', 
+    };
+    
+} #-- blocks_translation_delete
 
 1;

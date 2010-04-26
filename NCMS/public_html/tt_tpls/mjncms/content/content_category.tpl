@@ -58,7 +58,7 @@
             [% FOREACH page=pages_res.pages_res -%]
                 <h3>[% page.header | html %]</h3>
                 [% page.intro | safe_page_html %]<br />
-                [% IF page.body %]<a href="[% slug_base %]/[% page.slug | html %][% SESSION.EXTENSIONS_PAGE %]">[% loc('Read more') %]...</a><br />[% END -%]
+                [% IF page.body %]<a href="[% SESSION.URL_LANG_PREFIX %][% slug_base %]/[% page.slug | html %][% SESSION.EXTENSIONS_PAGE %]">[% loc('Read more') %]...</a><br />[% END -%]
                 <i>[% page.dt_publishstart_fmt | html %], [% page.author | html %]</i>
                 <hr class="w80" />
             [% END #FOREACH page=pages_res.pages_res -%]

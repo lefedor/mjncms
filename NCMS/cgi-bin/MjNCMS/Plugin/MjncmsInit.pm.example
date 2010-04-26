@@ -246,7 +246,8 @@ sub register {
                 #some another rules
             }
                 
-            $SESSION{'CURRENT_PAGE'} = $c->tx->req->url->clone; #->to_rel
+            # seems like always relative
+            $SESSION{'CURRENT_PAGE'} = $c->tx->req->url->clone; #->to_rel 
             $SESSION{'CURRENT_PAGE'}->query->remove('rnd');
             $SESSION{'CURRENT_PAGE'}->query->remove('notifyid');
             $SESSION{'CURRENT_PAGE'}->query->remove('msg');
@@ -745,6 +746,11 @@ $SESSION{'SERVER_NAME'} ~;
                 }
                 $url = $SESSION{'SERVER_URL'} . $url unless $url =~ /^\w+\:\/\//;
                 $url = Mojo::URL->new($url);
+                
+                if ($SESSION{'URL_LANG_PREFIX'}) {
+                    $url->path($SESSION{'URL_LANG_PREFIX'} . $url->path());
+                }
+                
                 $url->query->remove('rnd');
                 $url->query->remove('notifyid');
                 $url->query->remove('msg');

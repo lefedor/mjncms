@@ -1,14 +1,14 @@
 [% USE loc -%]
 [% UNLESS SESSION.USR.member_id %]
     <h2>[% loc('You\'re not authrized') | html -%]</h2>
-    <a href="[% SESSION.USR_URL %]/login">[% loc('Login') | html %]</a> 
+    <a href="[% SESSION.URL_LANG_PREFIX %][% SESSION.USR_URL %]/login">[% loc('Login') | html %]</a> 
     [% loc('or') | html %]
-    <a href="[% SESSION.USR_URL %]/register">[% loc('Register') | html %]</a> 
+    <a href="[% SESSION.URL_LANG_PREFIX %][% SESSION.USR_URL %]/register">[% loc('Register') | html %]</a> 
     [% loc('or') | html %]
-    <a href="[% SESSION.USR_URL %]/reconfirm_email">[% loc('Send confirmation email again') | html %]</a> 
+    <a href="[% SESSION.URL_LANG_PREFIX %][% SESSION.USR_URL %]/reconfirm_email">[% loc('Send confirmation email again') | html %]</a> 
 [% ELSE %]
     <h2>[% loc('Your profile') | html -%]</h2>
-    <form onSubmit="javascript:return confirm('[% loc('Update') | html %]?');" name="upduser_frm" id="upduser_frm" action="[% bytestream(SESSION.USR_URL, 'url_escape', 'A-Za-z0-9\/\-\.\_\~') %]/profile" method="post" accept-charset="[% TT_VARS.html_charset %]">
+    <form onSubmit="javascript:return confirm('[% loc('Update') | html %]?');" name="upduser_frm" id="upduser_frm" action="[% SESSION.URL_LANG_PREFIX %][% bytestream(SESSION.USR_URL, 'url_escape', 'A-Za-z0-9\/\-\.\_\~') %]/profile" method="post" accept-charset="[% TT_VARS.html_charset %]">
         <table class="transp_table">
             <tr>
                 <td>
@@ -74,5 +74,5 @@
         </table>
     </form>
     <br />
-    <a href="[% SESSION.USR_URL %]/logout?referer=/">[% loc('Logout') | html %]</a> 
+    <a href="[% SESSION.URL_LANG_PREFIX %][% SESSION.USR_URL %]/logout?referer=[% SESSION.URL_LANG_PREFIX %]/">[% loc('Logout') | html %]</a> 
 [% END %]

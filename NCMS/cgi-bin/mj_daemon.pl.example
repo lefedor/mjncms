@@ -230,10 +230,19 @@ package MjNCMS;
             to(controller => 'content', action => 'content_rt_blocks_edit_post');
         $adm_r->route('/content/blocks/delete/(:block_id)', {block_id => qr/\d+/})->via('get')->
             to(controller => 'content', action => 'content_rt_blocks_delete_get');
-        #Translations for blocks!!!
-        #next realise
-        
-        
+        $adm_r->route('/content/blocks/transes/(:block_id)', {block_id => qr/\d+/})->via('get')->
+            to(controller => 'content', action => 'content_rt_blocks_managetrans_get');
+        $adm_r->route('/content/blocks/transes/(:block_id)/add', {block_id => qr/\d+/})->via('get')->
+            to(controller => 'content', action => 'content_rt_blocks_managetrans_add_get');
+        $adm_r->route('/content/blocks/transes/(:block_id)/add', {block_id => qr/\d+/})->via('post')->
+            to(controller => 'content', action => 'content_rt_blocks_managetrans_add_post');
+        $adm_r->route('/content/blocks/transes/(:block_id)/(:lang)/edit', {block_id => qr/\d+/})->via('get')->
+            to(controller => 'content', action => 'content_rt_blocks_managetrans_edit_get');
+        $adm_r->route('/content/blocks/transes/(:block_id)/(:lang)/edit', {block_id => qr/\d+/})->via('post')->
+            to(controller => 'content', action => 'content_rt_blocks_managetrans_edit_post');
+        $adm_r->route('/content/blocks/transes/(:block_id)/(:lang)/delete', {block_id => qr/\d+/, lang => qr/\w{2,4}/})->via('get')->
+            to(controller => 'content', action => 'content_rt_blocks_managetrans_delete_get');
+                    
         #"Subscribe" routes
         #next realise
         

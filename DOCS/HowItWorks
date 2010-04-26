@@ -187,7 +187,7 @@ This is temporary descr just u should know if u've started MjNCMS
     Also attchmens are possible, etc, see MjNCMS::Mail
 
 
-9. Keep them separated thing:
+9. "Keep'em separated" [(c) Offspring] thing:
     I've done experement: split Content.pm (7000+ lines and growth) on smaller files:
         1) Split by usage: @Admin or @Site (&& maybe @ Admin)
         2) Split routes Part from actual functions, 
@@ -202,6 +202,7 @@ This is temporary descr just u should know if u've started MjNCMS
             
         Bad side - there a lot of files now, not one of 7k lines, 
             but smaller 12, for example, it's harder to maintain :(.
-        
+    
+    Btw, normally we use GET queryes for read data and POST to store it :)
     
 ..not finished yet...

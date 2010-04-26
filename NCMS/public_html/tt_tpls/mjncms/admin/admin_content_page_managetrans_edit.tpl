@@ -1,7 +1,11 @@
 [% USE loc -%]
 [% USE bytestream -%]
-[% IF TT_VARS.page_id && (matches = TT_VARS.page_id.match('^\d+$')) && TT_VARS.lang && (matches = TT_VARS.lang.match('^\w{2,4}$')) -%]
+[% IF 
+    TT_VARS.page_id && (matches = TT_VARS.page_id.match('^\d+$')) && 
+    TT_VARS.lang && (matches = TT_VARS.lang.match('^\w{2,4}$')) 
+-%]
     [% page_id = TT_VARS.page_id -%]
+    [% lang = TT_VARS.lang -%]
     [% pages_res=TT_CALLS.content_get_pagerecord({
         'res_ashash' => 1, 
         'page_id' => page_id, 
@@ -26,7 +30,7 @@
     [% END -%]
     [% trans = pages_res.transes.$page_id.$lang -%]
 [% ELSE -%]
-    [% loc('page id is not \d+') | html -%]
+    [% loc('page id is not \d+ or lang is wrong') | html -%]
     [% RETURN -%]
 [% END #IF TT_VARS.page_id -%]
 [% TT_VARS.CSS.push(SESSION.THEME_URLPATH _ '/_static/css/datepicker/datepicker_vista.css50') -%]
