@@ -30,11 +30,11 @@ sub register {
         before_dispatch => sub {
             my ($self, $c) = @_;
             
-            $SESSION{'SESSION'} = MjNCMS::Session->new()->init_session();
+            $SESSION{'SESS'} = MjNCMS::Session->new()->start_session();
             
-            if ($SESSION{'SESSION'}) {
+            if ($SESSION{'SESS'}) {
                 
-                $SESSION{'USR'}->{'SESSID'} = $SESSION{'SESSION'}->get_sess_id();
+                $SESSION{'USR'}->{'SESSID'} = $SESSION{'SESS'}->get_sess_id();
                 #$SESSION{'USR'}->{'SESS'} = $SESSION{'SESSION'}->unload();
                 
             }
@@ -49,12 +49,12 @@ sub register {
         after_dispatch => sub {
             my ($self, $c) = @_;
             
-            if ($SESSION{'SESSION'}) {
+            if ($SESSION{'SESS'}) {
                 
                 $SESSION{'USR'}->{'SESSID'} = undef;
                 #$SESSION{'SESSION'}->load($SESSION{'USR'}->{'SESS'});
                 
-                $SESSION{'SESSION'}->store_session();
+                $SESSION{'SESS'}->store_session();
                 
             }
             

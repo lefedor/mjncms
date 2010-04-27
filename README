@@ -1,5 +1,7 @@
 MjNCMS - Mojolicious-[PERL]-based CMS [Mj Not CMS :) ]
 
+v 0.82
+
 Project goal is not create CMS, but create ``CMS`` enviropment.
 Let me describe: every time you start new project you need 
 mess with "boring" stuff. Like user model, categories, 
@@ -31,8 +33,16 @@ also have own license, but free enough.
 
 Project distro is in NCMS folder
 
-It's about in running condition now. Req fixes, db/code clean.
-
 Support: http://groups.google.com/group/mjncms
 
 Demo: http://ffl.ath.cx:82/
+
+BTW, Some benchmarks, in requests/second:
+On my notebok:
+
+Apache/mod_php:
+joomla: no cache: 6.4, cache:memcached: 9.6
+wordpress no cache: 5.4
+
+Fcgi+nginx:
+MjNCMS, all plugins: no memd cache: 61, cache: 86

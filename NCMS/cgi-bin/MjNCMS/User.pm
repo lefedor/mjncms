@@ -354,6 +354,7 @@ sub auth ($) {
                 LEFT JOIN ${SESSION{PREFIX}}users u ON u.role_id=r.role_id 
             WHERE r.awp_id=~ . $ures->{'awp_id'} . qq~ 
                 AND r.sequence>~ . $ures->{'role_sequence'} . qq~ 
+                AND u.member_id!=~ . $ures->{'member_id'} . qq~ 
             ORDER BY r.sequence ASC ; 
         ~;
         eval {
@@ -388,7 +389,7 @@ sub auth ($) {
             }
             $sth -> finish();
         };
-
+        
     }
     
     $self->{'member_id_real'} = $self->{'member_id'};

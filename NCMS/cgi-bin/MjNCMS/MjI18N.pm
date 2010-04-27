@@ -213,6 +213,18 @@ sub get_t_fmt () {
     
 } #-- get_t_fmt
 
+sub get_dt_fmt () {
+    #get current date+time fmt
+    
+    my $self = shift;
+    my $lang = $self->{'CURRLANG'};
+    
+    return undef unless $lang;
+    return ${$self->{'ACTIVE_LANGS'}}{$lang}{'date_fmt_full'} . 
+        ' ' . ${$self->{'ACTIVE_LANGS'}}{$lang}{'date_fmt_hrs'};
+        
+} #-- get_dt_fmt
+
 sub get_mdt_fmt () {
     #get current date+time fmt
     

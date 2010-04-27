@@ -2666,6 +2666,23 @@ sub cats_rm_node ($) {
                 $dbh -> do($q);
             };
             
+            
+            $q = qq~
+                SELECT 
+                    p.page_id 
+                FROM ${SESSION{PREFIX}}pages p 
+                WHERE p.cat_id IN (~ . (join ', ', @cat_slaves) . qq~) 
+            ~;
+            eval {
+                $sth = $dbh -> prepare($q); $sth -> execute();
+                while ($res = $sth->fetchrow_hashref()) {
+                    &pages_delete_page({
+                        'page_id' => $res->{'page_id'}, 
+                        'del_category_mode' => 1, 
+                    });
+                }
+            };
+            
         }
         else {
             return {
@@ -3930,14 +3947,13 @@ sub pages_delete_page ($) {
         status => 'fail', 
         message => 'page out of permissions', 
     } unless (
-        #$res -> {'author_id'} == ${$cfg}{'author_id'} || 
+        ${$cfg}{'del_category_mode'} || 
         $SESSION{'USR'}->chk_access('pages', 'manage_any', 'w') || 
         $SESSION{'USR'}->is_user_writable( $res -> {'author_id'} ) || 
         (
             $SESSION{'USR'}->chk_access('pages', 'manage_others', 'w') && 
             $res -> {'author_role_id'} == $SESSION{'USR'}->{'role_id'} 
         ) ||
-        #$res -> {'member_id'} == $SESSION{'USR'}->{'member_id'} || 
         $SESSION{'USR'}->is_user_writable( $res -> {'member_id'} ) || 
         (
             $SESSION{'USR'}->chk_access('pages', 'manage_others', 'w') && 

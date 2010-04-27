@@ -204,5 +204,31 @@ This is temporary descr just u should know if u've started MjNCMS
             but smaller 12, for example, it's harder to maintain :(.
     
     Btw, normally we use GET queryes for read data and POST to store it :)
+
+10. Sessions
+    There are session module and plugin to enable sessions.
+    Sessions are stored @db and match by cookie
+    When session starts, it's check if sesion cookie is exist, and if yes,
+    looks for session comy @memcached 
+    (if memd is avaliable, if found, no sql queryes then), 
+    then @ mysq db, 
+    if still no session or no cookie, we search last user's session by member_id,
+    (except guests, they get new one if no cookie/wrong sessid), 
+    and if still no session, new one will be started.
+    Once session started, $SESSION{'USR'}->{'SESSID'} key has it's ID, like flag.
+    
+    API 
+        $SESSION{'SESS'}->set('somekey', 'somedata');
+        $SESSION{'SESS'}->set('anotherkey', {
+            'subkey' => 'something',
+            'other' => [1, 2, 5, 12],
+        });
+        $SESSION{'SESS'}->get('somekey');
+    
+    At the end of client session/connection [after_dispatch] session is 
+    become stored @memcached && database. Here is hint:
+    When you call $SESSION{'SESS'}->set(..), thre are flag '_HAS_CHANGED'
+    becomes switched to '1', so unless u've set some changes, there will no
+    update/set operations on mysql/memcached.
     
 ..not finished yet...

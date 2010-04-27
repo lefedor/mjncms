@@ -92,7 +92,7 @@
                                                 SESSION.USR.role_alternatives.size>1 
                                             %]</a>[% END -%]
                                             <br />
-                                    <span class="nwp">Today <strong>[% SESSION.today_date %]&nbsp;</strong>, Your time: <b>[% SESSION.localtime %]&nbsp;</b> | [% INCLUDE common/common_logout.tpl referer=SESSION.ADM_URL %]</span>
+                                    <span class="nwp">Today <strong>[% SESSION.DATE.get_by_fmt(SESSION.LOC.get_d_fmt()) %]</strong>, Your time: <b>[% SESSION.DATE.get_by_fmt(SESSION.LOC.get_t_fmt()) %]&nbsp;</b> | [% INCLUDE common/common_logout.tpl referer=SESSION.ADM_URL %]</span>
                                 [%- END -%]
                             </td>
                             <td class="windowbg2" style="padding:0;">
@@ -141,6 +141,7 @@
                 <table border="0" cellspacing="1" cellpadding="4" class="bordercolor w100">
                 [% u_savle_role='' -%]
                 [% FOREACH u=SESSION.USR.slave_users -%]
+                    [% NEXT UNLESS u.member_id #No guests -%]
                     [% IF u.role_id!=u_savle_role -%]
                         <tr class="catbg3">
                             <td colspan="2" class="lmal">
@@ -178,6 +179,7 @@
             <form action="[% SESSION.USR_URL | html %]/role_sw" method="post" accept-charset="[% TT_VARS.html_charset %]">
                 <table cellspacing="1" cellpadding="4" border="0" class="bordercolor w100">
                     [% FOREACH r=SESSION.USR.role_alternatives -%]
+                    [% NEXT UNLESS r.role_id #No guests -%]
                         <tr 
                             onclick="javascript:$('ridsw_[% r.role_id %]').checked=true;" 
                             onmouseout="javascript:var myid=this.id;$(myid).set({'class':$('ridsw_[% r.role_id %]').get('class')});" 

@@ -23,6 +23,7 @@ sub new {
   
   $self->{'SESSID'} = undef;
   $self->{'DATA'} = {};
+  $self->{'_HAS_CHANGED'} = 0;
   
   bless $self;
   return $self
@@ -72,7 +73,7 @@ sub unload_data ($) {
     
 } #-- unload
 
-sub init_session ($) {
+sub start_session ($) {
     my $self = shift;
     
     my (
@@ -242,13 +243,16 @@ sub init_session ($) {
 
     $self->{'SESSID'} = $mjn_sess_id;
     $self->{'DATA'} = $mjncms_session;
+    $self->{'_HAS_CHANGED'} = 0;
     
     return $self;
             
-} #-- init_session
+} #-- start_session
 
 sub store_session ($) {
     my $self = shift;
+    
+    return $self unless $self->{'_HAS_CHANGED'};
     
     my $mjn_sess_id = $self->{'SESSID'};
         return undef unless $mjn_sess_id;
@@ -329,6 +333,8 @@ sub set ($$;$) {
     my $self = shift;
     my $key = shift;
     my $value = shift;
+    
+    $self->{'_HAS_CHANGED'} = 1;
     
     unless (defined $value) {
         delete ${$self->{'DATA'}}{$key};

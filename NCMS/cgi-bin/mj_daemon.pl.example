@@ -40,7 +40,7 @@ package MjNCMS;
 #
 #
 
-    our $VERSION = '0.001-pre-alpha';
+    our $VERSION = '0.82';
 
     use lib qw~./ ./lib~;
 
