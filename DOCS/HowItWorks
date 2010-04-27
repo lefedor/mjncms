@@ -209,7 +209,7 @@ This is temporary descr just u should know if u've started MjNCMS
     There are session module and plugin to enable sessions.
     Sessions are stored @db and match by cookie
     When session starts, it's check if sesion cookie is exist, and if yes,
-    looks for session comy @memcached 
+    looks for session record @memcached 
     (if memd is avaliable, if found, no sql queryes then), 
     then @ mysq db, 
     if still no session or no cookie, we search last user's session by member_id,
