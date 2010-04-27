@@ -1,23 +1,15 @@
 #Things in mind, volunteers/suggestions are welcome:
 
   HOT:
-    Update templates use css styles from smth popular like wordpress/joomla (!)
       
   OTHER STUFF:
   Code cleanup/optimizing (i was too paranoid ad checks maybe)/Mojolicious::Guides::CodingGuidelines 
   Since NCMS is young, we take 6 month since 1th may to make all mods @core and freeze it.
-  Split MjNCMS::Content to sub modules [Categories, Pages, 
-    Urls, Filemanager, Blocks] - it's too fckin big (7k lines o_0 and not even complete) 
   Think about more transparent route('/some/:c/:a/param)->to route decoration
   Make everythin as plugins, aso separate parts (at least routes) - adm/content side? [maaaaybe]
   global %MULTISESSION{'SITE'}{'SOMEKEYS'} feature - static ocnnections to DB/MEMD/etc
-
   Update templates use css styles from smth popular like wordpress/joomla (!)
-
   breadcrumbs
-  HTML Blocks feature - 
-    just static pieces of html code can be placed on site and edited from admin side
-  BLOCK TRANSLATIONS
   Improve texts/localization (ready lang files, error messages, etc)
   Access permissions for Menus (like @ pages, ' "visible for" option ')
   Access/Post permissions for Categoryes (-//-)

@@ -179,7 +179,7 @@ This is temporary descr just u should know if u've started MjNCMS
         Last one mathced will be site lang
     
     
-7. Don't remember, U can defenatly use simplifyed Mojolicious::Lite/Even no TT2 for hi-load things, 
+7. Don't forget, U can defenatly use simplifyed Mojolicious::Lite/Even no TT2 for hi-load things, 
    just set up nginx right :)
    Just use Config, Service, enable plugins i18n, MjncmsInit, and you have user/etc model inbox.
 
