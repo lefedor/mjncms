@@ -286,7 +286,7 @@ sub get_suffixed_params ($;$) {
 }; #-- sub get_suffixed_params
 
 sub t_of () {
-    $SESSION{'ALLOW_T_OF'} = 1 unless $SESSION{'ALLOW_T_OF'};
+    #$SESSION{'ALLOW_T_OF'} = 1 unless $SESSION{'ALLOW_T_OF'};
     #$SESSION{'ALLOW_T_OF'} = 'alredy';
     if($SESSION{'ALLOW_T_OF'}){
         #for low level test immediatly

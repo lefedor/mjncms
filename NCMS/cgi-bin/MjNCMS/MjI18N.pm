@@ -88,6 +88,7 @@ sub loc($$;$) {
         ${$untrans_hash}{$SESSION{'SERVER_URL'}} = {} unless defined(${$untrans_hash}{$SESSION{'SERVER_URL'}});
         ${$untrans_hash}{$SESSION{'SERVER_URL'}}{$self->{'CURRLANG'}} = {} unless defined(${$untrans_hash}{$SESSION{'SERVER_URL'}}{$self->{'CURRLANG'}});
         foreach my $transfail_str (@to_trans){
+            #$transfail_str = $SESSION{'BS'}($transfail_str)->encode($SESSION{'SITE_CODING'});
             unless(defined(${$untrans_hash}{$SESSION{'SERVER_URL'}}{$self->{'CURRLANG'}}{$md5_sum = $SESSION{'BS'}($transfail_str)->md5_sum()->to_string()})){
                 ${$untrans_hash}{$SESSION{'SERVER_URL'}}{$self->{'CURRLANG'}}{$md5_sum} = $transfail_str;
                 $SESSION{'MEMD'}->set('untrans_hash', $untrans_hash);

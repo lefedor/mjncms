@@ -300,6 +300,7 @@ my %CFG_COMMON = (
     memc_untrans_strs => 0, #1/undef|0 
     
     #reCaptcha captcha settings: get own codes from http://recaptcha.net/
+    use_captcha => 1,
     recaptcha_publickey => 'fillit_fillit_fillti', 
     recaptcha_privatekey => 'fillit_fillit_fillti', 
     
@@ -381,6 +382,7 @@ my %CFG_COMMON = (
                     
                 },
             },
+
             
         }
     }
@@ -433,8 +435,8 @@ sub get_config ($) {
         site_coding => 'utf-8', #windows-1251
         site_locale => 'ru_RU.UTF-8', #Russian_Russia.1251
         site_xmlenc => 'utf8', #cp1251
-        site_name => 'MjNCMS Demo site', #default title
-        site_contactemail => 'ФедьКа <ffl.public@gmail.com>', 
+        site_name => 'MjNCMS Demo', 
+        site_contactemail => 'Фёдор <ffl.public@gmail.com>', 
         site_time_offset => 3, #default GMT time offset
 
         default_reg_role => 2, #0 == guest, 2==standart user

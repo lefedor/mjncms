@@ -171,8 +171,24 @@ a[target="_blank"]{
     margin: 5px;
 }
 
-.f100 {
-    font-size:100%;
+.f175 {
+    font-size:175%;
+}
+
+.f150 {
+    font-size:150%;
+}
+
+.f125 {
+    font-size:125%;
+}
+
+.f120 {
+    font-size:120%;
+}
+
+.f110 {
+    font-size:110%;
 }
 
 .f90 {

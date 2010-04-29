@@ -55,9 +55,6 @@ use Cache::Memcached::Fast;
 #Fast and safe captcha outsorcing service [ GD::SecurityImage may be later - but load cpu more ]
 use Captcha::reCAPTCHA;
 
-#4 Session store @memcache/database
-use Data::Serializer;
-
 sub register {
     my ($self, $app, $args) = @_;
     $args ||= {};
@@ -487,7 +484,7 @@ sub register {
             $SESSION{'PAGE_CACHABLE'} = undef;
 
             $SESSION{'CAPTCHA'} = undef;
-            if($$cfg{'recaptcha_publickey'} && $$cfg{'recaptcha_privatekey'}){
+            if($$cfg{'use_captcha'} && $$cfg{'recaptcha_publickey'} && $$cfg{'recaptcha_privatekey'}){
                 #api is quite simpe: ->get_mjcaptcha()/->check_mjcaptcha()
                 #so could be later impemented wth GD::SecurityImage easily if req
                 $SESSION{'CAPTCHA'} = Captcha::reCAPTCHA->new;

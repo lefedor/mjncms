@@ -517,6 +517,7 @@ sub content_rt_addpages_get () {
         $TT_CALLS{'content_get_catrecord_tree'} = \&MjNCMS::Content::content_get_catrecord_tree;
         $TT_CALLS{'content_get_catrecord'} = \&MjNCMS::Content::content_get_catrecord;
         $TT_CALLS{'awproles_get'} = \&MjNCMS::Usercontroller::awproles_get;
+        $TT_CALLS{'get_usersddata'} = \&MjNCMS::UserSiteLibAny::get_users;
     }
     $self->render('admin/admin_index');
 
@@ -619,6 +620,7 @@ sub content_rt_editpages_get () {
         $TT_CALLS{'content_get_catrecord'} = \&MjNCMS::Content::content_get_catrecord;
         $TT_CALLS{'content_get_pagerecord'} = \&MjNCMS::Content::content_get_pagerecord;
         $TT_CALLS{'awproles_get'} = \&MjNCMS::Usercontroller::awproles_get;
+        $TT_CALLS{'get_usersddata'} = \&MjNCMS::UserSiteLibAny::get_users;
     }
     $self->render('admin/admin_index');
 

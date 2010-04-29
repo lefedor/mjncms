@@ -110,7 +110,7 @@ sub _smf_get_users ($) {
     
     my $cfg = shift;
     
-    $cfg = {} unless $cfg;
+    $cfg = {} unless $cfg && ref $cfg eq 'HASH';
 
     my (
         $dbh, $sth, $res, $q, 
@@ -166,8 +166,7 @@ sub _smf_get_users ($) {
     }
     
     if (${$cfg}{'ids'} && 
-        ref ${$cfg}{'ids'} && 
-            ${$cfg}{'ids'} eq 'ARRAY' && 
+            ref ${$cfg}{'ids'} eq 'ARRAY' && 
                 scalar @{${$cfg}{'ids'}} && 
                     !(scalar (grep(/\D/, @{${$cfg}{'ids'}})))) { 
         $where_rule .= ' AND u.member_id IN ( ' . (join ', ', @{${$cfg}{'ids'}}) . ' ) ';
@@ -182,8 +181,7 @@ sub _smf_get_users ($) {
     }
     
     if (${$cfg}{'nids'} && 
-        ref ${$cfg}{'nids'} && 
-            ${$cfg}{'nids'} eq 'ARRAY' && 
+        ref ${$cfg}{'nids'} eq 'ARRAY' && 
                 scalar @{${$cfg}{'nids'}} && 
                     !(scalar (grep(/\D/, @{${$cfg}{'nids'}})))) { 
         $where_rule .= ' AND u.member_id NOT IN ( ' . (join ', ', @{${$cfg}{'nids'}}) . ' ) ';

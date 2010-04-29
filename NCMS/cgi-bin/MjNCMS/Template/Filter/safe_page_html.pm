@@ -64,7 +64,7 @@ sub safe_page_html ($) {
 
             ul li 
 
-            p div span style nobr
+            p div span style br nobr
 
             a 
 
@@ -72,7 +72,7 @@ sub safe_page_html ($) {
 
             img
 
-            table tbody tr td th
+            table tbody tr td th 
             
             object param embed
 
@@ -238,6 +238,9 @@ sub safe_page_html ($) {
     $attrib_whitelist->{'span'}->{'float'} = 'word';
     
     #table, tr, td, th seems ok
+    $attrib_whitelist->{'table'}->{'cellpadding'} = 'size';
+    $attrib_whitelist->{'table'}->{'cellspacing'} = 'size';
+    $attrib_whitelist->{'table'}->{'border'} = 'size';
 
     $attrib_whitelist->{'object'}->{'classid'} = 'text';
     $attrib_whitelist->{'object'}->{'codebase'} = 'text';

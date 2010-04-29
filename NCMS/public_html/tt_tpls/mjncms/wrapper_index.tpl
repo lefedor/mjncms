@@ -29,7 +29,7 @@
         [%- UNLESS TT_VARS.make_it_simple %]
         <meta name="robots" content="[% UNLESS TT_VARS.ROBOTS_NOINDEX %]index[% ELSE %]noindex[% END %],[% UNLESS TT_VARS.ROBOTS_NOFOLLOW %]follow[% ELSE %]nofollow[% END %]" />
     </head>
-    <body id="body_container_id">
+    <body id="[% IF TT_VARS.body_id %][% TT_VARS.body_id | html %][% ELSE %]body_container_id[% END %]">
         [% END #UNLESS TT_VARS.make_it_simple -%]
             [%- content #this focus provided by TT WRAPPER OPT -%]
         [%- UNLESS TT_VARS.make_it_simple %]

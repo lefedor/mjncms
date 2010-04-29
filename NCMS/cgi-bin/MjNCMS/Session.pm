@@ -163,7 +163,9 @@ sub start_session ($) {
             $mjncms_session 
         ) {
             
-            $dbh -> do("LOCK TABLES ${SESSION{PREFIX}}sessions WRITE ; ");
+            eval {
+                $dbh -> do("LOCK TABLES ${SESSION{PREFIX}}sessions WRITE ; ");
+            };
             
             $ips = &sv_getips();
             
@@ -224,7 +226,9 @@ sub start_session ($) {
                 $inscnt = $dbh->do($q);
             };
             
-            $dbh -> do("UNLOCK TABLES ; ");
+            eval{
+                $dbh -> do("UNLOCK TABLES ; ");
+            };
             
             $mjncms_session = {};
         }
